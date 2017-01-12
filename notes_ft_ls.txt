@@ -6,12 +6,29 @@ Se pencher sur un design initial.
 Optimiser la libft.
 Rendre avec un Makefile qui compile la lib avec son Makefile, puis compile le projet (et le recompile que si necessaire).
 Fonctions autorisees :
-	write		#unistd.h		write output			write(int fd, const void *buf, size_t nbyte)
-	opendir		#dirent.h		open directory 			opendir(const char *filename)
-	readdir		"				ptr to the next directory entry, NULL if end or error	struct dirent *readdir(DIR *dirrp)	
-	closedir
-	stat
-	lstat
+	write		<unistd.h>		void	write(int fd, const void *buf, size_t nbyte)
+				write output
+
+	opendir		<dirent.h>		DRI		*opendir(const char *filename)
+				open directory
+				NULL returned if filename can't be accessed ? malloc failed to find enough memory (errno is set)
+
+	readdir		<dirent.h>		struct dirent *readdir(DIR *dirrp)	
+				ptr to the next directory entry
+				NULL if end or error
+				if error, errno is set to any value documented in getdirentries (2)
+
+	
+	closedir	<dirent.h>		int		closedir(DIR *dirp)
+				close the directory stream and free the structure associated with dirp pointer
+				return 0 on success, -1 if error (and errno is set)
+
+	stat		<sys/stat.h>	int		stat(const char *restrict path, struct stat *restrict buf)
+				get file status
+	
+	lstat		<sys/stat.h>	int		lstat(const char *restrict path, struct stat *restrict buf)
+				get files status, if symbolic link, get info of the link not the file (unlike stat)
+
 	getpwuid
 	getgrgid
 	listxattr
