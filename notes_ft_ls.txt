@@ -1,0 +1,26 @@
+FT_LS
+=====
+1er projet de l'arc Unix
+API : Application programming Interface, set of routines, protocols, tools for building software applications, how software components should interact.
+Se pencher sur un design initial.
+Optimiser la libft.
+Rendre avec un Makefile qui compile la lib avec son Makefile, puis compile le projet (et le recompile que si necessaire).
+Fonctions autorisees :
+	write		#unistd.h		write output			write(int fd, const void *buf, size_t nbyte)
+	opendir		#dirent.h		open directory 			opendir(const char *filename)
+	readdir		"				ptr to the next directory entry, NULL if end or error	struct dirent *readdir(DIR *dirrp)	
+	closedir
+	stat
+	lstat
+	getpwuid
+	getgrgid
+	listxattr
+	getxattr
+	time
+	ctime
+	readlink
+	malloc
+	free
+	perror
+	strerror
+	exit
