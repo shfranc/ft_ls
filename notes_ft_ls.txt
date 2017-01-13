@@ -5,6 +5,20 @@ API : Application programming Interface, set of routines, protocols, tools for b
 Se pencher sur un design initial.
 Optimiser la libft.
 Rendre avec un Makefile qui compile la lib avec son Makefile, puis compile le projet (et le recompile que si necessaire).
+
+File System :
+How data is used and storage.
+Architecture = 3 layers
+* logical file system
+	API for file operations : OPEN, CLOSE, READ.
+* virtual file system
+	Multiple concurrente instances of physical file systens, each one being a file system implementation.
+* physical file system
+	physical operation of the storage device, physical blocks being read and written.
+	handl buffering and memory management, and physical placement of blocks in specific locations on the storage medium.
+	interact with the device drivers or the channel (input/output) to drive the storage device.
+Filename from the Unicode character set.
+
 Fonctions autorisees :
 	write		<unistd.h>		void	write(int fd, const void *buf, size_t nbyte)
 				write output
@@ -29,15 +43,66 @@ Fonctions autorisees :
 	lstat		<sys/stat.h>	int		lstat(const char *restrict path, struct stat *restrict buf)
 				get files status, if symbolic link, get info of the link not the file (unlike stat)
 
-	getpwuid
-	getgrgid
-	listxattr
-	getxattr
-	time
-	ctime
-	readlink
+	getpwuid	<sys/types.h> <uuid/uuid.h>	struct passwd	*getpwuid(uid_t	uid)
+				passeword database operation, obtain information from opendirectoryd(8)
+				return the first one encontered, a pointer to a thread-specific data structure or NULL. Un exemple dans le man.
+				<pwd.h> the returned structure :
+				struct passwd {
+					char    *pw_name;       /* user name */
+					char    *pw_passwd;     /* encrypted password */
+					uid_t   pw_uid;         /* user uid */
+					gid_t   pw_gid;         /* user gid */
+					time_t  pw_change;      /* password change time */
+					char    *pw_class;      /* user access class */
+					char    *pw_gecos;      /* Honeywell login info */
+					char    *pw_dir;        /* home directory */
+					char    *pw_shell;      /* default shell */
+					time_t  pw_expire;      /* account expiration */
+					int     pw_fields;      /* internal: fields filled in */
+					};
+				
+	getgrgid	<grp.h> <uuid/uudi.h>	struct group *getgrgid(gid_t gid)
+				group database operations, obtain information from opendirectoryd(8), each line define by the structure group
+				<grp.h> struct group {
+					char	*gr_name; 		/* group name */
+					char	*gr_passwd;		/* group password */
+					gid_t	gr_gid;			/* group id */
+					char	**gr_mem;		/* group members */
+
+	listxattr	<sys/xattr.h> ssize_t listxattr(const char *path, char *namebuf, size_t size, int options)
+				list extended attribute names, namebuf is a data buffer of size bytes fot the names of the extended attributes associated with path.
+				extended attribute names terminate with one \0 and returned in arbitrary order.
+				only the names which the process hass access to will be returned.
+				return value is size of the list of names.
+				options controls how the attributes list is generated:
+					XATTR_NOFOLLOW : do not follow symbolic links.
+					Normally, listxattr lists attributed of the target of the path if it's a symbolic link.
+					With this, it will list the attributes of the link itself.
+					XATTR_SHOWCOMPRESSION : will list HFS Compression extended attributes (if any) for the path or fd.
+				If namebuf == NULL, the functions returns the size of the list extended attributes names ==> useful to determine the size of a buffer sufficiently large to hold the names of the attributes currently associated with path.
+				return values ; on success size of the list, if no accessible content, 0, -1 on failure (+errno set as...)
+
+	getxattr	<sys/xattr.h>	ssize_t getxarttr(const char *path, const char *name, void *value, size_t size)
+				get an extended attribute value, they are stored as namae:data pairs assocaited with file system objects.
+				get up tp size bytes of data from the extended attribute identified by name associated with path into the pre-allocated buffer pointed by value.
+				returns number of bytes of data retrived, -1 if error (+errno is set as...)
+
+	time		<time.h>	time_t (time(time_t *tloc)
+				returns the value of time in seconds since january 1970, includind leapseconds. if error, -1.
+				reason of error described in gettimeofday(2).
+
+	ctime		<time.h>	char *ctime(const time_t *clock, char *buf)
+				get the time in seconds, adjust it for the current time zone and return a pointer to the string such as : Thu Nov 24 18:22:48 1986\n\0.
+				if error return NULL.
+
+	readlink	<unistd.h>	ssize_t readlink(const char *restrict path, char *restrict buf, size_t bufsize)
 	malloc
 	free
 	perror
 	strerror
 	exit
+
+ssize_t et size_t
+symbolic links
+HFS compression
+attributes names
