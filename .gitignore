@@ -3,3 +3,5 @@ a.out
 darwin_32_64
 test/*
 *.txt.swp
+ft_inspect_file
+ft_list_dir
