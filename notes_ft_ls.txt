@@ -7,6 +7,7 @@ Optimiser la libft.
 Rendre avec un Makefile qui compile la lib avec son Makefile, puis compile le projet (et le recompile que si necessaire).
 
 File System :
+-------------
 How data is used and storage.
 Architecture = 3 layers
 * logical file system
@@ -20,6 +21,7 @@ Architecture = 3 layers
 Filename from the Unicode character set.
 
 Fonctions autorisees :
+----------------------
 	write		<unistd.h>		void	write(int fd, const void *buf, size_t nbyte)
 				write output
 
@@ -87,22 +89,134 @@ Fonctions autorisees :
 				get up tp size bytes of data from the extended attribute identified by name associated with path into the pre-allocated buffer pointed by value.
 				returns number of bytes of data retrived, -1 if error (+errno is set as...)
 
-	time		<time.h>	time_t (time(time_t *tloc)
+	time		<time.h>		time_t (time(time_t *tloc)
 				returns the value of time in seconds since january 1970, includind leapseconds. if error, -1.
 				reason of error described in gettimeofday(2).
 
-	ctime		<time.h>	char *ctime(const time_t *clock, char *buf)
+	ctime		<time.h>		char *ctime(const time_t *clock, char *buf)
 				get the time in seconds, adjust it for the current time zone and return a pointer to the string such as : Thu Nov 24 18:22:48 1986\n\0.
 				if error return NULL.
 
-	readlink	<unistd.h>	ssize_t readlink(const char *restrict path, char *restrict buf, size_t bufsize)
-	malloc
-	free
-	perror
-	strerror
-	exit
+	readlink	<unistd.h>		ssize_t readlink(const char *restrict path, char *restrict buf, size_t bufsize)
+				read value of symbolic link, place e contents of the symblic link path in the buffer buf, which has size of buf_size. No NYL character is append.
+				returns the number of characters placed in the buf if succeeds, -1 if error (+errno set).
 
-ssize_t et size_t
-symbolic links
-HFS compression
-attributes names
+	malloc		<stdlib.h>		void *malloc(size_t size)
+				allocate size bytes of memory and returns a pointer to the allocated memory.
+				if error, return a NULL pointer and errno is set.
+
+	free		<stdlib.h>		void *free(void *ptr)
+				free allocation, no return.
+
+	perror		<stdio.h>		void	perror(const char *s)
+				finds the message correspondingto the current value of the global variable errno ans writes it, followed by \n.
+
+	strerror	<stdio.h>		char	*strerror(int errnum)
+				returns a pointer to the corresponding message.
+
+	exit		<stdlib.h>		void(int status)
+				terminate a process
+
+ERRNO is a global variable. A global variable is visible throughout the program (ex : global environment, global state)
+ssize_t et size_t : signed size_t and unsigned size_t.
+
+Les differents type de fichiers
+-------------------------------
+Windows = fichiers qui contiennent des informations et dossiers aui regroupent des fichiers. Mais Unix a une definition plus large de "fichiers" (ex: les fichiers dans /dev, devices sont associes a des peripheriques, ils apparaissent au branchement d'un peripherique et disparaissent ensuite, ou les fichiers dans /proc, baisser la luminosite, etat de la batterie revient sous Linux a modifier un fichier proc, communication avec le noyau...), et peut ne pas avoir d'existance reelle sur le media de stockage.
+
+-	fichiers reguliers	/* docs, images, archives,... */
+d	directory			/* dossier */
+l	lien symbolic		/* pointe sur un autre fichier */
+s	socket				/* communique qvec le reseau */
+b	block device		/* un peripherique de stockage (cle usb,...) /*
+c	charactere device	/* un peripherique que ne stocke pas de data (webcam, souris,...) */
+p	FIFO				/* pipes */
+
+Sockets vs pipe : 
+	* pipes exists within a specific host. pipes refer to beffering between virtual files, connecting output / input of processes within that host. comminucation uni directionelle.
+	* sockets packetize communication using IPv4 or IPv6 and can be extend beyond local host.Comminucation bi directionnelle.
+
+Liens physiques et liens symbolique :
+http://www.commentcamarche.net/contents/1143-unix-les-fichiers
+	* liens symbolique = un pointeur virtuels (raccourci) vers un fichier reel.
+	* lien physique = un nom alternatif pourun fichier (hardlink).
+
+File attributes :
+-----------------
+Metadata associated with a file, different from other metadata such as dates, times, filename extensions, file system permissions. In addition to file, folders, volumes.
+4 attributes :
+	archive
+	hidden
+	system
+	read-only
+
+Extended file attributes :
+Associate file with metadata not interpreted by the file system. MacOS supporte les attribut etendus avec le HFS filesystem attributes
+HFS Plus/+ : developpe par Apple, appose au filesystem primaire.
+
+Inode :
+-------
+noeud d'index (index + node en anglais)
+The inode is a data structure in a Unix-style file system which describes a filesystem object such as a file or a directory.
+À chaque fichier correspond un numéro d'inode (i-number) dans le système de fichiers dans lequel il réside, unique au périphérique sur lequel il est situé.
+Les inodes contiennent notamment les métadonnées des fichiers, et en particulier celles concernant les droits d'accès.
+Les inodes sont créés lors de la création du système de fichiers. La quantité d'inodes (généralement déterminée lors du formatage et dépendant de la taille de la partition) indique le nombre maximum de fichiers que le système de fichiers peut contenir.
+
+PARTIE OBLIGATOIRE :
+====================
+ls avec les options
+-l		Liste en format long, et sur un terminal, la taille total de tous les fichiers est affiche sur une ligne avant la liste. Le formatage enplusieurs colonne n'est pas reproduire
+-R		Recursif dans les dossiers rencontres
+-a		Affiche les fichiers caches dont le nom commence par un '.'.
+-r		Renverse l'ordre de tri en lexicographic, ou le plus vieux en premier, ou le plus lourd en premier.
+-t		Tri par date de modification (le modifier le plus recemment en 1er), avant de trier par lexicographique.
+
+Tolerence sur l'affichage (sur le padding), mais il ne doit manquer aucune information.
+Pas obliger de gerer les ACL et attributs etendus (ACL = Access Control List).
+
+/!\ Prendre en compte les implications de -R des le debut de la conception du code.
+
+le format long :
+----------------
+file mode 	= entry type = b, c, d, l, s, p, -.
+			= permissions XXX.XXX.XXX owner, group, other people permissions.
+				r/- : read
+				w/- : write
+				S/s/x/- :
+					S : file is not executable in the owner/group persmissions and set-user-ID/set-group-ID mode is set.
+					s : file is executable in the owner/group permissions and super user/group ID is set
+					x : file is executable or directory is searchable
+					- : none
+					for other people permission only, last charater :
+						T : sticky bit is set but no execute or search permission
+						t : sticky bit is set ans is seqrchable or executable.
+number of links
+owner name
+group name
+number of bytes in the file
+abbreviated month
+day of month file was last modified
+hour file was last modified
+minutes file was last modified
+path name
+
+Pour chaque dossier dont le contenu est affiche :
+le nombre total de 512-bytesblocks utilises par les fichiers contenus dans le dossier est affiche sur une ligne
+ex :
+./sudoku:
+total 192
+
+Si le fichier ou dossier a des attributs etendus, les droits sont suivis de '@'.
+Si le fichier ou dossier a des information de securite etendue (comme des droits d'acces), les droits sont suivis de l'affichage d'un '+'.
+Si la date de modification est anterieur a 6 mois (passe ou futur), l'annee de modification remplace les heures et les minutes.
+Si le 'owner' ou 'group' ne sont pqs connus, l'ID numeric est affiche.
+Si le fichier est un fichier associe a un peripherique (character ou block special), le nombre de peripheriques majeurs ou mineurs est affiche a la place de la taille.
+Si le fichier est un lien symbolic, '->' precede l'affichage du chemin.
+
+un exemple du man pour lister par taille croissante :
+ls -lrS
+
+ls returns 0 if success, <0 if an error occurs.
+
+PARTIE BONUS :
+==============
