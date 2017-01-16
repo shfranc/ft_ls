@@ -85,7 +85,35 @@ Fonctions autorisees :
 					int32_t         st_lspare;        /* RESERVED: DO NOT USE! */
 					int64_t         st_qspare[2];     /* RESERVED: DO NOT USE! */
 				};
+			
+				st_mode is a word with the following bits: 
+			    #define S_IFMT 0170000           /* type of file */
+				#define        S_IFIFO  0010000  /* named pipe (fifo) */
+				#define        S_IFCHR  0020000  /* character special */
+				#define        S_IFDIR  0040000  /* directory */
+				#define        S_IFBLK  0060000  /* block special */
+				#define        S_IFREG  0100000  /* regular */
+				#define        S_IFLNK  0120000  /* symbolic link */
+				#define        S_IFSOCK 0140000  /* socket */
+				#define        S_IFWHT  0160000  /* whiteout */
+				#define S_ISUID 0004000  /* set user id on execution */
+				#define S_ISGID 0002000  /* set group id on execution */
+				#define S_ISVTX 0001000  /* save swapped text even after use */
+				#define S_IRUSR 0000400  /* read permission, owner */
+				#define S_IWUSR 0000200  /* write permission, owner */
+				#define S_IXUSR 0000100  /* execute/search permission, owner */	
+				
+				ces macros sont des masques unsigned short en octal.
+				http://stackoverflow.com/questions/15055634/understanding-and-decoding-the-file-mode-value-from-stat-function-output
+				http://perldoc.perl.org/functions/stat.html
+				mask = st_mode & S_IFMT
+				mask ^ S_IF* == 0 --> type trouve !
 
+				struct timespec
+				{
+					long    tv_sec;         /* seconds */
+					long    tv_nsec;        /* nanoseconds */
+				};
 	
 	lstat		<sys/stat.h>	int		lstat(const char *restrict path, struct stat *restrict buf)
 				get files status, if symbolic link, get info of the link not the file (unlike stat)
@@ -286,5 +314,10 @@ PARTIE BONUS :
 
 RAPPEL SUR LES POINTEURS SUR STRUCTURE :
 ========================================
-	(*dir_temp).d_name[0] // *dir_temp->d_name
-	affiche le premier caractere de la chaine d_name, est equivalent a ecrire = *dir_temp->d_name
+t_list elem; --> reserve sur la stack de la place pour une structure elem de taille sizeof(t_list). On accede alors aux elements de elem en notant elem.content, elem.content_size car elem n'est pas un pointeur sur structure mais une structure.
+
+t_list *elem; --> reserve de la place sur la stack pour un pointeur (8 octets)
+ensuite elem = (t_list*)malloc(sizeof(t_list) reserve de la place pour une structure t_list sur la heap (beaucoup plus grande que la stack), et là, parce que elem est un pointeur, on accede aux differents elements de elem en notant (*elem).content soit elem->content (on se deplace vers la zone memoire pointee, puis on va sur content).
+
+si on doit acceder a un caractere de la chaine *content, il est possible de noter : *elem->content (ce qui equivaut au caractere 0, soit (*elem).content[0])
+
