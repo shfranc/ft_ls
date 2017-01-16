@@ -25,14 +25,37 @@ Fonctions autorisees :
 	write		<unistd.h>		void	write(int fd, const void *buf, size_t nbyte)
 				write output
 
-	opendir		<dirent.h>		DRI		*opendir(const char *filename)
+	opendir		<dirent.h>		DIR		*opendir(const char *filename)
 				open directory
 				NULL returned if filename can't be accessed ? malloc failed to find enough memory (errno is set)
+				type DIR : /* structure describing an open directory. */
+				typedef struct	_dirdesc
+				{
+					int     __dd_fd;      /* file descriptor associated with directory */
+				    long    __dd_loc;     /* offset in current buffer */
+				    long    __dd_size;    /* amount of data returned by getdirentries */
+				    char    *__dd_buf;    /* data buffer */
+				    int     __dd_len;     /* size of data buffer */
+				    long    __dd_seek;    /* magic cookie returned by getdirentries */
+				    long    __dd_rewind;  /* magic cookie for rewinding */
+				    int     __dd_flags;   /* flags for readdir */
+				    pthread_mutex_t __dd_lock; /* for thread locking */
+				    struct _telldir *__dd_td; /* telldir position recording */
+				} 				DIR;
 
 	readdir		<dirent.h>		struct dirent *readdir(DIR *dirrp)	
 				ptr to the next directory entry
 				NULL if end or error
 				if error, errno is set to any value documented in getdirentries (2)
+				struct dirent /* when _DARWIN_FEATURE_64_BIT_INODE is defined */
+				{
+					ino_t      d_fileno;     /* file number of entry */
+					__uint64_t d_seekoff;    /* seek offset (optional, used by servers) */
+					__uint16_t d_reclen;     /* length of this record */
+					__uint16_t d_namlen;     /* length of string in d_name */
+					__uint8_t  d_type;       /* file type, see below */
+					char    d_name[1024];    /* name must be no longer than this */
+				}
 
 	
 	closedir	<dirent.h>		int		closedir(DIR *dirp)
@@ -41,6 +64,28 @@ Fonctions autorisees :
 
 	stat		<sys/stat.h>	int		stat(const char *restrict path, struct stat *restrict buf)
 				get file status
+				struct stat /* when _DARWIN_FEATURE_64_BIT_INODE is defined */
+				{
+					dev_t           st_dev;           /* ID of device containing file */
+					mode_t          st_mode;          /* Mode of file (see below) */
+					nlink_t         st_nlink;         /* Number of hard links */
+					ino_t           st_ino;           /* File serial number */
+					uid_t           st_uid;           /* User ID of the file */
+					gid_t           st_gid;           /* Group ID of the file */
+					dev_t           st_rdev;          /* Device ID */
+					struct timespec st_atimespec;     /* time of last access */
+					struct timespec st_mtimespec;     /* time of last data modification */
+					struct timespec st_ctimespec;     /* time of last status change */
+					struct timespec st_birthtimespec; /* time of file creation(birth) */
+					off_t           st_size;          /* file size, in bytes */
+					blkcnt_t        st_blocks;        /* blocks allocated for file */
+					blksize_t       st_blksize;       /* optimal blocksize for I/O */
+					uint32_t        st_flags;         /* user defined flags for file */
+					uint32_t        st_gen;           /* file generation number */
+					int32_t         st_lspare;        /* RESERVED: DO NOT USE! */
+					int64_t         st_qspare[2];     /* RESERVED: DO NOT USE! */
+				};
+
 	
 	lstat		<sys/stat.h>	int		lstat(const char *restrict path, struct stat *restrict buf)
 				get files status, if symbolic link, get info of the link not the file (unlike stat)
@@ -118,10 +163,26 @@ Fonctions autorisees :
 				terminate a process
 
 ERRNO is a global variable. A global variable is visible throughout the program (ex : global environment, global state)
+
+errno		<errno.h>		number of last error
+				header file defines the integer variable errno.
+				Its value is significant only when the return value of the call indicated an error (i.e., -1 from most system calls; -1 or NULL from most library functions)
+				All the error names specified by POSIX.1 must have distinct values, with the exception of EAGAIN and EWOULDBLOCK, which may be the same.
+
 ssize_t et size_t : signed size_t and unsigned size_t.
 
-Les differents type de fichiers
--------------------------------
+_DARWIN_FEATURE_64_BIT_INODE :
+------------------------------
+Dans les man, les structures different suivant si _DARWIN_FEATURE_64_BIT_INODE est defini ou non.
+Darwin est un système d'exploitation libre et gratuit construit autour du noyau XNU et développé notamment par Apple. Il est dérivé de NeXTSTEP et de BSD. Sa vocation principale est de servir de base au système d'exploitation OS X.
+Apple a amorcé le projet OpenDarwin, puis l'a rendu indépendant, pour promouvoir ses technologies et attirer vers elles les développeurs open-source, très attachés à Linux et BSD.
+
+Maccro :
+#define _DARWIN_FEATURE_64_BIT_INODE == 1.
+Cette maccro existe sur les OS de 42, voir darwin_32_64.c.
+
+Les differents type de fichiers :
+---------------------------------
 Windows = fichiers qui contiennent des informations et dossiers aui regroupent des fichiers. Mais Unix a une definition plus large de "fichiers" (ex: les fichiers dans /dev, devices sont associes a des peripheriques, ils apparaissent au branchement d'un peripherique et disparaissent ensuite, ou les fichiers dans /proc, baisser la luminosite, etat de la batterie revient sous Linux a modifier un fichier proc, communication avec le noyau...), et peut ne pas avoir d'existance reelle sur le media de stockage.
 
 -	fichiers reguliers	/* docs, images, archives,... */
@@ -220,3 +281,10 @@ ls returns 0 if success, <0 if an error occurs.
 
 PARTIE BONUS :
 ==============
+
+
+
+RAPPEL SUR LES POINTEURS SUR STRUCTURE :
+========================================
+	(*dir_temp).d_name[0] // *dir_temp->d_name
+	affiche le premier caractere de la chaine d_name, est equivalent a ecrire = *dir_temp->d_name
