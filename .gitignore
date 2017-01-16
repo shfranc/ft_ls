@@ -2,3 +2,4 @@
 a.out
 darwin_32_64
 test/*
+*.txt.swp
