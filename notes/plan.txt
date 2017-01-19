@@ -1,0 +1,41 @@
+ls --> ls .
+ls "operand"
+	non directory + lex order
+	directory lex order + contenu lex order
+
+* 	faire la difference entre un nom de fichier et les arguments --> on peut se baser sur argv[i][0] = '-' ?
+	'--' est passablement ignorer et ainsi ls -- DOSSIER == ls DOSSIER
+	par contre, une fois le -- passer, un -a n'est pas un argument mais un nom de fichier invalide. mais ls s'execute quand meme pour le nom suivant : ls -- -a DOSSIER == ls DOSSIER avec l'affichage du message d'erreur
+	"ls: -a: No such file or directory"
+	c'est comme si "--" arretait la lecture des arguments (forcait l'arrer...?)
+	-a abreviation de --all ? ls --all renvoi une illegal option...
+	ls - --> No sush file or directory / ls - -a "-": No such file or directory x2
+	ls -- == ls
+	ls -a -truc == ls -a 
+	ls -a - --> "-" No such file or directory
+	ls --truc --> Illegal option
+	ls -- truc --> si pas de fichier truc alors No such... mais le -- est ignore.
+	ls -a -- == ls -a
+	ls -a -- truc == truc: No such...
+	ls --a -- == illegal option
+	ls -- -- == no such file
+
+	-- long-format options
+	GNU is the origin of those --long options
+	There, you have two types of options: long and short. The long ones are --foo. Those that take arguments can be written either --foo=arg or --foo arg
+
+-R	--> recursivite de ls en prenant chqaue directory ouvert comme nouveau point de depart.
+	directory dans un directory == ouvert + lister le contenu + lex order
+
+-r	inverser le lex order, mais on gar non dir en premier et dir ensuite
+	on aura 2 fonction sort a appliquer si -r actif ou non
+	inverse le tris --> pas forcement lex mais aussi -t
+
+	======== PARSING ==========
+
+read_options = '-...'
+ls [-Ralrt] [file...]
+separateur : "--" --> et uniquement 2 --, --a est une option invalide ou un fichier non existant.
+read_files 
+	opendir
+	open

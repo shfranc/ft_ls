@@ -103,11 +103,18 @@ Fonctions autorisees :
 				#define S_IWUSR 0000200  /* write permission, owner */
 				#define S_IXUSR 0000100  /* execute/search permission, owner */	
 				
+				S_IRUSR	S_IWUSR	S_IXUSR
+				S_IRGRP	S_IWGRP	S_IXGRP
+				S_IROTH	S_IWOTH	S_IXOTH
+
 				ces macros sont des masques unsigned short en octal.
 				http://stackoverflow.com/questions/15055634/understanding-and-decoding-the-file-mode-value-from-stat-function-output
 				http://perldoc.perl.org/functions/stat.html
 				mask = st_mode & S_IFMT
 				mask ^ S_IF* == 0 --> type trouve !
+				http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_stat.h.html
+
+				permission : if (st_mode & PERM) == PERM)
 
 				struct timespec
 				{
@@ -136,7 +143,7 @@ Fonctions autorisees :
 					int     pw_fields;      /* internal: fields filled in */
 					};
 				
-	getgrgid	<grp.h> <uuid/uudi.h>	struct group *getgrgid(gid_t gid)
+	getgrgid	<grp.h> <uuid/uuid.h>	struct group *getgrgid(gid_t gid)
 				group database operations, obtain information from opendirectoryd(8), each line define by the structure group
 				<grp.h> struct group {
 					char	*gr_name; 		/* group name */
@@ -162,13 +169,14 @@ Fonctions autorisees :
 				get up tp size bytes of data from the extended attribute identified by name associated with path into the pre-allocated buffer pointed by value.
 				returns number of bytes of data retrived, -1 if error (+errno is set as...)
 
-	time		<time.h>		time_t (time(time_t *tloc)
+	time		<time.h>		time_t time(time_t *tloc)
 				returns the value of time in seconds since january 1970, includind leapseconds. if error, -1.
 				reason of error described in gettimeofday(2).
 
 	ctime		<time.h>		char *ctime(const time_t *clock, char *buf)
 				get the time in seconds, adjust it for the current time zone and return a pointer to the string such as : Thu Nov 24 18:22:48 1986\n\0.
 				if error return NULL.
+				time_t correspond a un long (?), ctime marche en donnant stat->st_mtimespec.tv_sec qui est un long par ex.
 
 	readlink	<unistd.h>		ssize_t readlink(const char *restrict path, char *restrict buf, size_t bufsize)
 				read value of symbolic link, place e contents of the symblic link path in the buffer buf, which has size of buf_size. No NYL character is append.
@@ -220,10 +228,10 @@ s	socket				/* communique qvec le reseau */
 b	block device		/* un peripherique de stockage (cle usb,...) /*
 c	charactere device	/* un peripherique que ne stocke pas de data (webcam, souris,...) */
 p	FIFO				/* pipes */
-
+				
 Sockets vs pipe : 
 	* pipes exists within a specific host. pipes refer to beffering between virtual files, connecting output / input of processes within that host. comminucation uni directionelle.
-	* sockets packetize communication using IPv4 or IPv6 and can be extend beyond local host.Comminucation bi directionnelle.
+	* sockets packetize communication using IPv4 or IPv6 and can be extend beyond local host. Communication bi directionnelle.
 
 Liens physiques et liens symbolique :
 http://www.commentcamarche.net/contents/1143-unix-les-fichiers
@@ -278,7 +286,7 @@ file mode 	= entry type = b, c, d, l, s, p, -.
 					- : none
 					for other people permission only, last charater :
 						T : sticky bit is set but no execute or search permission
-						t : sticky bit is set ans is seqrchable or executable.
+						t : sticky bit is set and is searchable or executable.
 number of links
 owner name
 group name
