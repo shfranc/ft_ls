@@ -1,15 +1,15 @@
-ls --> ls .
+ls --> ls . En realite, pour l'exercice, ls tout court sera l'equivalent de ls -1.
 ls "operand"
 	non directory + lex order
 	directory lex order + contenu lex order
 
 * 	faire la difference entre un nom de fichier et les arguments --> on peut se baser sur argv[i][0] = '-' ?
-	'--' est passablement ignorer et ainsi ls -- DOSSIER == ls DOSSIER
-	par contre, une fois le -- passer, un -a n'est pas un argument mais un nom de fichier invalide. mais ls s'execute quand meme pour le nom suivant : ls -- -a DOSSIER == ls DOSSIER avec l'affichage du message d'erreur
+*	'--' est passablement ignorer et ainsi ls -- DOSSIER == ls DOSSIER
+	par contre, une fois le -- passer, un -a n'est pas une option mais un nom de fichier invalide. mais ls s'execute quand meme pour le nom suivant : ls -- -a DOSSIER == ls DOSSIER avec l'affichage du message d'erreur
 	"ls: -a: No such file or directory"
-	c'est comme si "--" arretait la lecture des arguments (forcait l'arrer...?)
-	-a abreviation de --all ? ls --all renvoi une illegal option...
-	ls - --> No sush file or directory / ls - -a "-": No such file or directory x2
+	c'est comme si "--" arretait la lecture des options et que tout ce qui etait apres etait des noms de fichiers
+*	-a abreviation de --all ? (anciennement --all en fait) ls --all renvoi une illegal option...
+	ls - --> No such file or directory / ls - -a "-": No such file or directory x2
 	ls -- == ls
 	ls -a -truc == ls -a 
 	ls -a - --> "-" No such file or directory
@@ -17,8 +17,6 @@ ls "operand"
 	ls -- truc --> si pas de fichier truc alors No such... mais le -- est ignore.
 	ls -a -- == ls -a
 	ls -a -- truc == truc: No such...
-	ls --a -- == illegal option
-	ls -- -- == no such file
 
 	-- long-format options
 	GNU is the origin of those --long options
@@ -32,10 +30,96 @@ ls "operand"
 	inverse le tris --> pas forcement lex mais aussi -t
 
 	======== PARSING ==========
+--------
+ESSAI n1
+--------
+on va lire les options, les "activer" dans un tableau d'options/une structure d'options
+opt[5][2]
+0 0/1 --> au moins une option ? utile ?		ou une struct opt { en int 0/1 ou en char directement...
+R	0/1										int	R; 0/1		char R '\0'/'R';
+a	0/1										int	a; 0/1		char a '\0'/'a';
+l	0/1										int	l; 0/1 		char l '\0'/'l';
+r	0/1										int r; 0/1		char r '\0'/'r';
+t	0/1										int t; 0/1		char t '\0'/'t';
+											}; avec une initialisation des parametres a 0.
 
-read_options = '-...'
-ls [-Ralrt] [file...]
-separateur : "--" --> et uniquement 2 --, --a est une option invalide ou un fichier non existant.
-read_files 
-	opendir
-	open
+if (opt[i][1]) --> si l'option opt[i] est activee, on va executer une serie de fonction.
+	...
+if (opt.R) --> R != '\0'; plus joli a lire !
+
+Et en meme temps, faut-il deja penser aux pointeurs sur fonctions (rappelle do_op ou eval expert avec une fontion par signe '+', '-',... ?
+
+--> ou creer le tableau d'options ?
+--> passer un pointeur de liste pour recup les noms ?
+--> le parsing renvoit 1/0 ? prends en argument un pointeur sur l'adresse d'une liste + un pointeur sur un tableau d'options ?
+
+une option valide commence par un "-" et est immediatement suivit d'un caractere ! important car '-' est un fichier invalide + arrete la lecture des options et renvoi un erreur.
+on lit un argument :
+*	read_options(char **av)
+	if (av[i][1] == '-' && av[i+1][1] == '\0') --> on a "--"
+				break; -->on sort de cette boucle pour aller lire les noms, on arrete de chercher des options !!
+	if (av[i][1] == '-' && av[i+1][1] != '\0') --> on a "--"
+	il y a un '-' --> get_opt(char *av)
+		while (av[i][0] = '-')
+			if (av[i][1] == R, a, l r, t)
+				get_opt(char av[i][1]);
+					option mise a 1 ou INVALID OPTION
+				INVALID OPTION
+
+*	il n'y a pas de '-' --> c'est un fichier. on passe a get_names
+
+separateur : "--"
+read_name
+	if (a[i][1] == '-') -- juste un '-' (ex: ls -) 
+		NO SUCH FILE (une erreur read_names) 
+--------
+ESSAI n2
+--------
+ac2				ac3				ac4			ac5			...		acn
+'-'?
+non -> fichier 	-> fichier 		-> fichier	-> fichier	... 	-> fichier
+oui -> option	'-'?
+				non -> fichier	-> fichier	-> fichier	...		-> fichier
+				oui -> option	'-'?
+								non ...
+								oui ...
+
+1.1		av[1] n'existe pas / ac == 1 --> on est sur ls sans option ni nom passe en argument 
+1.2 ou	av[1] existe / ac > 1 --> (mais peut etre nul, dans ce cas --> NO SUCH FILE...)
+	2.1		av[1][0] != '-'	--> on va chercher des fichiers et on ne cherchera jamais/plus d'options.
+	2.2 ou	av[1][0] == '-' --> on va chercher une option.
+		3.1		av[i][1] == 0 --> ERRNO "ls -" NO SUCH FILE, et on va chercher des fichiers et on ne cherchera jamais/plus d'options.
+		3.2 ou	av[i][1] != 0
+				3.2.1		av[i][1] == '-' et av[i][2] == 0 --> "ls --" = rien, et on va chercher des fichiers et on ne cherchera jamais/plus d'options.
+				3.2.2 ou	av[i][1] != '-' --> on lit l'option
+				3.2.2.1			av[i][2] != R, a, l, r, t --> ILLEGAL OPTION, on arrete tout meme si ls -alD et on ne lit pas les fichiers ensuite.
+				3.2.2.2			av[i][2] == R, a, l, r, t --> struct opt modifie ==> retour au point 3.2 (ou 2.1 ?)
+
+et on traduirait ca en fonction par :
+int		main(int ac, char **av)
+{
+	if (!(parsing(ac, av)) --> ls ne s'arrete que si "illegal option"
+		return (0);
+	return (0);
+}
+
+int		parsing(int ac, char **av, **list, **opt)
+{
+	if (ac == 1)
+		read_names(&'.');
+	av++;
+	ac--;
+	while (ac)
+	{
+		if (*av != '-')
+		{
+			read_names(av, lis);
+			return (1);
+		}
+		else
+			if (!(read_option(*av, opt)))
+				return (0);
+		av+
+	}
+	return (1);
+}

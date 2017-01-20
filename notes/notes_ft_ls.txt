@@ -315,10 +315,19 @@ ls -lrS
 
 ls returns 0 if success, <0 if an error occurs.
 
+la gestion d'erreur est tres importante : exit programme + affichage du message d'erreur correspondant.
+- les droits Permission denied.
+
+faire un ls dans /dev --> contient les devices
+ls -l dans ce fichier, majeur et mineur des devices.
+b et c sont les 2 type de fichiers qui existe dans /dev surtout.
+
+ls -r /usr --> repertoire assez violent^^ pour tester la robustesse.
+
 PARTIE BONUS :
 ==============
-
-
+-G, -d, -u,...
+une gestion des couleurs
 
 RAPPEL SUR LES POINTEURS SUR STRUCTURE :
 ========================================
