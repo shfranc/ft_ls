@@ -5,3 +5,4 @@ test/*
 *.txt.swp
 ft_inspect_file
 ft_list_dir
+ft_ls
