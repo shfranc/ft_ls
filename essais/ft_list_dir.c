@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 14:19:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/16 17:40:09 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/23 11:20:29 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 */
 
 #include <dirent.h>
+#include <stdio.h>
+#include <errno.h>
 #include "libft.h"
 
 int		main(int ac, char **av)
@@ -26,7 +28,10 @@ int		main(int ac, char **av)
 
 	(void)ac;
 	if (!(dir_ptr = opendir(av[1])))
+	{
+		perror(av[1]);
 		return (0);
+	}
 	while ((dir_temp = readdir(dir_ptr)) != NULL)
 	{
 		if (*dir_temp->d_name != '.')

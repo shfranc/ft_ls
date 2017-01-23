@@ -96,30 +96,92 @@ oui -> option	'-'?
 				3.2.2.2			av[i][2] == R, a, l, r, t --> struct opt modifie ==> retour au point 3.2 (ou 2.1 ?)
 
 et on traduirait ca en fonction par :
+
+typedef struct	s_file
+{
+	char			*name;
+	struct stat		*stat;
+	struct s_file	*next; --> point vers le nom suivant.
+	struct s_file	*inside; --> si dir, pointe vers des maillons qui liste le contenu.
+
+}				t_file;
+
 int		main(int ac, char **av)
 {
-	if (!(parsing(ac, av)) --> ls ne s'arrete que si "illegal option"
+	t_file		**list;
+	struct opt	*opt;
+
+	if (!(parsing(ac, av, list, opt)) --> ls ne s'arrete que si "illegal option"
 		return (0);
 	return (0);
 }
 
+void	read_names(**av, **list)
+{
+	DIR				*dir_ptr;
+	struct dirent	*dir_temp;
+	int				fd;
+	int				ret_close;
+	
+	while (av)
+	{
+		if (!(dir_ptr = opendir(*av))
+			perror(*av);
+			if (!opt)
+				skip . & ..
+			if (opt)
+				a -- on ne skip rien
+				lrt -- on rempli stat et lstat
+				R 
+		if (!(fd = open(*av))
+			perror(*av);
+		av++;
+	}
+}
+
+int		read_option(*av, **opt)
+{
+	char	*c;
+	char	*options;
+
+	options = strdup("Ralrt");
+
+	if (!opt)
+		init_opt(opt, 0);
+	while (*av)
+	{
+		if (
+		init_opt(opt, *c);
+}
+
 int		parsing(int ac, char **av, **list, **opt)
 {
+	int		dash;
+
+	dash = 0;
 	if (ac == 1)
-		read_names(&'.');
+		read_names(&".");
 	av++;
 	ac--;
 	while (ac)
 	{
 		if (*av != '-')
 		{
-			read_names(av, lis);
+			read_names(av, list, opt);
 			return (1);
 		}
 		else
-			if (!(read_option(*av, opt)))
+			if (*(av + 1) = '-' && *(av + 2) == '\0' && !dash) --> passer le "--" qu'une fois.
+			{
+				dash = 1;
+				av++;
+				read_names(av, list);
+				return (1);
+			}
+			if (!(read_option(*(av + 1), opt)))
 				return (0);
-		av+
+		av++;
+		ac--;
 	}
 	return (1);
 }
