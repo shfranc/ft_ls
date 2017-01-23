@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 15:54:57 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/23 18:53:40 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:22:26 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,22 @@ void	display_names(t_list *names)
 	}
 }
 
-void	set_errors(char **errors, char *message, char *file)
+void	set_errors(char **errors, char *message, char *file, int nb_err)
 {
 	char	*temp;
 
-	while (*errors != 0)
-		errors++;
+	(void)errors;
+	(void)message;
+	(void)nb_err;
 	temp = ft_strjoin(file, " :");
-	*errors = ft_strjoin(temp, message);
+//	*(errors + nb_err - 1) = ft_strjoin(temp, message);
 }
 
-void	put_errors(char *errors)
+void	put_errors(char **errors, int nb_err)
 {
-	while (errors)
+	while (nb_err--)
 	{
-		ft_putendl(errors);
+		ft_putendl(*errors);
 		errors++;
 	}
 }

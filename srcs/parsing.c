@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:42:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/23 18:53:38 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:21:24 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		read_names(int ac, char **av, t_list **names)
 	t_list			*temp;
 	struct stat		stat_file;
 	int				ret_stat;
-	char			*errors;
+	char			**errors;
 	int				nb_err;
 
 	errors = 0;
@@ -28,19 +28,18 @@ void		read_names(int ac, char **av, t_list **names)
 		ret_stat = stat(*av, &stat_file);
 		temp = ft_lstnew(*av, ft_strlen(*av));
 		if (*names != NULL)
-			ft_lstadd(names, temp);
+			ft_lstadd_last(names, temp);
 		else
 			*names = temp;
 		if (errno != 0)
 		{
 			nb_err++;
-			ft_putendl(strerror(errno));
-			set_errors(&errors, strerror(errno), *av, nb_err);
+			set_errors(errors, strerror(errno), *av, nb_err);
 		}
 		if (ac--)
 			av++;
 	}
-	put_errors(errors, nb_err);
+//	put_errors(errors, nb_err);
 	ft_putendl("--> read_names fin");
 }
 
