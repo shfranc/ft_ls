@@ -6,37 +6,44 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 15:54:57 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/23 19:22:26 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/24 18:57:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	display_names(t_list *names)
+void	display_names(t_file *names)
 {
-	while (names)
+	t_file	*temp;
+
+	temp = names;
+	while (temp)
 	{
-		ft_putendl(names->content);
-		names = names->next;
+		if (temp->error == 0)
+			ft_putendl(temp->name);
+		if (temp->inside != NULL)
+		{
+			ft_putendl("--- inside");
+			display_names(temp->inside);
+		}
+		temp = temp->next;
 	}
 }
 
-void	set_errors(char **errors, char *message, char *file, int nb_err)
+void	display_errors(t_file *names)
 {
-	char	*temp;
+	t_file	*temp;
 
-	(void)errors;
-	(void)message;
-	(void)nb_err;
-	temp = ft_strjoin(file, " :");
-//	*(errors + nb_err - 1) = ft_strjoin(temp, message);
-}
-
-void	put_errors(char **errors, int nb_err)
-{
-	while (nb_err--)
+	temp = names;
+	while (temp)
 	{
-		ft_putendl(*errors);
-		errors++;
+		if (temp->error != 0)
+		{
+			ft_putstr("ft_ls :");
+			ft_putstr(temp->name);
+			ft_putstr(": ");
+			ft_putendl(strerror(temp->error));
+		}
+		temp = temp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/23 18:27:12 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/24 17:13:12 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int		main(int ac, char **av)
 {
-	t_list	*names;
+	t_file	*names;
 	char	*options;
 
 	names = NULL;
 	options = NULL;
 	if (!(parsing(ac, av, &names, options)))
 		return (0);
+	display_errors(names);
 	display_names(names);
 	return (0);
 }
