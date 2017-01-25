@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/24 17:13:12 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/25 19:27:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		main(int ac, char **av)
 	options = NULL;
 	if (!(parsing(ac, av, &names, options)))
 		return (0);
-	display_errors(names);
-	display_names(names);
+//	display_errors(names);
+//	display_names(names);
 	return (0);
 }

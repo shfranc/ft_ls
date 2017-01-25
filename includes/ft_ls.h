@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/24 18:04:29 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/25 19:27:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sys/stat.h> /* stat + struct stat */
 #include <stdio.h> /* strerror */
 #include <dirent.h> /* opendir + DIR, readdir + struct dirent */
+
 typedef struct	s_file
 {
 	char			*name;
@@ -35,6 +36,7 @@ t_file	*ft_filenew(char *av);
 void	ft_fileadd_last(t_file **alst, t_file *new);
 int		parsing(int ac, char **av, t_file **names, char *options);
 void	read_names(int ac, char **av, t_file **names);
+void	read_inside(DIR *dir_ptr, t_file **names);
 
 /*
 ** display.c
