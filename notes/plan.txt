@@ -185,3 +185,23 @@ int		parsing(int ac, char **av, **list, **opt)
 	}
 	return (1);
 }
+--------
+ESSAI n3
+--------
+On laisse tomber la v2 par necessite de revenir au fondamentaux du parsing et bien comprendre la difference entre un dossier ouvert s'il est en argument ou en recursivite. Trop rapide sur l'envie d'afficher un ls alors que le parsing n'est pas complet...
+
+1. les options
+commencent par "-"
+"--" separateur entre option et fichier, tout ce qui est apres est un fichier, force la fin de lecture des options.
+illegal option stoppe le programme, la ou les autres erreurs sont relevees mais n'arrete pas le programme.
+d'ou la necessite de bien parser les options.
+-Ralrt idem -RRaallrrtt
+stocker les options : on a eu l'idee d'un tableau ou d'une structure mais il faudrait plutot une methode qui puisse etre bouclee, un *char, un int ? et des masques ?
+int option;
+option = 	0000 0000  0000 0000  0000 0000  0000 0000
+R			0000 0000  0000 0000  0000 0000  0000 0001
+a			0000 0000  0000 0000  0000 0000  0000 0010
+l			0000 0000  0000 0000  0000 0000  0000 0100
+r			0000 0000  0000 0000  0000 0000  0000 1000
+t			0000 0000  0000 0000  0000 0000  0001 0000
+32 options possibles du coup.
