@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/27 12:58:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/27 18:58:20 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct	s_file
 
 typedef struct s_options
 {
-	char	R;
+	char	u_r;
 	char	a;
 	char	l;
 	char	r;
@@ -44,7 +44,7 @@ typedef struct s_options
 }				t_opt;
 
 /*
-** parsing.c
+** parsing_options.c
 */
 void	init_options(t_opt *options);
 int		is_options(char *s, t_opt *options);
