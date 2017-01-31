@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/31 14:27:48 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/31 17:24:45 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	walk_dir(char *av_dir, t_file **names)
 	(*names)->inside = begin;
 }
 
-void	read_names(int ac, char **av, t_file **names)
+void	read_names(int ac, char **av, t_file **names) /* la distinction dir non dir se fera plutot a l'affichage. */
 {
 	t_file	*elem;
 //	t_file	*dir;

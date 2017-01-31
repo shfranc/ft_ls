@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 15:54:57 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/31 14:27:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/31 18:07:14 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	display_errors(t_file *names)
 	}
 }
 
-void	display_names(int ac, t_file *files)
+void	display_names(int ac, t_file *files) /* on laisse de cote pour l'instant */
 {
 	t_file	*temp;
 	t_file	*temp2;
@@ -91,14 +91,15 @@ void	display_dirnondir(int ac, t_file *files)
 	t_file	*temp2;
 	int		file;
 
-	(void)ac;
 	temp = files;
 	file = 0;
 	while (temp)
 	{
 		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) != 0)
+		{
 			ft_putendl(temp->name);
-		file++;
+			file++;
+		}
 		temp = temp->next;
 	}
 	if (file != 0)
@@ -108,8 +109,12 @@ void	display_dirnondir(int ac, t_file *files)
 	{
 		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
 		{
-			ft_putstr(temp->name);
-			ft_putendl(":");
+			if (ac != 1)
+			{
+				ft_putstr(temp->name);
+				ft_putendl(":");
+			}
+			file++;
 			if (temp->inside != NULL)
 			{
 				temp2 = temp->inside;
@@ -117,8 +122,9 @@ void	display_dirnondir(int ac, t_file *files)
 				{
 					ft_putendl(ft_strrchr(temp2->name, '/') + 1);
 					temp2 = temp2->next;
-				}		
-				write(1, "\n",1);
+				}
+				if (file != ac)
+					write(1, "\n",1);
 			}
 		}
 		temp = temp->next;	

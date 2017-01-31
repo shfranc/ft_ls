@@ -1,0 +1,10 @@
+-----------
+TO DO 31/01
+-----------
+- Gestion de l'affichage des messages d'erreur et des dossiers :
+	1) actuellement, on a lol qui est bien repere en erreur mais affiche ensuite avec les non_dir
+	2) no_acess: le message d'erreur doit etre affiche en contenu du dossier et non au debut avec les No such file or directory.
+- Norme :
+	1) read_options
+	2) display_dirnondir sortir l'impression de l'interieur d'un dossier ?
+- Plan pour 'R', test a faire pour voir si on a une base deja pour faire marcher une recursivite...!
