@@ -6,33 +6,28 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/30 19:11:38 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/31 14:27:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file		*file_new(char *name, char *path)
+t_file		*file_new(char *name)
 {
 	t_file		*elem;
-	struct stat	l_stat;
 	int			ret_lstat;
-	char		*temp;
+	int			ret_sstat;
 
+	errno = 0;
 	if (!(elem = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
-	if (path != NULL)
-	{
-		temp = name;
-		name = ft_strnew(ft_strlen(path) + ft_strlen(temp) + 1);
-		name = ft_strcat(ft_strcat(path, "/"), temp);
-	}
-	ft_putendl(name);
-	if ((ret_lstat = lstat(name, &l_stat)) == -1)
-		return (NULL);
-	elem->name = ft_strdup(name);
+//	if ((ret_lstat = lstat(name, &l_stat)) == -1)
+//		return (NULL);
+	ret_lstat = lstat(name, &elem->lstat);
 	elem->error = errno;
-	elem->lstat = l_stat;
+	elem->name = ft_strdup(name);
+//	printf("%d\t%d\t%s\n", ret_lstat, elem->error, elem->name);
+	ret_sstat = stat(name, &elem->stat);
 	elem->next = NULL;
 	elem->inside = NULL;
 	return (elem);
@@ -49,12 +44,28 @@ void	file_add(t_file **begin, t_file *new) /*on ne surprotege pas file_add, donc
 		}
 }
 
+void	file_add_last(t_file **begin, t_file *new)
+{
+	t_file	*temp;
+
+	if (*begin == NULL)
+		*begin = new;
+	else
+	{
+		temp = *begin;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new;
+	}
+}
+
 void	walk_dir(char *av_dir, t_file **names)
 {
 	DIR				*dir_ptr;
 	struct dirent	*dir_temp;
 	t_file			*begin;
-//	t_file			*elem;
+	t_file			*elem;
+	char			*temp;
 
 	begin = NULL;
 	if (!(dir_ptr = opendir(av_dir)))
@@ -65,8 +76,11 @@ void	walk_dir(char *av_dir, t_file **names)
 	}
 	while ((dir_temp = readdir(dir_ptr)) != NULL)
 	{
-//		elem = file_new(dir_temp->d_name, av_dir);
-//		file_add(&begin, elem);
+		temp = ft_strnew(ft_strlen(av_dir) + ft_strlen(dir_temp->d_name) + 1);
+		temp = ft_strcat(ft_strcat(ft_strcpy(temp, av_dir), "/"), dir_temp->d_name);
+		elem = file_new(temp);
+		file_add_last(&begin, elem);
+		ft_strdel(&temp);
 	}
 	(*names)->inside = begin;
 }
@@ -74,15 +88,24 @@ void	walk_dir(char *av_dir, t_file **names)
 void	read_names(int ac, char **av, t_file **names)
 {
 	t_file	*elem;
+//	t_file	*dir;
+//	t_file	*non_dir;
 
 	while (ac)
 	{
-		elem = file_new(*av, NULL);
-		file_add(names, elem);
-		if ((((*names)->lstat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
-			walk_dir((*names)->name, names);
+		elem = file_new(*av);
+		if (((elem->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
+		{
+			walk_dir(elem->name, &elem);
+//			file_add_last(&dir, elem);
+		}
+//		else
+//			file_add_last(&non_dir, elem);
+		file_add_last(names, elem);
 		if (--ac)
 			++av;
 	}
+//	file_add_last(&non_dir, dir);
+//	names = &non_dir;
 }
 

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 15:54:57 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/30 19:11:43 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/31 14:27:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	display_illegal_option(char c)
 	ft_putendl(USAGE);
 }
 
-int		display_file_error(t_file *file)
+void	display_file_error(t_file *file)
 {
 	if (file->error != 0 && file->error != 20)
 	{
@@ -39,32 +39,88 @@ int		display_file_error(t_file *file)
 		ft_putstr(file->name);
 		ft_putstr(": ");
 		ft_putendl(strerror(file->error));
-		return (1);
 	}
-	return (0);
+}
+
+void	display_errors(t_file *names)
+{
+	t_file	*temp;
+
+	temp = names;
+	while (temp)
+	{
+		display_file_error(temp);
+		temp = temp->next;
+	}
 }
 
 void	display_names(int ac, t_file *files)
 {
 	t_file	*temp;
 	t_file	*temp2;
+	int		i;
 
-	(void)ac;
 	temp = files;
+	i = 1;
 	while (temp)
 	{
-		if (!(display_file_error(temp)) && ac != 1)
-			ft_putendl(temp->name);
+		if (temp->error == 0 || temp->error == 20)
+		{
+			ft_putstr(temp->name);
+			ft_putendl(":");
+		}
 		if (temp->inside != NULL)
 		{
 			temp2 = temp->inside;
 			while (temp2)
 			{
-				ft_putendl(temp2->name);
+				ft_putendl(ft_strrchr(temp2->name, '/') + 1);
 				temp2 = temp2->next;
 			}
-			ft_putchar('\n');
 		}
+		if (i != ac)
+			ft_putchar('\n');
 		temp = temp->next;
+		++i;
+	}
+}
+
+void	display_dirnondir(int ac, t_file *files)
+{
+	t_file	*temp;
+	t_file	*temp2;
+	int		file;
+
+	(void)ac;
+	temp = files;
+	file = 0;
+	while (temp)
+	{
+		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) != 0)
+			ft_putendl(temp->name);
+		file++;
+		temp = temp->next;
+	}
+	if (file != 0)
+		write(1, "\n", 1);
+	temp = files;
+	while (temp)
+	{
+		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
+		{
+			ft_putstr(temp->name);
+			ft_putendl(":");
+			if (temp->inside != NULL)
+			{
+				temp2 = temp->inside;
+				while (temp2)
+				{
+					ft_putendl(ft_strrchr(temp2->name, '/') + 1);
+					temp2 = temp2->next;
+				}		
+				write(1, "\n",1);
+			}
+		}
+		temp = temp->next;	
 	}
 }

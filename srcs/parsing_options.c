@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 11:50:25 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/30 17:26:03 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/31 11:28:54 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	init_options(t_opt *options)
 {
 	options->u_r = 0;
 	options->a = 0;
+	options->f = 0;
 	options->l = 0;
 	options->r = 0;
 	options->t = 0;
@@ -26,7 +27,8 @@ int		is_option(char *s, t_opt *options)
 	s++;
 	while (*s)
 	{
-		if (*s != 'R' && *s != 'a' && *s != 'l' && *s != 'r' && *s != 't')
+		if (*s != 'R' && *s != 'a' && *s != 'f' && *s != 'l' && *s != 'r'
+				&& *s != 't')
 		{
 			display_illegal_option(*s);
 			return (0);
@@ -44,6 +46,8 @@ void	save_option(char c, t_opt *options)
 		options->u_r = c;
 	if (c == 'a')
 		options->a = c;
+	if (c == 'f')
+		options->f = c;
 	if (c == 'l')
 		options->l = c;
 	if (c == 'r')

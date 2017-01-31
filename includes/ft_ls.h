@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/30 19:11:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/01/31 14:27:56 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,27 @@
 typedef struct	s_file
 {
 	char			*name;
-	char			*path;
 	int				error;
 	struct stat		lstat;
-//	struct stat		stat;
+	struct stat		stat;
 	struct s_file	*inside;
 	struct s_file	*next;
 } 				t_file;
+
+/*
+** R	recursive
+** a	hidden files
+** f	no acsii sorting
+** l	long format
+** r	reverse sorting
+** t	sort by modification time
+*/
 
 typedef struct s_options
 {
 	char	u_r;
 	char	a;
+	char	f;
 	char	l;
 	char	r;
 	char	t;
@@ -56,8 +65,9 @@ int				arg_vide(int ac, char **av);
 /*
 ** parsing_names.c
 */
-t_file			*file_new(char *name, char *path);
+t_file			*file_new(char *name);
 void			file_add(t_file **begin, t_file *new);
+void			file_add_last(t_file **begin, t_file *new);
 void			walk_dir(char *av_dir, t_file **names);
 void			read_names(int ac, char **av, t_file **names);
 
@@ -66,7 +76,9 @@ void			read_names(int ac, char **av, t_file **names);
 */
 void			display_options(t_opt *options); /* pour debug */
 void			display_illegal_option(char c);
-int				display_file_error(t_file *file);
+void			display_file_error(t_file *file);
+void			display_errors(t_file *names);
 void			display_names(int ac, t_file *files);
+void			display_dirnondir(int ac, t_file *files);
 
 #endif
