@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/01 13:04:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/01 18:57:57 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h> /* strerror */
 # include <dirent.h> /* opendir + DIR, readdir + struct dirent */
 
-# define OPTIONS	"Ralrt"
+# define OPTIONS	"Raflrt"
 # define USAGE		"\nusage: ft_ls [-"OPTIONS"] [file ...]"
 # define ILLEGAL	"ft_ls: illegal option -- "
 # define LS			"ft_ls: "
@@ -32,7 +32,7 @@ typedef struct	s_file
 	struct stat		stat;
 	struct s_file	*inside;
 	struct s_file	*next;
-} 				t_file;
+}				t_file;
 
 /*
 ** R	recursive
@@ -43,7 +43,7 @@ typedef struct	s_file
 ** t	sort by modification time
 */
 
-typedef struct s_options
+typedef struct	s_options
 {
 	char	u_r;
 	char	a;
@@ -84,8 +84,14 @@ void			display_names(int ac, t_file *files); /* a supprimer eventuellement */
 ** classic_display.c
 */
 int				display_non_dir(t_file *files);
-void			display_dir(int nb_file, int ac, t_file *files);
+void			display_dir(int nb_file, int ac, t_file *files, t_opt *options);
 void			display_inside(int nb_file, int ac, t_file *files);
-void			classic_display(int ac, t_file *files);
+void			classic_display(int ac, t_file *files, t_opt *options);
+
+/*
+** options_R.c 
+*/
+void			readndisplay_inside(int ac, t_file *files_inside, t_opt *options);
+int				list_file_len(t_file *files);
 
 #endif

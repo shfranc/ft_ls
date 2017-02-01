@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/01 13:01:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/01 18:57:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		display_non_dir(t_file *files)
 	return (nb_file);
 }
 
-void	display_dir(int nb_file, int ac, t_file *files)
+void	display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 {
 	t_file	*temp;
 
@@ -54,7 +54,14 @@ void	display_dir(int nb_file, int ac, t_file *files)
 					write(1, "\n", 1);
 			}
 			else
+			{
 				display_inside(nb_file, ac, temp->inside);
+				if (options->u_r)
+				{
+					ft_putendl("REC ---");
+					readndisplay_inside(ac, temp->inside, options);
+				}
+			}
 		}
 		temp = temp->next;
 	}
@@ -79,7 +86,7 @@ void	display_inside(int nb_file, int ac, t_file *files)
 		write(1, "\n", 1);
 }
 
-void	classic_display(int ac, t_file *files)
+void	classic_display(int ac, t_file *files, t_opt *options)
 {
 	int		nb_file;
 
@@ -87,5 +94,5 @@ void	classic_display(int ac, t_file *files)
 	nb_file = display_non_dir(files);
 	if (nb_file != 0 && nb_file != ac)
 		write(1, "\n", 1);
-	display_dir(nb_file, ac, files);
+	display_dir(nb_file, ac, files, options);
 }

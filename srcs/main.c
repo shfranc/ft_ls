@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/01 12:57:36 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/01 18:57:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int		main(int ac, char **av)
 	read_names(ac, av, &names);
 //	display_errors(names);
 //	display_names(ac, names);
-	classic_display(ac, names);
+	display_options(&options);
+	classic_display(ac, names, &options);
 
 //	display_options(&options);
 //	ft_putstr("debut des fichiers : ");

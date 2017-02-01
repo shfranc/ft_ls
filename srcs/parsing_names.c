@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/01 11:23:34 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/01 16:39:07 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,7 @@ void	read_names(int ac, char **av, t_file **names) /* la distinction dir non dir
 	{
 		elem = file_new(*av);
 		if (((elem->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
-		{
 			walk_dir(elem->name, &elem);
-		}
 		file_add_last(names, elem);
 		if (--ac)
 			++av;
