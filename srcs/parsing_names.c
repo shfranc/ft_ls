@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/31 17:24:45 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/01 11:23:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file		*file_new(char *name)
+t_file	*file_new(char *name)
 {
 	t_file		*elem;
 	int			ret_lstat;
@@ -21,8 +21,6 @@ t_file		*file_new(char *name)
 	errno = 0;
 	if (!(elem = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
-//	if ((ret_lstat = lstat(name, &l_stat)) == -1)
-//		return (NULL);
 	ret_lstat = lstat(name, &elem->lstat);
 	elem->error = errno;
 	elem->name = ft_strdup(name);
@@ -35,13 +33,13 @@ t_file		*file_new(char *name)
 
 void	file_add(t_file **begin, t_file *new) /*on ne surprotege pas file_add, donc bien verifier que begin existe */
 {
-		if (*begin == NULL)
-			*begin = new;
-		else
-		{
-			new->next = *begin;
-			*begin = new;
-		}
+	if (*begin == NULL)
+		*begin = new;
+	else
+	{
+		new->next = *begin;
+		*begin = new;
+	}
 }
 
 void	file_add_last(t_file **begin, t_file *new)
@@ -88,8 +86,6 @@ void	walk_dir(char *av_dir, t_file **names)
 void	read_names(int ac, char **av, t_file **names) /* la distinction dir non dir se fera plutot a l'affichage. */
 {
 	t_file	*elem;
-//	t_file	*dir;
-//	t_file	*non_dir;
 
 	while (ac)
 	{
@@ -97,15 +93,9 @@ void	read_names(int ac, char **av, t_file **names) /* la distinction dir non dir
 		if (((elem->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
 		{
 			walk_dir(elem->name, &elem);
-//			file_add_last(&dir, elem);
 		}
-//		else
-//			file_add_last(&non_dir, elem);
 		file_add_last(names, elem);
 		if (--ac)
 			++av;
 	}
-//	file_add_last(&non_dir, dir);
-//	names = &non_dir;
 }
-

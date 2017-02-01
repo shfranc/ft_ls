@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/31 18:07:12 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/01 13:04:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct	s_file
 /*
 ** R	recursive
 ** a	hidden files
-** f	no acsii sorting
+** f	no acsii sorting + option 'a' active
 ** l	long format
 ** r	reverse sorting
 ** t	sort by modification time
@@ -60,25 +60,32 @@ void			init_options(t_opt *options);
 int				is_options(char *s, t_opt *options);
 void			save_option(char c, t_opt *options);
 int				read_options(int ac, char ***av, t_opt *options);
-int				arg_vide(int ac, char **av);
+int				set_current_dir(int ac, char ***av);
 
 /*
 ** parsing_names.c
 */
 t_file			*file_new(char *name);
-void			file_add(t_file **begin, t_file *new);
+void			file_add(t_file **begin, t_file *new); /* a supprimer eventuellement */
 void			file_add_last(t_file **begin, t_file *new);
 void			walk_dir(char *av_dir, t_file **names);
 void			read_names(int ac, char **av, t_file **names);
 
 /*
-** display.c
+** display_errors.c
 */
 void			display_options(t_opt *options); /* pour debug */
 void			display_illegal_option(char c);
 void			display_file_error(t_file *file);
 void			display_errors(t_file *names);
-void			display_names(int ac, t_file *files);
-void			display_dirnondir(int ac, t_file *files);
+void			display_names(int ac, t_file *files); /* a supprimer eventuellement */
+
+/*
+** classic_display.c
+*/
+int				display_non_dir(t_file *files);
+void			display_dir(int nb_file, int ac, t_file *files);
+void			display_inside(int nb_file, int ac, t_file *files);
+void			classic_display(int ac, t_file *files);
 
 #endif

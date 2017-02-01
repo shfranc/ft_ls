@@ -1,4 +1,4 @@
-/* *****************9********************************************************* */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 11:50:25 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/31 17:24:55 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/01 11:05:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,12 @@ int		is_option(char *s, t_opt *options)
 
 void	save_option(char c, t_opt *options)
 {
-	if (c == 'R')
-		options->u_r = c;
-	if (c == 'a')
-		options->a = c;
-	if (c == 'f')
-		options->f = c;
-	if (c == 'l')
-		options->l = c;
-	if (c == 'r')
-		options->r = c;
-	if (c == 't')
-		options->t = c;
+	c == 'R' ? options->u_r = 'R' : 0;
+	c == 'a' ? options->a = 'a' : 0;
+	c == 'f' ? options->f = 'f' : 0;
+	c == 'l' ? options->l = 'l' : 0;
+	c == 'r' ? options->r = 'r' : 0;
+	c == 't' ? options->t = 't' : 0;
 }
 
 int		read_options(int ac, char ***av, t_opt *options)
@@ -77,29 +71,16 @@ int		read_options(int ac, char ***av, t_opt *options)
 				return (-1);
 		}
 	}
+	ac = set_current_dir(ac, av);
+	return (ac);
+}
+
+int		set_current_dir(int ac, char ***av)
+{
 	if (ac == 0)
 	{
 		ac++;
 		**av = ".";
 	}
 	return (ac);
-}
-
-int		arg_vide(int ac, char **av)
-{
-	struct stat	av_stat;
-
-	while (--ac)
-	{
-		++av;
-		if ((ft_strequ(*av, "")))
-		{
-			stat("", &av_stat);
-			ft_putstr(LS);
-			ft_putstr(""":");
-			perror(*av);
-			return (0);
-		}
-	}
-	return (1);
 }
