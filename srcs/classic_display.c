@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/01 18:57:48 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/03 11:49:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,7 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 			else
 			{
 				display_inside(nb_file, ac, temp->inside);
-				if (options->u_r)
-				{
-					ft_putendl("REC ---");
-					readndisplay_inside(ac, temp->inside, options);
-				}
+				readndisplay_inside(temp->inside, options);
 			}
 		}
 		temp = temp->next;
@@ -73,6 +69,7 @@ void	display_inside(int nb_file, int ac, t_file *files)
 
 	if (files != NULL)
 	{
+		write(1, "\n", 1);
 		temp = files;
 		while (temp)
 		{
@@ -82,8 +79,8 @@ void	display_inside(int nb_file, int ac, t_file *files)
 		if (nb_file != ac)
 			write(1, "\n", 1);
 	}
-	else
-		write(1, "\n", 1);
+//	else
+//		write(1, "\n", 1);
 }
 
 void	classic_display(int ac, t_file *files, t_opt *options)

@@ -6,44 +6,63 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 16:31:57 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/01 18:57:45 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/03 11:49:18 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	readndisplay_inside(int ac, t_file *files_inside, t_opt *options)
+void	readndisplay_inside(t_file *files_inside, t_opt *options)
 {
 	t_file *temp;
-	int		nb_file;
+	int		nb_dir;
+	int		i;
 
-	(void)ac;
-	nb_file = 0;
 	if (options->u_r != 'R')
 		return ;
-	ft_putendl("-------- INTERIEUR ");
+//	ft_putendl("-------- INTERIEUR ");
+	i = 0;
+	nb_dir = nb_dir_inside(files_inside);
 	temp = files_inside;
 	while (temp)
 	{
-		ft_putendl(temp->name);
-		if (!(ft_strstr(temp->name, ".")) && !(ft_strstr(temp->name, ".."))
-						&& (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0))
+		if (!(ft_strequ(ft_strrchr(temp->name, '/') + 1, "."))
+				&& !(ft_strequ(ft_strrchr(temp->name, '/') + 1, ".."))
+				&& (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0))
 		{
-			ft_putstr("-- on fouille ce dossier ");
-			ft_putendl(temp->name);
+			i++;
+//			ft_putendl("-- on fouille ce dossier ");
 			walk_dir(temp->name, &temp);
-//			classic_display(ac, temp, options);
-//			nb_file = list_file_len(temp->inside);
-//			printf("%s\t%d", temp->name, nb_file);
-//			display_inside(nb_file, ac, temp->inside);
-//			readndisplay_inside(ac, temp->inside, options);
+//			ft_putnbr_endl(nb_dir);
+//			ft_putnbr_endl(i);
+//			write(1, "\n", 1);
+			ft_putstr(temp->name);
+			ft_putendl(":");
+			display_inside(1, 2, temp->inside);
+			readndisplay_inside(temp->inside, options);
 		}
 		temp = temp->next;
 	}
-	ft_putendl("fin");
+//	ft_putendl("fin");
 } 
 
-int		list_file_len(t_file *files)
+int		nb_dir_inside(t_file *files)
+{
+	t_file *temp;
+	int		dir;
+
+	dir = 0;
+	temp = files;
+	while (temp)
+	{
+		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
+			dir++;
+		temp = temp->next;
+	}
+	return (dir - 2);
+}
+
+int		list_file_len(t_file *files, t_opt *options) /* on en aura surement pas besoin */
 {
 	t_file	*temp;
 	int		len;
@@ -55,5 +74,7 @@ int		list_file_len(t_file *files)
 		len++;
 		temp = temp->next;
 	}
+	if (!(options->a))
+		len = len - 2;
 	return (len);
 }

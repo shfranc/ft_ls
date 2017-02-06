@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/01 18:57:57 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/02 11:59:20 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void			classic_display(int ac, t_file *files, t_opt *options);
 /*
 ** options_R.c 
 */
-void			readndisplay_inside(int ac, t_file *files_inside, t_opt *options);
-int				list_file_len(t_file *files);
+void			readndisplay_inside(t_file *files_inside, t_opt *options);
+int				nb_dir_inside(t_file *files);
+int				list_file_len(t_file *files, t_opt *options);
 
 #endif
