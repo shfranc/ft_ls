@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/01 16:39:07 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/08 19:23:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	walk_dir(char *av_dir, t_file **names)
 	char			*temp;
 
 	begin = NULL;
-	if (!(dir_ptr = opendir(av_dir)))
+	if ((dir_ptr = opendir(av_dir)) == NULL)
 	{
 		if (errno != 0)
 			(*names)->error = errno;
@@ -81,9 +81,12 @@ void	walk_dir(char *av_dir, t_file **names)
 		ft_strdel(&temp);
 	}
 	(*names)->inside = begin;
+	closedir(dir_ptr);
+//	if ((closedir(dir_ptr)) == -1)
+//		(*names)->error = errno;
 }
 
-void	read_names(int ac, char **av, t_file **names) /* la distinction dir non dir se fera plutot a l'affichage. */
+void	read_names(int ac, char **av, t_file **names)
 {
 	t_file	*elem;
 
@@ -97,3 +100,12 @@ void	read_names(int ac, char **av, t_file **names) /* la distinction dir non dir
 			++av;
 	}
 }
+
+//		if (((elem->lstat.st_mode & S_IFMT) ^ S_IFLNK) == 0)
+//		{
+//			link_name = (char*)malloc(elem->lstat.st_size + 1);
+//			r = readlink(elem->name, link_name, elem->lstat.st_size + 1);
+//			link_name[elem->lstat.st_size] = '\0';
+//			ft_putstr("link name : ");
+//			ft_putendl(link_name);
+//		}

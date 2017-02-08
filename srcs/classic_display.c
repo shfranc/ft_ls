@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/06 14:41:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/08 19:22:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,41 +46,30 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 				ft_putstr(temp->name);
 				ft_putendl(":");
 			}
-			nb_file++;
 			if (temp->error == 13)
-			{
 				display_file_error(temp);
-				if (ac != 1)
-					write(1, "\n", 1);
-			}
 			else
 			{
-				display_inside(nb_file, ac, temp->inside);
+				display_inside(temp->inside);
 				readndisplay_inside(temp->inside, options);
 			}
+			if (++nb_file != ac)
+				write(1, "\n", 1);
 		}
 		temp = temp->next;
 	}
 }
 
-void	display_inside(int nb_file, int ac, t_file *files)
+void	display_inside(t_file *files)
 {
 	t_file	*temp;
 
-	if (files != NULL)
+	temp = files;
+	while (temp)
 	{
-		write(1, "\n", 1);
-		temp = files;
-		while (temp)
-		{
-			ft_putendl(ft_strrchr(temp->name, '/') + 1);
-			temp = temp->next;
-		}
-		if (nb_file != ac)
-			write(1, "\n", 1);
+		ft_putendl(ft_strrchr(temp->name, '/') + 1);
+		temp = temp->next;
 	}
-//	else
-//		write(1, "\n", 1);
 }
 
 void	classic_display(int ac, t_file *files, t_opt *options)
