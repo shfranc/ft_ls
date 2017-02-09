@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/08 19:23:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/09 17:56:25 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,16 @@ void			display_inside(t_file *files);
 void			classic_display(int ac, t_file *files, t_opt *options);
 
 /*
-** options_R.c 
+** options_upper_r.c 
 */
 void			readndisplay_inside(t_file *files_inside, t_opt *options);
+
+/*
+** sorting.c
+*/
+void			which_sort(t_file *files, t_opt *options);
+void			sorting(t_file *files, int len);
+int				file_list_len(t_file *files);
+//void			sorting_ascii
 
 #endif
