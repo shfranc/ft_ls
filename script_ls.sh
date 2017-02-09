@@ -5,5 +5,5 @@
 #echo "compil ft_inspect_file : \033[01;32mOK\033[00m"
 #gcc -Wall -Werror -Wextra -o ft_ls ../libft_gitperso/libft.a -I ../libft_gitperso/includes -I includes srcs/main.c srcs/parsing_options.c srcs/display.c
 #echo "compil ft_ls : \033[01;32mOK\033[00m"
-clang -Wall -Werror -Wextra -o ft_ls libft/libft.a -I libft/includes -I includes srcs/main.c srcs/parsing_options.c srcs/display_errors.c srcs/parsing_names.c srcs/classic_display.c srcs/option_R.c
+clang -Wall -Werror -Wextra -o ft_ls libft/libft.a -I libft/includes -I includes srcs/main.c srcs/parsing_options.c srcs/display_errors.c srcs/parsing_names.c srcs/classic_display.c srcs/option_upper_r.c srcs/sorting.c
 echo "compil ft_ls : \033[01;32mOK\033[00m"
