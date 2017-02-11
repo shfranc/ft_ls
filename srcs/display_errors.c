@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 15:54:57 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/08 19:22:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/11 13:23:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	display_options(t_opt *options)
 
 void	display_illegal_option(char c)
 {
-	ft_putstr(ILLEGAL);
-	ft_putchar(c);
-	ft_putendl(USAGE);
+	ft_putstr_fd(ILLEGAL, 2);
+	ft_putchar_fd(c, 2);
+	ft_putendl_fd(USAGE, 2);
 }
 
 void	display_file_error(t_file *file)
