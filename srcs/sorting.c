@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 10:41:01 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/11 16:12:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/13 17:55:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,13 @@
 
 t_file	*which_sort(t_file *files, t_opt *options)
 {
-	t_file	*new;
 	int		len;
 
-	new = files;
-	if (options->f)
-		return (files);
-	if ((len = file_list_len(files->inside)) < 2)
+	if ((len = file_list_len(files)) > 2)
 		return (files);
 	if ((options->a))
-		new = divide_list(files->inside);
-	display_inside(new);
-	return (new);
+		return (divide_list(files->inside));
+	return (files);
 }
 
 
@@ -37,12 +32,14 @@ t_file	*divide_list(t_file *files)
 	int		half;
 	int		i;
 
-	len = file_list_len(files);
+	t_file	*temp;
 
-	if (len == 0 || len == 1) // si plus d'element ou un seul element, on retourne la liste, fin de la division)
+
+	if (files->next == NULL) // si un seul element, on retourne la liste, fin de la division
 		return (files);
 	
-	half = len / 2; // on split en 2 chaines
+	len = file_list_len(files);
+	half = len / 2;
 	
 	i = 0;
 	left = files;
@@ -55,101 +52,64 @@ t_file	*divide_list(t_file *files)
 	left->next = NULL;
 	left = files;
 
-	ft_putendl("\n --left :");
+	ft_putstr("\n --left : ");
+	ft_putnbr_endl(file_list_len(left));
 	display_inside(left);
-	ft_putendl("\n --right :");
+	ft_putstr("\n --right : ");
+	ft_putnbr_endl(file_list_len(right));
 	display_inside(right);
 	
-	left = divide_list(left);
-	right = divide_list(right);
+	temp = merge(&left, &right);
+	ft_putendl("\n ==== result left");
+	display_inside(temp);
+	ft_putendl("\n ==== result right");
+	display_inside(right);
+	
+//	left = divide_list(left);
+//	right = divide_list(right);
 
-	return (merge(left, right)); // c'est dans merge qu'on aura l'application du tri.
-
+	return (NULL);
+//	return (merge(left, right)); // c'est dans merge qu'on aura l'application du tri.
+//	return (merge(divide_list(left), divide_list(right)));
 }
 
-t_file	*merge(t_file *left, t_file *right)
+t_file	*merge(t_file **left, t_file **right)
 {
-	t_file	*new;
-	
-	ft_putendl("\n ----MERGE :");
+//	t_file	*head;
+	t_file	*temp;
+
+	ft_putendl("\n====== MERGE ");
 	ft_putendl("\n --left :");
-	display_inside(left);
+	display_inside(*left);
 	ft_putendl("\n --right :");
-	display_inside(right);
+	display_inside(*right);
+	ft_putendl("\n====== END MERGE ");
 
-	while (left != NULL && right != NULL)
-	{
-		ft_putendl("\n ----MERGE 1:");
-		if (ft_strcmp(left->name, right->name) > 0)
-		{
-			ft_putendl("\n ----MERGE 1 left:");
-			insert_elem(&new, left);
-
-			ft_putendl("check new");
-			display_inside(new);
-
-			left = left->next;
-
-//			ft_putnbr_endl((int)left);
-		//	display_inside(left);
-			ft_putendl("lol");
-		}
-		else
-		{
-			ft_putendl("\n ----MERGE 1 right:");
-			insert_elem(&new, right);
-			right = right->next;
-			ft_putnbr_endl((int)right);
-		}
-	}
-
-	ft_putendl("\n ----MERGE 2:");
-//	if (left != NULL)
+//	if (left->next == NULL || right->next == NULL)
 //	{
-//		insert_elem(&new, left);
-//		return (new);
-//		left = left->next;
+		if ((ft_strcmp((*left)->name, (*right)->name)) < 0)
+		{
+			temp = (*right)->next;
+			(*right)->next = (*left)->next;
+			(*left)->next = *right;
+			*right = temp;
+		}
 //	}
-
-//	ft_putendl("\n ----MERGE 3:");
-	if (right != NULL)
-	{
-		insert_elem(&new, right);
-		return (new);
-		right = right->next;
-	}
-	
-	display_inside(new);
-
-	return (new);
+	return (*left);
 }
 
+/*
 void	insert_elem(t_file **new, t_file *elem)
 {
-	ft_putendl("INSERT");
-	if (*new == NULL)
-	{
-		ft_putendl("LOL");
-		*new = elem;
-		ft_putendl("LOL");
-	}
-	else
-	{
-		ft_putendl("LOLI");
-		elem->next = *new;
-		ft_putendl("LOLI");
-		*new = elem;
-		ft_putendl("LOLI");
-	}
-	display_inside(*new);
 }
-
-//void	ascii_sort(char *a, char *b)
-
+*/
 int		file_list_len(t_file *files)
 {
 	t_file *temp;
 	int		len;
+
+	if (!files)
+		return (0);
 
 	len = 0;
 	temp = files;
