@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/13 17:48:04 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/14 13:20:59 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,25 @@ typedef struct	s_file
 
 /*
 ** R	recursive
+** S	sort by size
 ** a	hidden files
 ** f	no acsii sorting + option 'a' active
 ** l	long format
 ** r	reverse sorting
 ** t	sort by modification time
+** u	sort by last access time
 */
 
 typedef struct	s_options
 {
 	char	u_r;
+	char	u_s;
 	char	a;
 	char	f;
 	char	l;
 	char	r;
 	char	t;
+	char	u;
 }				t_opt;
 
 /*
@@ -96,10 +100,12 @@ void			readndisplay_inside(t_file *files_inside, t_opt *options);
 ** sorting.c
 */
 t_file			*which_sort(t_file *files, t_opt *options);
-t_file			*divide_list(t_file *files);
-t_file			*merge(t_file **left, t_file **right);
-//void			insert_elem(t_file **new, t_file *elem);
+t_file			*divide_list(t_file *files, void (*f)(t_file**, t_file**, t_file**));
+t_file			*merge(t_file *left, t_file *right, void (*f)(t_file**, t_file**, t_file**));
+void			sort_ascii(t_file **temp, t_file **left, t_file **right);
+void			sort_time_modified(t_file **temp, t_file **left, t_file **right);
+void			sort_size(t_file **temp, t_file **left, t_file **right);
+//void			sort_time_last_access(t_file **temp, t_file **left, t_file **right);
 int				file_list_len(t_file *files);
-//void			sorting_ascii
 
 #endif

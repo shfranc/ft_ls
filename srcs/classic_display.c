@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/08 19:22:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/14 10:49:41 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 				display_file_error(temp);
 			else
 			{
+				temp->inside = which_sort(temp->inside, options);
 				display_inside(temp->inside);
 				readndisplay_inside(temp->inside, options);
 			}

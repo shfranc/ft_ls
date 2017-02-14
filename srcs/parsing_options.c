@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 11:50:25 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/01 11:05:47 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/14 13:21:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 void	init_options(t_opt *options)
 {
 	options->u_r = 0;
+	options->u_s = 0;
 	options->a = 0;
 	options->f = 0;
 	options->l = 0;
 	options->r = 0;
 	options->t = 0;
+	options->u = 0;
 }
 
 int		is_option(char *s, t_opt *options)
@@ -27,8 +29,8 @@ int		is_option(char *s, t_opt *options)
 	s++;
 	while (*s)
 	{
-		if (*s != 'R' && *s != 'a' && *s != 'f' && *s != 'l' && *s != 'r'
-				&& *s != 't')
+		if (*s != 'R' && *s != 'S' && *s != 'a' && *s != 'f' && *s != 'l' && *s != 'r'
+				&& *s != 't' && *s != 'u')
 		{
 			display_illegal_option(*s);
 			return (0);
@@ -43,11 +45,13 @@ int		is_option(char *s, t_opt *options)
 void	save_option(char c, t_opt *options)
 {
 	c == 'R' ? options->u_r = 'R' : 0;
+	c == 'S' ? options->u_s = 'S' : 0;
 	c == 'a' ? options->a = 'a' : 0;
 	c == 'f' ? options->f = 'f' : 0;
 	c == 'l' ? options->l = 'l' : 0;
 	c == 'r' ? options->r = 'r' : 0;
 	c == 't' ? options->t = 't' : 0;
+	c == 'u' ? options->u = 'u' : 0;
 }
 
 int		read_options(int ac, char ***av, t_opt *options)

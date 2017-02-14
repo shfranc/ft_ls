@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 15:54:57 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/11 13:23:44 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/14 13:18:12 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ void	display_options(t_opt *options)
 {
 	ft_putstr("options : ");
 	ft_putchar(options->u_r);
+	ft_putchar(options->u_s);
 	ft_putchar(options->a);
 	ft_putchar(options->f);
 	ft_putchar(options->l);
 	ft_putchar(options->r);
 	ft_putchar(options->t);
+	ft_putchar(options->u);
 //	if (options->u_r || options->a || options->l || options->r || options->t)
 		ft_putchar('\n');
 }
