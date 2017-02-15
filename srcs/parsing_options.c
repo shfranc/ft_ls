@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 11:50:25 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/14 13:21:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/15 18:13:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,21 @@ int		is_option(char *s, t_opt *options)
 			return (0);
 		}
 		else
-			save_option(*s, options);
+			if (check_priority(*s, options))
+				save_option(*s, options);
 		s++;
 	}
+	return (1);
+}
+
+int		check_priority(char c, t_opt *options)
+{
+	if (c == 'f')
+		options->a = 'a';
+	if (c == 't' && options->u_s)
+		return (0);
+	if (c == 'S' && options->t)
+		options->t = 0;
 	return (1);
 }
 
@@ -79,7 +91,7 @@ int		read_options(int ac, char ***av, t_opt *options)
 	return (ac);
 }
 
-int		set_current_dir(int ac, char ***av)
+int		set_current_dir(int ac, char ***av) // a basculer dans parsing_names.c ?
 {
 	if (ac == 0)
 	{

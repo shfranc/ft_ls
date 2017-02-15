@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/14 13:20:59 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/15 18:47:24 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct	s_options
 void			init_options(t_opt *options);
 int				is_options(char *s, t_opt *options);
 void			save_option(char c, t_opt *options);
+int				check_priority(char c, t_opt *options);
 int				read_options(int ac, char ***av, t_opt *options);
 int				set_current_dir(int ac, char ***av);
 
@@ -72,8 +73,8 @@ int				set_current_dir(int ac, char ***av);
 t_file			*file_new(char *name);
 void			file_add(t_file **begin, t_file *new); /* a supprimer eventuellement */
 void			file_add_last(t_file **begin, t_file *new);
-void			walk_dir(char *av_dir, t_file **names);
-void			read_names(int ac, char **av, t_file **names);
+void			walk_dir(char *av_dir, t_file **names, t_opt *options);
+void			read_names(int ac, char **av, t_file **names, t_opt *options);
 
 /*
 ** display_errors.c
@@ -97,15 +98,19 @@ void			classic_display(int ac, t_file *files, t_opt *options);
 void			readndisplay_inside(t_file *files_inside, t_opt *options);
 
 /*
-** sorting.c
+** merge_sorting.c
 */
 t_file			*which_sort(t_file *files, t_opt *options);
-t_file			*divide_list(t_file *files, void (*f)(t_file**, t_file**, t_file**));
+t_file			*merge_sort(t_file *files, void (*f)(t_file**, t_file**, t_file**));
 t_file			*merge(t_file *left, t_file *right, void (*f)(t_file**, t_file**, t_file**));
+int				file_list_len(t_file *files);
+
+/*
+** sorting.c
+*/
 void			sort_ascii(t_file **temp, t_file **left, t_file **right);
 void			sort_time_modified(t_file **temp, t_file **left, t_file **right);
 void			sort_size(t_file **temp, t_file **left, t_file **right);
 //void			sort_time_last_access(t_file **temp, t_file **left, t_file **right);
-int				file_list_len(t_file *files);
 
 #endif

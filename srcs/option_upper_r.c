@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 19:20:33 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/14 11:12:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/15 18:27:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	readndisplay_inside(t_file *files_inside, t_opt *options)
 				&& (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
 				&& (((temp->lstat.st_mode & S_IFMT) ^ S_IFLNK) != 0))
 		{
-			walk_dir(temp->name, &temp);
+			walk_dir(temp->name, &temp, options);
 			write(1, "\n", 1);
 			ft_putstr(temp->name);
 			ft_putendl(":");

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/13 13:51:55 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/15 19:19:14 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	file_add_last(t_file **begin, t_file *new)
 	}
 }
 
-void	walk_dir(char *av_dir, t_file **names)
+void	walk_dir(char *av_dir, t_file **names, t_opt *options)
 {
 	DIR				*dir_ptr;
 	struct dirent	*dir_temp;
@@ -74,6 +74,8 @@ void	walk_dir(char *av_dir, t_file **names)
 	}
 	while ((dir_temp = readdir(dir_ptr)) != NULL)
 	{
+		if (!options->a && *dir_temp->d_name == '.')
+			continue ;
 		temp = ft_strnew(ft_strlen(av_dir) + ft_strlen(dir_temp->d_name) + 1);
 		temp = ft_strcat(ft_strcat(ft_strcpy(temp, av_dir), "/"), dir_temp->d_name);
 		elem = file_new(temp);
@@ -86,7 +88,7 @@ void	walk_dir(char *av_dir, t_file **names)
 //		(*names)->error = errno;
 }
 
-void	read_names(int ac, char **av, t_file **names)
+void	read_names(int ac, char **av, t_file **names, t_opt *options)
 {
 	t_file	*elem;
 
@@ -94,7 +96,7 @@ void	read_names(int ac, char **av, t_file **names)
 	{
 		elem = file_new(*av);
 		if (((elem->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
-			walk_dir(elem->name, &elem);
+			walk_dir(elem->name, &elem, options);
 		file_add_last(names, elem);
 		if (--ac)
 			++av;

@@ -1,4 +1,17 @@
 -----------
+TO DO 16/01
+-----------
+- R ok
+- S ok
+- a ok ? attention aux fichiers #xxxx de taille 102...
+- t ok
+
+- l non entame
+- r non emtame
+
+
+
+-----------
 TO DO 31/01
 -----------
 - Gestion de l'affichage des messages d'erreur et des dossiers :
