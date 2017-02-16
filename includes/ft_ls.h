@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/15 18:47:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/16 11:49:23 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h> /* strerror */
 # include <dirent.h> /* opendir + DIR, readdir + struct dirent */
 
-# define OPTIONS	"Raflrt"
+# define OPTIONS	"RSaflrtu"
 # define USAGE		"\nusage: ft_ls [-"OPTIONS"] [file ...]"
 # define ILLEGAL	"ft_ls: illegal option -- "
 # define LS			"ft_ls: "
@@ -35,14 +35,15 @@ typedef struct	s_file
 }				t_file;
 
 /*
-** R	recursive
-** S	sort by size
+** R	recursive search into folder
 ** a	hidden files
-** f	no acsii sorting + option 'a' active
 ** l	long format
-** r	reverse sorting
+** r	reverse any sorting (except no sorting)
 ** t	sort by modification time
-** u	sort by last access time
+** -- BONUS --
+** S	sort by size, bigger to smaller
+** u	sort by last access time with -t and -l, no effect otherwise
+** f	no acsii sorting + option 'a' active
 */
 
 typedef struct	s_options
@@ -111,6 +112,14 @@ int				file_list_len(t_file *files);
 void			sort_ascii(t_file **temp, t_file **left, t_file **right);
 void			sort_time_modified(t_file **temp, t_file **left, t_file **right);
 void			sort_size(t_file **temp, t_file **left, t_file **right);
-//void			sort_time_last_access(t_file **temp, t_file **left, t_file **right);
+void			sort_last_access(t_file **temp, t_file **left, t_file **right);
+
+/*
+** reverse_sorting.c
+*/
+void			reverse_sort_ascii(t_file **temp, t_file **left, t_file **right);
+void			reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right);
+void			reverse_sort_last_access(t_file **temp, t_file **left, t_file **right);
+void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
 
 #endif

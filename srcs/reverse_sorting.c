@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sorting.c                                          :+:      :+:    :+:   */
+/*   reverse_sorting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/09 10:41:01 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/16 17:57:52 by sfranc           ###   ########.fr       */
+/*   Created: 2017/02/16 10:31:09 by sfranc            #+#    #+#             */
+/*   Updated: 2017/02/16 11:44:26 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	sort_ascii(t_file **temp, t_file **left, t_file **right)
+void	reverse_sort_ascii(t_file **temp, t_file **left, t_file **right)
 {
-	if ((ft_strcmp((*left)->name, (*right)->name)) < 0)
+	if ((ft_strcmp((*left)->name, (*right)->name)) > 0)
 	{
 		*temp = *left;
 		*left = (*left)->next;
@@ -26,13 +26,13 @@ void	sort_ascii(t_file **temp, t_file **left, t_file **right)
 	}
 }
 
-void	sort_time_modified(t_file **temp, t_file **left, t_file **right)
+void	reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right)
 {
 	if ((*left)->lstat.st_mtimespec.tv_sec == (*right)->lstat.st_mtimespec.tv_sec)
-		sort_ascii(temp, left, right);
+		reverse_sort_ascii(temp, left, right);
 	else
 	{
-		if ((*left)->lstat.st_mtimespec.tv_sec > (*right)->lstat.st_mtimespec.tv_sec)
+		if ((*left)->lstat.st_mtimespec.tv_sec < (*right)->lstat.st_mtimespec.tv_sec)
 		{
 			*temp = *left;
 			*left = (*left)->next;
@@ -45,13 +45,13 @@ void	sort_time_modified(t_file **temp, t_file **left, t_file **right)
 	}
 }
 
-void	sort_last_access(t_file **temp, t_file **left, t_file **right)
+void	reverse_sort_last_access(t_file **temp, t_file **left, t_file **right)
 {
 	if ((*left)->lstat.st_atimespec.tv_sec == (*right)->lstat.st_atimespec.tv_sec)
-		sort_ascii(temp, left, right);
+		reverse_sort_ascii(temp, left, right);
 	else
 	{
-		if ((*left)->lstat.st_atimespec.tv_sec > (*right)->lstat.st_atimespec.tv_sec)
+		if ((*left)->lstat.st_atimespec.tv_sec < (*right)->lstat.st_atimespec.tv_sec)
 		{
 			*temp = *left;
 			*left = (*left)->next;
@@ -64,13 +64,13 @@ void	sort_last_access(t_file **temp, t_file **left, t_file **right)
 	}
 }
 
-void	sort_size(t_file **temp, t_file **left, t_file **right)
+void	reverse_sort_size(t_file **temp, t_file **left, t_file **right)
 {
 	if ((*left)->lstat.st_size == (*right)->lstat.st_size)
-		sort_ascii(temp, left, right);
+		reverse_sort_ascii(temp, left, right);
 	else
 	{
-		if ((*left)->lstat.st_size > (*right)->lstat.st_size)
+		if ((*left)->lstat.st_size < (*right)->lstat.st_size)
 		{
 			*temp = *left;
 			*left = (*left)->next;
