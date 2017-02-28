@@ -1,0 +1,1 @@
+./ft_ls -RSa ~  0.45s user 1.45s system 33% cpu 5.620 total

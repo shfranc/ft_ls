@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/16 11:49:23 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/28 12:49:56 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,7 @@ void			reverse_sort_ascii(t_file **temp, t_file **left, t_file **right);
 void			reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right);
 void			reverse_sort_last_access(t_file **temp, t_file **left, t_file **right);
 void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
+
+typedef void	(*t_comp)(t_file **temp, t_file **left, t_file **right);
 
 #endif

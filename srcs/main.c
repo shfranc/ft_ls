@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/16 11:04:59 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/28 18:14:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		main(int ac, char **av)
 		return (0);
 	read_names(ac, av, &names, &options);
 	
-//	display_options(&options);
+	display_options(&options);
 	
 	classic_display(ac, names, &options);
 

@@ -6,13 +6,44 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:57:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/16 17:57:55 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/02/28 17:40:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+t_comp 	g_comp[]=
+{
+	sort_ascii, 					// 0
+	reverse_sort_last_access,		// 1 r
+	sort_size,						// 2 S	-- S = 2
+	reverse_sort_size,				// 3 Sr
+	sort_time_modified,				// 4 t	-- t = 3			
+	reverse_sort_time_modified,		// 5 tr				
+	sort_last_access,				// 6 tu	u = +2
+	reverse_sort_last_access,		// 7 tur
+};
+
 t_file	*which_sort(t_file *files, t_opt *options)
+{
+	int i;
+
+	if ((file_list_len(files)) < 2 || options->f)
+		return (files);
+	i = 0;
+	if (options->u_s)
+		i = 2;
+	if (options->t)
+		i = 4;
+	if (options->t && options->u)
+		i += 2;
+	if (options->r)
+		i += 1;
+//	ft_putnbr_endl(i);
+	return (merge_sort(files, g_comp[i]));
+}
+
+/*t_file	*which_sort(t_file *files, t_opt *options)
 {
 	if ((file_list_len(files)) < 2 || options->f)
 		return (files);
@@ -37,7 +68,7 @@ t_file	*which_sort(t_file *files, t_opt *options)
 	if (options->r)
 		return (merge_sort(files, &reverse_sort_ascii));
 	return (merge_sort(files, &sort_ascii));
-}
+}*/
 
 /*t_file	*which_sort(t_file *files, t_opt *options)
 {
