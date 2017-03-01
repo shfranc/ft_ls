@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/28 18:10:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/01 17:54:12 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file	*file_new(char *name)
+t_file	*file_new(char *name, t_opt *options)
 {
 	t_file		*elem;
 	int			ret_lstat;
@@ -24,10 +24,16 @@ t_file	*file_new(char *name)
 	ret_lstat = lstat(name, &elem->lstat);
 	elem->error = errno;
 	elem->name = ft_strdup(name);
+
 //	printf("%d\t%d\t%s\n", ret_lstat, elem->error, elem->name);
 	ret_sstat = stat(name, &elem->stat);
 	elem->next = NULL;
 	elem->inside = NULL;
+	if (options->l)
+	{
+		fill_llong_struct(elem);
+		elem->long_format = get_long_format(elem);
+	}
 	return (elem);
 }
 
@@ -78,7 +84,7 @@ void	walk_dir(char *av_dir, t_file **names, t_opt *options)
 			continue ;
 		temp = ft_strnew(ft_strlen(av_dir) + ft_strlen(dir_temp->d_name) + 1);
 		temp = ft_strcat(ft_strcat(ft_strcpy(temp, av_dir), "/"), dir_temp->d_name);
-		elem = file_new(temp);
+		elem = file_new(temp, options);
 		file_add_last(&begin, elem);
 		ft_strdel(&temp);
 	}
@@ -94,7 +100,7 @@ void	read_names(int ac, char **av, t_file **names, t_opt *options)
 
 	while (ac)
 	{
-		elem = file_new(*av);
+		elem = file_new(*av, options);
 		if (((elem->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
 			walk_dir(elem->name, &elem, options);
 		file_add_last(names, elem);

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/28 18:14:58 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/01 10:54:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,13 @@ int		main(int ac, char **av)
 	
 	display_options(&options);
 	
-	classic_display(ac, names, &options);
+	if (options.l)
+	{
+		ft_putendl("LONG DISPLAY");
+		long_display(ac, names, &options);
+	}
+	else
+		classic_display(ac, names, &options);
 
 //	display_options(&options);
 //	ft_putstr("debut des fichiers : ");

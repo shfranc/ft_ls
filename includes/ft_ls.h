@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/28 12:49:56 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/01 17:54:14 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,38 @@
 # define FT_LS_H
 
 # include "libft.h"
-# include <errno.h> /*errno */
+# include <errno.h> /* errno */
 # include <sys/stat.h> /* stat + struct stat */
 # include <stdio.h> /* strerror */
 # include <dirent.h> /* opendir + DIR, readdir + struct dirent */
+# include <sys/types.h> /* getpwuid */
+# include <pwd.h> /* getpwuid */
+# include <grp.h> /* getgrgid */
+# include <uuid/uuid.h> /* getpwuid & getgrgid */
 
 # define OPTIONS	"RSaflrtu"
 # define USAGE		"\nusage: ft_ls [-"OPTIONS"] [file ...]"
 # define ILLEGAL	"ft_ls: illegal option -- "
 # define LS			"ft_ls: "
 
+typedef struct	s_long
+{
+	int				len_nblink;
+	struct passwd	*usr;
+	int				len_user;
+	struct group	*grp;
+	int				len_group;
+	int				len_size;
+}				t_long;
+
 typedef struct	s_file
 {
 	char			*name;
+	char			*long_format;
 	int				error;
 	struct stat		lstat;
 	struct stat		stat;
+	t_long			llong;
 	struct s_file	*inside;
 	struct s_file	*next;
 }				t_file;
@@ -58,6 +74,8 @@ typedef struct	s_options
 	char	u;
 }				t_opt;
 
+typedef void	(*t_comp)(t_file **temp, t_file **left, t_file **right);
+
 /*
 ** parsing_options.c
 */
@@ -71,7 +89,7 @@ int				set_current_dir(int ac, char ***av);
 /*
 ** parsing_names.c
 */
-t_file			*file_new(char *name);
+t_file			*file_new(char *name, t_opt *options);
 void			file_add(t_file **begin, t_file *new); /* a supprimer eventuellement */
 void			file_add_last(t_file **begin, t_file *new);
 void			walk_dir(char *av_dir, t_file **names, t_opt *options);
@@ -106,6 +124,7 @@ t_file			*merge_sort(t_file *files, void (*f)(t_file**, t_file**, t_file**));
 t_file			*merge(t_file *left, t_file *right, void (*f)(t_file**, t_file**, t_file**));
 int				file_list_len(t_file *files);
 
+
 /*
 ** sorting.c
 */
@@ -122,6 +141,20 @@ void			reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right);
 void			reverse_sort_last_access(t_file **temp, t_file **left, t_file **right);
 void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
 
-typedef void	(*t_comp)(t_file **temp, t_file **left, t_file **right);
+/*
+** long_format.c 
+*/
+void			fill_llong_struct(t_file *elem);
+char			*get_long_format(t_file *file);
+void			get_type(char **long_format, t_file *file);
+void			get_perms(char **long_format, t_file *file);
+int				ull_len(unsigned long long nb);
 
+/*
+** long_display.c
+*/
+int				long_display_non_dir(t_file *files);
+void			long_display_dir(int nb_file, int ac, t_file *files, t_opt *options);
+void			long_display_inside(t_file *files);
+void			long_display(int ac, t_file *files, t_opt *options);
 #endif
