@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/01 17:54:14 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/02 16:28:35 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,22 @@
 # define ILLEGAL	"ft_ls: illegal option -- "
 # define LS			"ft_ls: "
 
-typedef struct	s_long
+typedef struct	s_len
 {
-	int				len_nblink;
-	struct passwd	*usr;
-	int				len_user;
-	struct group	*grp;
-	int				len_group;
-	int				len_size;
-}				t_long;
+	int				nblink;
+	int				user;
+	int				group;
+	int				size;
+}				t_len;
+
+typedef struct	s_max
+{
+	int				nblink;
+	int				user;
+	int				group;
+	int				size;
+	int				total;
+}				t_max;
 
 typedef struct	s_file
 {
@@ -45,7 +52,10 @@ typedef struct	s_file
 	int				error;
 	struct stat		lstat;
 	struct stat		stat;
-	t_long			llong;
+	struct passwd	*usr;
+	struct group	*grp;
+	t_len			len;
+	t_max			max;
 	struct s_file	*inside;
 	struct s_file	*next;
 }				t_file;
@@ -145,10 +155,14 @@ void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
 ** long_format.c 
 */
 void			fill_llong_struct(t_file *elem);
-char			*get_long_format(t_file *file);
+int				set_max_len(t_file **files);
+void			fill_long_format(t_file **files);
+char			*get_long_format(t_file *file, int max_len);
 void			get_type(char **long_format, t_file *file);
 void			get_perms(char **long_format, t_file *file);
+void			get_nblink(char **long_format, t_file *file);
 int				ull_len(unsigned long long nb);
+char			*ull_toa(unsigned long long nb);
 
 /*
 ** long_display.c

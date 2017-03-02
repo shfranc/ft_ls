@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/01 17:54:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/02 16:28:30 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,81 @@
 
 void	fill_llong_struct(t_file *elem)
 {	
-		elem->llong.len_nblink = ull_len(elem->stat.st_nlink);
-//		ft_putnbr_endl(elem->llong.len_nblink);
+		elem->len.nblink = ull_len(elem->stat.st_nlink);
+//		ft_putnbr_endl(elem->len.nblink);
 
-		if (!(elem->llong.usr = (struct passwd*)malloc(sizeof(struct passwd))))
+		if (!(elem->usr = (struct passwd*)malloc(sizeof(struct passwd))))
 			return ; // configurer un exit ?
-		elem->llong.usr = getpwuid(elem->stat.st_uid);	
-//		ft_putendl(elem->llong.usr->pw_name);
-		elem->llong.len_user = ft_strlen(elem->llong.usr->pw_name);
-//		ft_putnbr_endl(elem->llong.len_user);
+		elem->usr = getpwuid(elem->stat.st_uid);	
+//		ft_putendl(elem->usr->pw_name);
+		elem->len.user = ft_strlen(elem->usr->pw_name);
+//		ft_putnbr_endl(elem->len.user);
 
-		if (!(elem->llong.grp = (struct group*)malloc(sizeof(struct group))))
+		if (!(elem->grp = (struct group*)malloc(sizeof(struct group))))
 			return ; // exit ?
-		elem->llong.grp = getgrgid(elem->stat.st_gid);	
-//		ft_putendl(elem->llong.grp->gr_name);
-		elem->llong.len_group = ft_strlen(elem->llong.grp->gr_name);
-//		ft_putnbr_endl(elem->llong.len_group);
+		elem->grp = getgrgid(elem->stat.st_gid);	
+//		ft_putendl(elem->grp->gr_name);
+		elem->len.group = ft_strlen(elem->grp->gr_name);
+//		ft_putnbr_endl(elem->len.group);
 		
-		elem->llong.len_size = ull_len(elem->stat.st_size);
-//		ft_putnbr_endl(elem->llong.len_size);
+		elem->len.size = ull_len(elem->stat.st_size);
+//		ft_putnbr_endl(elem->len.size);
 }
 
-char	*get_long_format(t_file *file)
+int		set_max_len(t_file **files)
+{
+	t_file		*temp;
+	t_max		max;
+
+	max.nblink = 0;
+	max.user = 0;
+	max.group = 0;
+	max.size = 0;
+	temp = *files;
+	while (temp)
+	{
+		max.nblink < temp->len.nblink ? max.nblink = temp->len.nblink : 0;
+		max.user < temp->len.user ? max.user = temp->len.user : 0;
+		max.group < temp->len.group ? max.group = temp->len.group : 0;
+		max.size < temp->len.size ? max.size = temp->len.size : 0;
+		temp = temp->next;
+	}
+	max.total = max.nblink + max.user + max.group + max.size + 31;
+	temp = *files;
+	while (temp)
+	{
+		temp->max = max;
+		temp = temp->next;
+	}
+	ft_putstr("MAX LEN = ");
+	ft_putnbr_endl((*files)->max.total);
+	return (max.total);
+}
+
+void	fill_long_format(t_file **files)
+{
+	t_file	*temp;
+	int		max_len;
+
+	max_len = set_max_len(files);
+	temp = *files;
+	while (temp)
+	{
+		temp->long_format = get_long_format(temp, max_len);
+		temp = temp->next;
+	}
+}
+
+char	*get_long_format(t_file *file, int max_len)
 {
 	char	*long_format;
 
-	long_format = ft_strnew(1024);
+	long_format = ft_strnew(max_len + ft_strlen(file->name));
+	ft_memset(long_format, ' ', max_len + ft_strlen(file->name));
+
 	get_type(&long_format, file);
 	get_perms(&long_format, file);
-//	get_link
+	get_nblink(&long_format, file);
 //	get_owner
 //	get_group
 //	get_size
@@ -77,8 +123,27 @@ void	get_perms(char **long_format, t_file *file)
 	(file->lstat.st_mode & S_IROTH) == S_IROTH ? temp[7] = 'r' : 0;
 	(file->lstat.st_mode & S_IWOTH) == S_IWOTH ? temp[8] = 'w' : 0;
 	(file->lstat.st_mode & S_IXOTH) == S_IXOTH ? temp[9] = 'x' : 0;
-	temp[10] = ' ';
-	temp[11] = ' ';
+//	temp[10] = ' ';
+//	temp[11] = ' ';
+}
+
+void	get_nblink(char **long_format, t_file *file)
+{
+	int	padd;
+
+	(void)file;
+	padd = file->max.nblink - file->len.nblink;
+	//padd = 3;
+	ft_putnbr_endl(padd);
+	*(long_format + 12) = ft_strncpy((*long_format + 12), ull_toa(file->stat.st_nlink), file->len.nblink);
+	//*(long_format + 12 + padd) = ft_strncpy((*long_format + 12 + padd), ull_toa(file->stat.st_nlink), file->len.nblink);
+
+
+	*(*long_format + 12 + file->max.nblink + 1) = 'u';
+	*(*long_format + 12 + file->max.nblink + 1 + file->max.user + 2) = 'g';
+	*(*long_format + 12 + file->max.nblink + 1 + file->max.user + 2 + file->max.group + 2) = 's';
+	*(*long_format + 12 + file->max.nblink + 1 + file->max.user + 2 + file->max.group + 2 + file->max.size + 1) = 't';
+	*(*long_format + 12 + file->max.nblink + 1 + file->max.user + 2 + file->max.group + 2 + file->max.size + 1 + 12 + 1) = 'N';
 }
 
 int		ull_len(unsigned long long nb)
@@ -96,8 +161,20 @@ int		ull_len(unsigned long long nb)
 	return (len);
 }
 
-/*
-void	get_nblinks(char **long_format, t_file *file)
+char	*ull_toa(unsigned long long nb)
 {
+	int		len;
+	char	*s;
 
-}*/
+	len = ull_len(nb);
+	s = ft_strnew(len);
+	if (nb == 0)
+		*(s + len - 1) = '0';
+	while (nb > 0 && len-- > 0)
+	{
+		*(s + len) = nb % 10 + '0';
+		nb = nb / 10;
+	}
+	return (s);
+}
+

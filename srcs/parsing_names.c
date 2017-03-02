@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/01 17:54:12 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/02 16:28:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ t_file	*file_new(char *name, t_opt *options)
 	elem->next = NULL;
 	elem->inside = NULL;
 	if (options->l)
-	{
 		fill_llong_struct(elem);
-		elem->long_format = get_long_format(elem);
-	}
 	return (elem);
 }
 
