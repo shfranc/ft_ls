@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/01 10:54:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/03 17:59:39 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		main(int ac, char **av)
 		return (0);
 	read_names(ac, av, &names, &options);
 	
-	display_options(&options);
+	// display_options(&options);
 	
 	if (options.l)
 	{
@@ -60,6 +60,8 @@ int		main(int ac, char **av)
 //	ft_putendl(*av);
 //	ft_putstr("nombre de fichiers : ");
 //	ft_putnbr_endl(ac);
+
 //	while(1);
+
 	return (0);
 }

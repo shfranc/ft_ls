@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:57:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/28 17:40:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/03 17:58:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_comp 	g_comp[]=
 {
 	sort_ascii, 					// 0
-	reverse_sort_last_access,		// 1 r
+	reverse_sort_ascii,				// 1 r
 	sort_size,						// 2 S	-- S = 2
 	reverse_sort_size,				// 3 Sr
 	sort_time_modified,				// 4 t	-- t = 3			
@@ -39,86 +39,11 @@ t_file	*which_sort(t_file *files, t_opt *options)
 		i += 2;
 	if (options->r)
 		i += 1;
+	
 //	ft_putnbr_endl(i);
+	
 	return (merge_sort(files, g_comp[i]));
 }
-
-/*t_file	*which_sort(t_file *files, t_opt *options)
-{
-	if ((file_list_len(files)) < 2 || options->f)
-		return (files);
-	if (options->t)
-	{
-		if (options->u)
-		{
-			if (options->r)
-				return (merge_sort(files, &reverse_sort_last_access));
-			return (merge_sort(files, &sort_last_access));
-		}
-		if (options->r)
-			return (merge_sort(files, &reverse_sort_time_modified));
-		return (merge_sort(files, &sort_time_modified));
-	}
-	if (options->u_s)
-	{
-		if (options->r)
-			return (merge_sort(files, &reverse_sort_size));
-		return (merge_sort(files, &sort_size));
-	}
-	if (options->r)
-		return (merge_sort(files, &reverse_sort_ascii));
-	return (merge_sort(files, &sort_ascii));
-}*/
-
-/*t_file	*which_sort(t_file *files, t_opt *options)
-{
-	if ((file_list_len(files)) < 2 || options->f)
-	{
-		ft_putendl("ON NE TRI PAS EN ASCII");
-		return (files);
-	}
-
-	if (options->t)
-	{
-		if (options->u)
-		{
-			if (options->r)
-			{
-				ft_putendl("TRI PAR DATE DE LAST ACCESS -- REVERSE");
-				return (merge_sort(files, &reverse_sort_last_access));
-			}
-			ft_putendl("TRI PAR DATE DE LAST ACCESS");
-			return (merge_sort(files, &sort_last_access));
-		}
-		if (options->r)
-		{
-			ft_putendl("TRI PAR DATE DE MODIF -- REVERSE");
-			return (merge_sort(files, &reverse_sort_time_modified));
-		}
-		ft_putendl("TRI PAR DATE DE MODIF");
-		return (merge_sort(files, &sort_time_modified));
-	}
-
-	if (options->u_s)
-	{
-		if (options->r)
-		{
-			ft_putendl("TRI PAR TAILLE -- REVERSE");
-			return (merge_sort(files, &reverse_sort_size));
-		}
-		ft_putendl("TRI PAR TAILLE");
-		return (merge_sort(files, &sort_size));
-	}
-
-	if (options->r)
-	{
-		ft_putendl("TRI ASCII -- REVERSE");
-		return (merge_sort(files, &reverse_sort_ascii));
-	}
-
-	ft_putendl("TRI ASCII PAR DEFAUT");
-	return (merge_sort(files, &sort_ascii));
-}*/
 
 t_file	*merge_sort(t_file *files, void (*f)(t_file**, t_file**, t_file**))
 {

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/03 13:04:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/03 15:24:45 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ int		set_max_len(t_file *files)
 		temp->max = max;
 		temp = temp->next;
 	}
-//	ft_putstr("MAX LEN = ");
-//	ft_putnbr_endl(files->max.total);
+
+	// ft_putstr("MAX LEN = ");
+	// ft_putnbr_endl(files->max.total);
+	
 	return (max.total);
 }
 
@@ -82,17 +84,33 @@ void	fill_long_format(t_file *files, t_opt *options)
 char	*get_long_format(t_file *file, int max_len, t_opt *options)
 {
 	char	*long_format;
+	int		len;
 
-	long_format = ft_strnew(max_len + ft_strlen(file->name));
-	ft_memset(long_format, ' ', max_len + ft_strlen(file->name));
-
-	get_type(&long_format, file);
-	get_perms(&long_format, file);
-	get_nblink(&long_format, file);
-	get_user_owner(&long_format, file);
-	get_size(&long_format, file);
-	get_timestamp(&long_format, file, options);
-	get_name(&long_format, file);
 	(void)options;
+
+//	ft_putendl((ft_strrchr(file->name, '/') + 1));
+	len = max_len + ft_strlen(ft_strrchr(file->name, '/') + 1);
+//	ft_putnbr_endl(len);
+	long_format = ft_strnew(len);
+	
+//	long_format = ft_strnew(max_len + ft_strlen(file->name));
+	
+	ft_memset(long_format, ' ', len);
+
+	get_type(long_format, file);
+	// ft_putendl("c'est pas le type");
+	get_perms(long_format, file);
+	// ft_putendl("c'est pas les perms");
+	get_nblink(long_format, file);
+	// ft_putendl("c'est pas les liens");
+	get_user_owner(long_format, file);
+	// ft_putendl("c'est pas le user ou owner");
+	get_size(long_format, file);
+	// ft_putendl("c'est pas la size");
+	get_timestamp(long_format, file, options);
+	// ft_putendl("c'est pas le timestamp");
+	get_name(long_format, file);
+	// ft_putendl("c'est pas le name");
+	// ft_putendl(long_format);
 	return (long_format);
 }

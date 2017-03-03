@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/03 13:07:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/03 18:39:24 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,17 +163,17 @@ char			*get_long_format(t_file *file, int max_len, t_opt *options);
 /*
 ** long_format_details_part1.c
 */
-void			get_type(char **long_format, t_file *file);
-void			get_perms(char **long_format, t_file *file);
-void			get_nblink(char **long_format, t_file *file);
-void			get_user_owner(char **long_format, t_file *file);
+void			get_type(char *long_format, t_file *file);
+void			get_perms(char *long_format, t_file *file);
+void			get_nblink(char *long_format, t_file *file);
+void			get_user_owner(char *long_format, t_file *file);
 
 /*
 ** long_format_details_part2.c
 */
-void			get_size(char **long_format, t_file *file);
-void			get_timestamp(char **long_format, t_file *file, t_opt *options);
-void			get_name(char **long_format, t_file *file);
+void			get_size(char *long_format, t_file *file);
+void			get_timestamp(char *long_format, t_file *file, t_opt *options);
+void			get_name(char *long_format, t_file *file);
 
 /*
 ** long_display.c

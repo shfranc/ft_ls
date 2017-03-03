@@ -56,7 +56,7 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 			else
 			{
 				temp->inside = which_sort(temp->inside, options);
-				
+				ft_putendl("on a trie");
 				long_display_inside(temp->inside, options);
 
 				readndisplay_inside(temp->inside, options); // y'aura un truc a faire

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 10:41:01 by sfranc            #+#    #+#             */
-/*   Updated: 2017/02/28 12:32:29 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/03 18:48:05 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,25 @@ void	sort_ascii(t_file **temp, t_file **left, t_file **right)
 
 void	sort_time_modified(t_file **temp, t_file **left, t_file **right)
 {
+	if ((*left)->lstat.st_mtimespec.tv_sec
+			> (*right)->lstat.st_mtimespec.tv_sec
+			|| ((*left)->lstat.st_mtimespec.tv_sec
+				== (*right)->lstat.st_mtimespec.tv_sec
+				&& (*left)->lstat.st_mtimespec.tv_nsec
+				>= (*right)->lstat.st_mtimespec.tv_nsec))
+	{
+		*temp = *left;
+		*left = (*left)->next;
+	}
+	else
+	{
+		*temp = *right;
+		*right = (*right)->next;
+	}
+}
+
+/*void	sort_time_modified(t_file **temp, t_file **left, t_file **right)
+{
 	if ((*left)->lstat.st_mtimespec.tv_sec == (*right)->lstat.st_mtimespec.tv_sec)
 		sort_ascii(temp, left, right);
 	else
@@ -43,7 +62,7 @@ void	sort_time_modified(t_file **temp, t_file **left, t_file **right)
 			*right = (*right)->next;
 		}
 	}
-}
+}*/
 
 void	sort_last_access(t_file **temp, t_file **left, t_file **right)
 {
