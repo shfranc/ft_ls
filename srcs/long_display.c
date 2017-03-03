@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 10:49:12 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/02 16:28:33 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/03 13:07:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,8 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 			else
 			{
 				temp->inside = which_sort(temp->inside, options);
-				fill_long_format(&temp->inside);
 				
-				long_display_inside(temp->inside);
+				long_display_inside(temp->inside, options);
 
 				readndisplay_inside(temp->inside, options); // y'aura un truc a faire
 			}
@@ -69,15 +68,15 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 	}
 }
 
-void	long_display_inside(t_file *files)
+void	long_display_inside(t_file *files, t_opt *options)
 {
 	t_file	*temp;
 
+	fill_long_format(files, options);
 	temp = files;
 	while (temp)
 	{
-		ft_putstr(temp->long_format);
-		ft_putendl(ft_strrchr(temp->name, '/') + 1);
+		ft_putendl(temp->long_format);
 		temp = temp->next;
 	}
 }

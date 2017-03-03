@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 19:20:33 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/01 11:05:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/03 13:07:33 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,7 @@ void	readndisplay_inside(t_file *files_inside, t_opt *options)
 			if (temp->error != 0)
 				display_file_error(temp);
 			else
-			{
-				temp->inside = which_sort(temp->inside, options);
-				if (options->l)
-					long_display_inside(temp->inside);
-				else
-					display_inside(temp->inside);
-			}
+				display_inside(temp->inside, options);
 			readndisplay_inside(temp->inside, options);
 		}
 		temp = temp->next;

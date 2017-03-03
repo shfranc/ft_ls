@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/02 16:28:35 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/03 13:07:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <pwd.h> /* getpwuid */
 # include <grp.h> /* getgrgid */
 # include <uuid/uuid.h> /* getpwuid & getgrgid */
+# include <time.h> /* ctime */
 
 # define OPTIONS	"RSaflrtu"
 # define USAGE		"\nusage: ft_ls [-"OPTIONS"] [file ...]"
@@ -118,7 +119,7 @@ void			display_errors(t_file *names);
 */
 int				display_non_dir(t_file *files);
 void			display_dir(int nb_file, int ac, t_file *files, t_opt *options);
-void			display_inside(t_file *files);
+void			display_inside(t_file *files, t_opt *options);
 void			classic_display(int ac, t_file *files, t_opt *options);
 
 /*
@@ -155,20 +156,30 @@ void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
 ** long_format.c 
 */
 void			fill_llong_struct(t_file *elem);
-int				set_max_len(t_file **files);
-void			fill_long_format(t_file **files);
-char			*get_long_format(t_file *file, int max_len);
+int				set_max_len(t_file *files);
+void			fill_long_format(t_file *files, t_opt *options);
+char			*get_long_format(t_file *file, int max_len, t_opt *options);
+
+/*
+** long_format_details_part1.c
+*/
 void			get_type(char **long_format, t_file *file);
 void			get_perms(char **long_format, t_file *file);
 void			get_nblink(char **long_format, t_file *file);
-int				ull_len(unsigned long long nb);
-char			*ull_toa(unsigned long long nb);
+void			get_user_owner(char **long_format, t_file *file);
+
+/*
+** long_format_details_part2.c
+*/
+void			get_size(char **long_format, t_file *file);
+void			get_timestamp(char **long_format, t_file *file, t_opt *options);
+void			get_name(char **long_format, t_file *file);
 
 /*
 ** long_display.c
 */
 int				long_display_non_dir(t_file *files);
 void			long_display_dir(int nb_file, int ac, t_file *files, t_opt *options);
-void			long_display_inside(t_file *files);
+void			long_display_inside(t_file *files, t_opt *options);
 void			long_display(int ac, t_file *files, t_opt *options);
 #endif

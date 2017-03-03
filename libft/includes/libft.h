@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:37:22 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/13 19:33:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/03 12:28:24 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,17 +111,19 @@ t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void			ft_lstprint(t_list *list);
 
 /*
-** Fonctions conversion int <-> char
+** Fonctions conversion nombre <-> char
 */
 int				ft_atoi(const char *str);
 char			*ft_itoa(int n);
 char			*ft_itoa_base(int value, int base);
+char			*ull_toa(unsigned long long nb);
 
 /*
-** Fonctions sur des int
+** Fonctions sur des nombres
 */
 int				*ft_range(int min, int max);
 int				ft_intsize(int n);
 void			sort_int_tab(int *tab, unsigned int size);
+int				ull_len(unsigned long long nb);
 
 #endif
