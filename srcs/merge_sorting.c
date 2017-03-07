@@ -24,20 +24,20 @@ t_comp 	g_comp[]=
 	reverse_sort_last_access,		// 7 tur
 };
 
-t_file	*which_sort(t_file *files, t_opt *options)
+t_file	*which_sort(t_file *files, t_opt *option)
 {
 	int i;
 
-	if ((file_list_len(files)) < 2 || options->f)
+	if ((file_list_len(files)) < 2 || option->f)
 		return (files);
 	i = 0;
-	if (options->u_s)
+	if (option->u_s)
 		i = 2;
-	if (options->t)
+	if (option->t)
 		i = 4;
-	if (options->t && options->u)
+	if (option->t && option->u)
 		i += 2;
-	if (options->r)
+	if (option->r)
 		i += 1;
 	
 //	ft_putnbr_endl(i);

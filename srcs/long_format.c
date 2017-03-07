@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/03 15:24:45 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/07 18:49:57 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,18 @@
 void	fill_llong_struct(t_file *elem)
 {	
 		elem->len.nblink = ull_len(elem->lstat.st_nlink);
-//		ft_putnbr_endl(elem->len.nblink);
 
 		if (!(elem->usr = (struct passwd*)malloc(sizeof(struct passwd))))
-			return ; // configurer un exit ?
-		elem->usr = getpwuid(elem->stat.st_uid);	
-//		ft_putendl(elem->usr->pw_name);
+			ft_exit("Unable to malloc struct passwd");
+		elem->usr = getpwuid(elem->lstat.st_uid);	
 		elem->len.user = ft_strlen(elem->usr->pw_name);
-//		ft_putnbr_endl(elem->len.user);
 
 		if (!(elem->grp = (struct group*)malloc(sizeof(struct group))))
-			return ; // exit ?
-		elem->grp = getgrgid(elem->stat.st_gid);	
-//		ft_putendl(elem->grp->gr_name);
+			ft_exit("Unable to malloc struct group");
+		elem->grp = getgrgid(elem->lstat.st_gid);	
 		elem->len.group = ft_strlen(elem->grp->gr_name);
-//		ft_putnbr_endl(elem->len.group);
 		
 		elem->len.size = ull_len(elem->lstat.st_size);
-//		ft_putnbr_endl(elem->len.size);
 }
 
 int		set_max_len(t_file *files)
@@ -53,64 +47,44 @@ int		set_max_len(t_file *files)
 		max.size < temp->len.size ? max.size = temp->len.size : 0;
 		temp = temp->next;
 	}
-	max.total = max.nblink + max.user + max.group + max.size + 31;
 	temp = files;
 	while (temp)
 	{
 		temp->max = max;
 		temp = temp->next;
 	}
-
-	// ft_putstr("MAX LEN = ");
-	// ft_putnbr_endl(files->max.total);
-	
-	return (max.total);
+	return (max.nblink + max.user + max.group + max.size + 31);
 }
 
-void	fill_long_format(t_file *files, t_opt *options)
+void	fill_long_format(t_file *files, t_opt *option)
 {
 	t_file	*temp;
-	int		max_len;
 
-	max_len = set_max_len(files);
 	temp = files;
 	while (temp)
 	{
-		temp->long_format = get_long_format(temp, max_len, options);
+		temp->long_format = get_long_format(temp, set_max_len(files), option);
 		temp = temp->next;
 	}
 }
 
-char	*get_long_format(t_file *file, int max_len, t_opt *options)
+char	*get_long_format(t_file *file, int max_len, t_opt *option)
 {
 	char	*long_format;
 	int		len;
 
-	(void)options;
-
-//	ft_putendl((ft_strrchr(file->name, '/') + 1));
-	len = max_len + ft_strlen(ft_strrchr(file->name, '/') + 1);
-//	ft_putnbr_endl(len);
+	len = max_len + ft_strlen(file->name);
+	if (((file->lstat.st_mode & S_IFMT) ^ S_IFLNK) == 0)
+		len += file->lstat.st_size + 4;
 	long_format = ft_strnew(len);
-	
-//	long_format = ft_strnew(max_len + ft_strlen(file->name));
-	
 	ft_memset(long_format, ' ', len);
 
 	get_type(long_format, file);
-	// ft_putendl("c'est pas le type");
 	get_perms(long_format, file);
-	// ft_putendl("c'est pas les perms");
 	get_nblink(long_format, file);
-	// ft_putendl("c'est pas les liens");
 	get_user_owner(long_format, file);
-	// ft_putendl("c'est pas le user ou owner");
 	get_size(long_format, file);
-	// ft_putendl("c'est pas la size");
-	get_timestamp(long_format, file, options);
-	// ft_putendl("c'est pas le timestamp");
+	get_timestamp(long_format, file, option);
 	get_name(long_format, file);
-	// ft_putendl("c'est pas le name");
-	// ft_putendl(long_format);
 	return (long_format);
 }

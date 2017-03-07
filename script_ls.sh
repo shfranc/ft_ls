@@ -12,6 +12,7 @@ gcc -g -Wall -Werror -Wextra -o ft_ls \
 	srcs/main.c \
 	srcs/parsing_options.c \
 	srcs/display_errors.c \
+	srcs/parsing_misc.c \
 	srcs/parsing_names.c \
 	srcs/classic_display.c \
 	srcs/option_upper_r.c \

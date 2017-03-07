@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 10:49:12 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/03 13:07:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/07 19:07:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		long_display_non_dir(t_file *files)
 			if (temp->error == 0 || temp->error == 20)
 			{
 				ft_putstr(temp->long_format);
-				ft_putendl(temp->name);
+				ft_putendl(temp->path);
 			}
 			nb_file++;
 		}
@@ -36,7 +36,7 @@ int		long_display_non_dir(t_file *files)
 	return (nb_file);
 }
 
-void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *options)
+void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 {
 	t_file	*temp;
 
@@ -48,18 +48,17 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 		{
 			if (ac != 1)
 			{
-				ft_putstr(temp->name);
+				ft_putstr(temp->path);
 				ft_putendl(":");
 			}
 			if (temp->error == 13)
 				display_file_error(temp);
 			else
 			{
-				temp->inside = which_sort(temp->inside, options);
-				ft_putendl("on a trie");
-				long_display_inside(temp->inside, options);
+				temp->inside = which_sort(temp->inside, option);
+				long_display_inside(temp->inside, option);
 
-				readndisplay_inside(temp->inside, options); // y'aura un truc a faire
+				readndisplay_inside(temp->inside, option); // y'aura un truc a faire
 			}
 			if (++nb_file != ac)
 				write(1, "\n", 1);
@@ -68,11 +67,11 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 	}
 }
 
-void	long_display_inside(t_file *files, t_opt *options)
+void	long_display_inside(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 
-	fill_long_format(files, options);
+	fill_long_format(files, option);
 	temp = files;
 	while (temp)
 	{
@@ -81,7 +80,7 @@ void	long_display_inside(t_file *files, t_opt *options)
 	}
 }
 
-void	long_display(int ac, t_file *files, t_opt *options)
+void	long_display(int ac, t_file *files, t_opt *option)
 {
 	int		nb_file;
 
@@ -89,5 +88,5 @@ void	long_display(int ac, t_file *files, t_opt *options)
 	nb_file = long_display_non_dir(files);
 	if (nb_file != 0 && nb_file != ac)
 		write(1, "\n", 1);
-	long_display_dir(nb_file, ac, files, options);
+	long_display_dir(nb_file, ac, files, option);
 }

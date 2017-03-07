@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing_misc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/01/24 17:13:12 by sfranc           ###   ########.fr       */
+/*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
+/*   Updated: 2017/03/07 12:23:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		main(int ac, char **av)
+void		check_arg_vide(int ac, char **av)
 {
-	t_file	*names;
-	char	*option;
+	struct stat	av_stat;
 
-	names = NULL;
-	option = NULL;
-	if (!(parsing(ac, av, &names, option)))
-		return (0);
-	display_errors(names);
-	display_names(names);
-	return (0);
+	while (--ac)
+	{
+		++av;
+		if ((ft_strequ(*av, "")))
+		{
+			stat("", &av_stat);
+			ft_putstr_fd(LS, 2);
+			ft_putstr_fd(""":", 2);
+			ft_exit(strerror(errno));
+		}
+	}
+}
+
+int		set_current_dir(int ac, char ***av)
+{
+	if (ac == 0)
+	{
+		ac++;
+		**av = ".";
+	}
+	return (ac);
 }

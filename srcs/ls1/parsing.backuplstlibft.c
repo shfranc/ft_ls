@@ -38,9 +38,9 @@ void		read_names(int ac, char **av, t_list **names)
 	ft_putendl("--> read_names fin");
 }
 
-int		parsing(int ac, char **av, t_list **names, char *options)
+int		parsing(int ac, char **av, t_list **names, char *option)
 {
-	(void)options;
+	(void)option;
 	if (ac == 1)
 	{
 //		ft_putendl("read_names 1");
@@ -63,7 +63,7 @@ int		parsing(int ac, char **av, t_list **names, char *options)
 				read_names(--ac, ++av, names);
 				return (1);
 			}
-//			ft_putendl("read_options");
+//			ft_putendl("read_option");
 		}
 	}
 	return (0);

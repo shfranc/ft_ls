@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:04:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/03 15:28:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/07 19:07:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,63 +27,55 @@ void	get_size(char *long_format, t_file *file)
 
 }
 
-void	get_timestamp(char *long_format, t_file *file, t_opt *options)
+void	get_timestamp(char *long_format, t_file *file, t_opt *option)
 {
 	char	*time;
-	char	*time_stamp;
+	char	*timestamp;
 
 	// definir les tailles sup a 6 mois pour mettre l'annee uniquement)	
 	
-	if (options->u)
-		time = ctime(&file->lstat.st_atimespec.tv_sec);
+	time = ft_strnew(26);
+	if (option->u)
+		ft_memcpy(time, ctime(&file->lstat.st_atimespec.tv_sec), 26);
 	else
 		time = ctime(&file->lstat.st_mtimespec.tv_sec);
-	time_stamp = ft_strnew(12);
-	ft_memcpy(time_stamp, time + 4, 12);
+	timestamp = ft_strnew(12);
+	ft_memcpy(timestamp, time + 4, 12);
 	ft_memcpy(long_format + 12
 		+ file->max.nblink + 1
 		+ file->max.user + 2
 		+ file->max.group + 2
-		+ file->max.size + 1, time_stamp, 12);
+		+ file->max.size + 1, timestamp, 12);
+//	free(time);
+//	free(timestamp);
 }
 
 void	get_name(char *long_format, t_file *file)
 {
-	char	*file_name;
 	char	*link_name;
+	char	*arrow;
 	int		len_name;
 
-	file_name = ft_strrchr(file->name, '/') +1;
-	ft_putendl(file_name);
-	len_name = ft_strlen(file_name);
-	ft_memcpy(long_format + 12 + file->max.nblink + 1 + file->max.user + 2 + file->max.group + 2 + file->max.size + 1 + 12 + 1, file_name, len_name);
+	len_name = ft_strlen(file->name);
+	ft_memcpy(long_format + 12
+			+ file->max.nblink + 1
+			+ file->max.user + 2
+			+ file->max.group + 2
+			+ file->max.size + 1 + 12 + 1, file->name, len_name);
 	if (*long_format == 'l')
 	{
 		if (!(link_name = (char*)malloc(sizeof(char) * (file->lstat.st_size + 1))))
-			return ;
+			ft_exit("Unable to malloc link_name");
 		readlink(file->name, link_name, file->lstat.st_size + 1);
 		*(link_name + file->lstat.st_size) = 0;
-		ft_putstr("LIEN = ");
-		ft_putendl(link_name);
+		arrow = ft_strjoin(" -> ", link_name);
 		ft_memcpy(long_format + 12
 			+ file->max.nblink + 1
 			+ file->max.user + 2
 			+ file->max.group + 2
 			+ file->max.size + 1
-			+ 12 + 1 + len_name, " -> ", 4);
-		ft_memcpy(long_format + 12
-			+ file->max.nblink + 1
-			+ file->max.user + 2
-			+ file->max.group + 2
-			+ file->max.size + 1
-			+ 12 + 1 + len_name
-			+ 4, link_name, file->lstat.st_size);
+			+ 12 + 1 + len_name, arrow, file->lstat.st_size + 4);
+		free(link_name);
+		free(arrow);
 	}
-	else
-		ft_memcpy(long_format + 12
-			+ file->max.nblink + 1
-			+ file->max.user + 2
-			+ file->max.group + 2
-			+ file->max.size + 1
-			+ 12 + 1, file_name, len_name);
 }

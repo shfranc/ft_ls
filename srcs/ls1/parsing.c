@@ -104,9 +104,9 @@ void	read_inside(DIR	*dir_ptr, t_file **names)
 	closedir(dir_ptr);
 }
 
-int		parsing(int ac, char **av, t_file **names, char *options)
+int		parsing(int ac, char **av, t_file **names, char *option)
 {
-	(void)options;
+	(void)option;
 	if (ac == 1)
 	{
 		ft_putendl("--- open . et lis");

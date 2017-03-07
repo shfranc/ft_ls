@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/03 18:39:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/07 19:09:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ typedef struct	s_max
 	int				user;
 	int				group;
 	int				size;
-	int				total;
 }				t_max;
 
 typedef struct	s_file
 {
+	char			*path;
 	char			*name;
 	char			*long_format;
 	int				error;
@@ -90,26 +90,32 @@ typedef void	(*t_comp)(t_file **temp, t_file **left, t_file **right);
 /*
 ** parsing_options.c
 */
-void			init_options(t_opt *options);
-int				is_options(char *s, t_opt *options);
-void			save_option(char c, t_opt *options);
-int				check_priority(char c, t_opt *options);
-int				read_options(int ac, char ***av, t_opt *options);
-int				set_current_dir(int ac, char ***av);
+void			init_options(t_opt *option);
+void			is_options(char *s, t_opt *option);
+void			save_option(char c, t_opt *option);
+int				check_priority(char c, t_opt *option);
+int				read_options(int ac, char ***av, t_opt *option);
 
 /*
 ** parsing_names.c
 */
-t_file			*file_new(char *name, t_opt *options);
+t_file			*file_new(char *name, t_opt *option);
 void			file_add(t_file **begin, t_file *new); /* a supprimer eventuellement */
 void			file_add_last(t_file **begin, t_file *new);
-void			walk_dir(char *av_dir, t_file **names, t_opt *options);
-void			read_names(int ac, char **av, t_file **names, t_opt *options);
+void			walk_dir(char *av_dir, t_file **files, t_opt *option);
+void			read_names(int ac, char **av, t_file **names, t_opt *option);
+
+/*
+** parsing_misc.c
+*/
+void			check_arg_vide(int ac, char **av);
+int				set_current_dir(int ac, char ***av);
 
 /*
 ** display_errors.c
 */
-void			display_options(t_opt *options); /* pour debug */
+void			ft_exit(char *s);
+void			display_options(t_opt *option); /* pour debug */
 void			display_illegal_option(char c);
 void			display_file_error(t_file *file);
 void			display_errors(t_file *names);
@@ -118,19 +124,19 @@ void			display_errors(t_file *names);
 ** classic_display.c
 */
 int				display_non_dir(t_file *files);
-void			display_dir(int nb_file, int ac, t_file *files, t_opt *options);
-void			display_inside(t_file *files, t_opt *options);
-void			classic_display(int ac, t_file *files, t_opt *options);
+void			display_dir(int nb_file, int ac, t_file *files, t_opt *option);
+void			display_inside(t_file *files, t_opt *option);
+void			classic_display(int ac, t_file *files, t_opt *option);
 
 /*
 ** options_upper_r.c 
 */
-void			readndisplay_inside(t_file *files_inside, t_opt *options);
+void			readndisplay_inside(t_file *files_inside, t_opt *option);
 
 /*
 ** merge_sorting.c
 */
-t_file			*which_sort(t_file *files, t_opt *options);
+t_file			*which_sort(t_file *files, t_opt *option);
 t_file			*merge_sort(t_file *files, void (*f)(t_file**, t_file**, t_file**));
 t_file			*merge(t_file *left, t_file *right, void (*f)(t_file**, t_file**, t_file**));
 int				file_list_len(t_file *files);
@@ -157,8 +163,8 @@ void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
 */
 void			fill_llong_struct(t_file *elem);
 int				set_max_len(t_file *files);
-void			fill_long_format(t_file *files, t_opt *options);
-char			*get_long_format(t_file *file, int max_len, t_opt *options);
+void			fill_long_format(t_file *files, t_opt *option);
+char			*get_long_format(t_file *file, int max_len, t_opt *option);
 
 /*
 ** long_format_details_part1.c
@@ -179,7 +185,7 @@ void			get_name(char *long_format, t_file *file);
 ** long_display.c
 */
 int				long_display_non_dir(t_file *files);
-void			long_display_dir(int nb_file, int ac, t_file *files, t_opt *options);
-void			long_display_inside(t_file *files, t_opt *options);
-void			long_display(int ac, t_file *files, t_opt *options);
+void			long_display_dir(int nb_file, int ac, t_file *files, t_opt *option);
+void			long_display_inside(t_file *files, t_opt *option);
+void			long_display(int ac, t_file *files, t_opt *option);
 #endif

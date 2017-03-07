@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/03 13:07:48 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/07 17:42:41 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		display_non_dir(t_file *files)
 		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) != 0)
 		{
 			if (temp->error == 0 || temp->error == 20)
-				ft_putendl(temp->name);
+				ft_putendl(temp->path);
 			nb_file++;
 		}
 		temp = temp->next;
@@ -32,7 +32,7 @@ int		display_non_dir(t_file *files)
 	return (nb_file);
 }
 
-void	display_dir(int nb_file, int ac, t_file *files, t_opt *options)
+void	display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 {
 	t_file	*temp;
 
@@ -43,16 +43,16 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 		{
 			if (ac != 1)
 			{
-				ft_putstr(temp->name);
+				ft_putstr(temp->path);
 				ft_putendl(":");
 			}
 			if (temp->error == 13)
 				display_file_error(temp);
 			else
 			{
-				temp->inside = which_sort(temp->inside, options);
-				display_inside(temp->inside, options);
-				readndisplay_inside(temp->inside, options);
+				temp->inside = which_sort(temp->inside, option);
+				display_inside(temp->inside, option);
+				readndisplay_inside(temp->inside, option);
 			}
 			if (++nb_file != ac)
 				write(1, "\n", 1);
@@ -61,24 +61,25 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *options)
 	}
 }
 
-void	display_inside(t_file *files, t_opt *options)
+void	display_inside(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 
-	if (options->l)
-		long_display_inside(files, options);
+	if (option->l)
+		long_display_inside(files, option);
 	else
 	{
 		temp = files;
 		while (temp)
 		{
-			ft_putendl(ft_strrchr(temp->name, '/') + 1);
+			//ft_putendl(ft_strrchr(temp->name, '/') + 1);
+			ft_putendl(temp->name);
 			temp = temp->next;
 		}
 	}
 }
 
-void	classic_display(int ac, t_file *files, t_opt *options)
+void	classic_display(int ac, t_file *files, t_opt *option)
 {
 	int		nb_file;
 
@@ -86,5 +87,5 @@ void	classic_display(int ac, t_file *files, t_opt *options)
 	nb_file = display_non_dir(files);
 	if (nb_file != 0 && nb_file != ac)
 		write(1, "\n", 1);
-	display_dir(nb_file, ac, files, options);
+	display_dir(nb_file, ac, files, option);
 }

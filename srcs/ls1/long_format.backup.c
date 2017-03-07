@@ -65,7 +65,7 @@ int		set_max_len(t_file **files)
 	return (max.total);
 }
 
-void	fill_long_format(t_file **files, t_opt *options)
+void	fill_long_format(t_file **files, t_opt *option)
 {
 	t_file	*temp;
 	int		max_len;
@@ -74,12 +74,12 @@ void	fill_long_format(t_file **files, t_opt *options)
 	temp = *files;
 	while (temp)
 	{
-		temp->long_format = get_long_format(temp, max_len, options);
+		temp->long_format = get_long_format(temp, max_len, option);
 		temp = temp->next;
 	}
 }
 
-char	*get_long_format(t_file *file, int max_len, t_opt *options)
+char	*get_long_format(t_file *file, int max_len, t_opt *option)
 {
 	char	*long_format;
 
@@ -91,9 +91,9 @@ char	*get_long_format(t_file *file, int max_len, t_opt *options)
 	get_nblink(&long_format, file);
 	get_user_owner(&long_format, file);
 	get_size(&long_format, file);
-	get_timestamp(&long_format, file, options);
+	get_timestamp(&long_format, file, option);
 	get_name(&long_format, file);
-	(void)options;
+	(void)option;
 	return (long_format);
 }
 
@@ -148,14 +148,14 @@ void	get_size(char **long_format, t_file *file)
 
 }
 
-void	get_timestamp(char **long_format, t_file *file, t_opt *options)
+void	get_timestamp(char **long_format, t_file *file, t_opt *option)
 {
 	char	*time;
 	char	*time_stamp;
 
 // definir les tailles sup a 6 mois pour mettre l'annee uniquement)	
 	
-	if (options->u)
+	if (option->u)
 		time = ctime(&file->stat.st_atimespec.tv_sec);
 	else
 		time = ctime(&file->stat.st_mtimespec.tv_sec);
