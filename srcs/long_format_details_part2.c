@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:04:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 19:07:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/08 12:28:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,41 @@
 
 void	get_size(char *long_format, t_file *file)
 {
-	int	padd;
+	int		padd;
+	char	*size;
 
 	// faire majeur mineur
 
 	padd = file->max.size - file->len.size;
+	size = ull_toa(file->lstat.st_size);
 	ft_memcpy(long_format + 12
 		+ file->max.nblink + 1
 		+ file->max.user + 2
 		+ file->max.group + 2
-		+ padd, ull_toa(file->lstat.st_size), file->len.size);
-
+		+ padd, size, file->len.size);
+	free(size);
 }
 
 void	get_timestamp(char *long_format, t_file *file, t_opt *option)
 {
-	char	*time;
+	char	*t_time;
 	char	*timestamp;
 
-	// definir les tailles sup a 6 mois pour mettre l'annee uniquement)	
-	
-	time = ft_strnew(26);
 	if (option->u)
-		ft_memcpy(time, ctime(&file->lstat.st_atimespec.tv_sec), 26);
-	else
-		time = ctime(&file->lstat.st_mtimespec.tv_sec);
+		file->lstat.st_mtimespec.tv_sec = file->lstat.st_atimespec.tv_sec;
+	t_time = ctime(&file->lstat.st_mtimespec.tv_sec);
 	timestamp = ft_strnew(12);
-	ft_memcpy(timestamp, time + 4, 12);
+	ft_memcpy(timestamp, t_time + 4, 12);
+	if ((time(NULL) - file->lstat.st_mtimespec.tv_sec) > 15811200
+		|| file->lstat.st_mtimespec.tv_sec > time(NULL))
+		ft_memcpy(timestamp + 7, t_time + 19, 4);
 	ft_memcpy(long_format + 12
 		+ file->max.nblink + 1
 		+ file->max.user + 2
 		+ file->max.group + 2
 		+ file->max.size + 1, timestamp, 12);
-//	free(time);
-//	free(timestamp);
+	//free(t_time);
+	free(timestamp);
 }
 
 void	get_name(char *long_format, t_file *file)

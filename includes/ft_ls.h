@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 19:09:03 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/08 18:27:41 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
 /*
 ** long_format.c 
 */
-void			fill_llong_struct(t_file *elem);
+void			get_usr_group_struct(t_file *elem);
 int				set_max_len(t_file *files);
 void			fill_long_format(t_file *files, t_opt *option);
 char			*get_long_format(t_file *file, int max_len, t_opt *option);

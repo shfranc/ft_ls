@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 19:09:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/08 18:27:39 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ int		main(int ac, char **av)
 	else
 		classic_display(ac, files, &option);
 
-//	display_option(&option);
-//	ft_putstr("debut des fichiers : ");
-//	ft_putendl(*av);
-//	ft_putstr("nombre de fichiers : ");
-//	ft_putnbr_endl(ac);
 
 //	while(1);
 

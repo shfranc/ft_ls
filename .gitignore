@@ -9,3 +9,5 @@ output.ls
 srcs/*.c.swp
 *.dSYM
 lol
+new_file
+old_file

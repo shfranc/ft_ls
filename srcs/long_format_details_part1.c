@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:01:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 17:44:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/08 12:43:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,14 @@ void	get_perms(char *long_format, t_file *file)
 
 void	get_nblink(char *long_format, t_file *file)
 {
-	int	padd;
+	int		padd;
+	char	*nlink;
 
+
+	nlink = ull_toa(file->stat.st_nlink); 
 	padd = file->max.nblink - file->len.nblink;
-	ft_memcpy(long_format + 12 + padd, ull_toa(file->stat.st_nlink), file->len.nblink);
+	ft_memcpy(long_format + 12 + padd, nlink, file->len.nblink);
+	free(nlink);
 }
 
 void	get_user_owner(char *long_format, t_file *file)

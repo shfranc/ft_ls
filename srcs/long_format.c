@@ -6,26 +6,19 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 18:49:57 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/08 18:27:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	fill_llong_struct(t_file *elem)
+void	get_usr_group_struct(t_file *elem)
 {	
 		elem->len.nblink = ull_len(elem->lstat.st_nlink);
-
-		if (!(elem->usr = (struct passwd*)malloc(sizeof(struct passwd))))
-			ft_exit("Unable to malloc struct passwd");
 		elem->usr = getpwuid(elem->lstat.st_uid);	
 		elem->len.user = ft_strlen(elem->usr->pw_name);
-
-		if (!(elem->grp = (struct group*)malloc(sizeof(struct group))))
-			ft_exit("Unable to malloc struct group");
 		elem->grp = getgrgid(elem->lstat.st_gid);	
 		elem->len.group = ft_strlen(elem->grp->gr_name);
-		
 		elem->len.size = ull_len(elem->lstat.st_size);
 }
 
@@ -78,7 +71,6 @@ char	*get_long_format(t_file *file, int max_len, t_opt *option)
 		len += file->lstat.st_size + 4;
 	long_format = ft_strnew(len);
 	ft_memset(long_format, ' ', len);
-
 	get_type(long_format, file);
 	get_perms(long_format, file);
 	get_nblink(long_format, file);

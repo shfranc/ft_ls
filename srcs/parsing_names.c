@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 18:15:42 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/08 17:58:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ t_file	*file_new(char *path, t_opt *option)
 
 	if (!(elem->path = ft_strdup(path)))
 		ft_exit("Unable to malloc path");
+
+//	if (!(elem->path = (char*)malloc(sizeof(char) * (ft_strlen(path) + 1))))
+//			elem->path = ft_memcpy(elem->path, path, ft_strlen(path) + 1);
+
 	if (!(elem->name = ft_strrchr(elem->path, '/') + 1))
 		elem->name = elem->path;
 //	
@@ -34,7 +38,7 @@ t_file	*file_new(char *path, t_opt *option)
 	elem->next = NULL;
 	elem->inside = NULL;
 	if (option->l)
-		fill_llong_struct(elem);
+		get_usr_group_struct(elem);
 	return (elem);
 }
 
