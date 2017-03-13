@@ -1,15 +1,24 @@
+# tests
 test.txt
 Arbre
 fleur
 ft_ls
 nenuphar
-notes/*.txt.swp
 output.ft_ls
 output.ls
-srcs/*.c.swp
-*.dSYM
 lol
 new_file
 old_file
+
+# swap
+srcs/*.c.swp
+notes/*.txt.swp
+
+# objects
 srcs/*.o
+
+# executables
 libft/libft.a
+
+# debug
+*.dSYM
