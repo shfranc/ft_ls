@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:20:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 18:10:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/13 12:08:02 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ void	display_illegal_option(char c)
 void	display_file_error(t_file *file)
 {
 	ft_putstr_fd(LS, 2);
-//	if ((ft_strrchr(ifile->name, '/')))
-		ft_putstr_fd(file->name, 2);
-//	else
-//		ft_putstr_fd(file->name, 2);
+	ft_putstr_fd(file->path, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(strerror(file->error), 2);
 }

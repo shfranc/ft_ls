@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 12:23:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/13 12:57:39 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		check_arg_vide(int ac, char **av)
+void	check_arg_vide(int ac, char **av)
 {
 	struct stat	av_stat;
 
@@ -37,4 +37,13 @@ int		set_current_dir(int ac, char ***av)
 		**av = ".";
 	}
 	return (ac);
+}
+
+char	*create_path(char *dir, char *file)
+{
+	char *path;
+
+	path = ft_strnew(ft_strlen(dir) + ft_strlen(file) + 1);
+	path = ft_strcat(ft_strcat(ft_strcpy(path, dir), "/"), file);
+	return (path);
 }

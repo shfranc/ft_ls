@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/08 18:27:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/13 12:56:17 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void			read_names(int ac, char **av, t_file **names, t_opt *option);
 */
 void			check_arg_vide(int ac, char **av);
 int				set_current_dir(int ac, char ***av);
+char			*create_path(char *dir, char *file);
 
 /*
 ** display_errors.c

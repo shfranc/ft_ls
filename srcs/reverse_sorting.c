@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 10:31:09 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 17:43:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/13 13:21:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	reverse_sort_ascii(t_file **temp, t_file **left, t_file **right)
 	}
 }
 
-void	reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right)
+/*void	reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right)
 {
 	if ((*left)->lstat.st_mtimespec.tv_sec
 			< (*right)->lstat.st_mtimespec.tv_sec
@@ -43,9 +43,9 @@ void	reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right)
 		*temp = *right;
 		*right = (*right)->next;
 	}
-}
+}*/
 
-/*void	reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right)
+void	reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right)
 {
 	if ((*left)->lstat.st_mtimespec.tv_sec == (*right)->lstat.st_mtimespec.tv_sec)
 		reverse_sort_ascii(temp, left, right);
@@ -62,7 +62,7 @@ void	reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right)
 			*right = (*right)->next;
 		}
 	}
-}*/
+}
 
 void	reverse_sort_last_access(t_file **temp, t_file **left, t_file **right)
 {

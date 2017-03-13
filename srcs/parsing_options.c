@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_option.c                                  :+:      :+:    :+:   */
+/*   parsing_options.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/07 12:24:50 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 12:42:00 by sfranc           ###   ########.fr       */
+/*   Created: 2017/03/13 12:14:49 by sfranc            #+#    #+#             */
+/*   Updated: 2017/03/13 12:16:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,9 @@ void	is_options(char *s, t_opt *option)
 	{
 		if (*s != 'R' && *s != 'S' && *s != 'a' && *s != 'f' && *s != 'l'
 				&& *s != 'r' && *s != 't' && *s != 'u')
-		{
 			display_illegal_option(*s);
-		}
-		else
-			if (check_priority(*s, option))
-				save_option(*s, option);
+		else if (check_priority(*s, option))
+			save_option(*s, option);
 		s++;
 	}
 }

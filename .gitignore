@@ -11,3 +11,5 @@ srcs/*.c.swp
 lol
 new_file
 old_file
+srcs/*.o
+libft/libft.a
