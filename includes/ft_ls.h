@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/13 12:56:17 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/13 18:27:30 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,9 @@ void			get_name(char *long_format, t_file *file);
 /*
 ** long_display.c
 */
-int				long_display_non_dir(t_file *files);
+int				long_display_non_dir(t_file *files, t_opt *option);
 void			long_display_dir(int nb_file, int ac, t_file *files, t_opt *option);
 void			long_display_inside(t_file *files, t_opt *option);
 void			long_display(int ac, t_file *files, t_opt *option);
+void			display_totalblocks(t_file *file);
 #endif

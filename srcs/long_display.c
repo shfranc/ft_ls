@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 10:49:12 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/07 19:07:36 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/13 18:24:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		long_display_non_dir(t_file *files)
+int		long_display_non_dir(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 	int		nb_file;
@@ -26,8 +26,8 @@ int		long_display_non_dir(t_file *files)
 		{
 			if (temp->error == 0 || temp->error == 20)
 			{
-				ft_putstr(temp->long_format);
-				ft_putendl(temp->path);
+				fill_long_format(files, option);
+				ft_putendl(temp->long_format);
 			}
 			nb_file++;
 		}
@@ -55,6 +55,7 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 				display_file_error(temp);
 			else
 			{
+				display_totalblocks(temp);
 				temp->inside = which_sort(temp->inside, option);
 				long_display_inside(temp->inside, option);
 
@@ -85,8 +86,27 @@ void	long_display(int ac, t_file *files, t_opt *option)
 	int		nb_file;
 
 	display_errors(files);
-	nb_file = long_display_non_dir(files);
+	nb_file = long_display_non_dir(files, option);
 	if (nb_file != 0 && nb_file != ac)
 		write(1, "\n", 1);
 	long_display_dir(nb_file, ac, files, option);
+}
+
+void	display_totalblocks(t_file *file)
+{
+	unsigned long long	size;
+	t_file				*temp;
+	char				*s;
+
+	temp = file->inside;
+	size = 0;
+	while (temp)
+	{
+		size += temp->lstat.st_blocks;
+		temp = temp->next;
+	}
+	ft_putstr("total ");
+	s = ull_toa(size);
+	ft_putendl(s);
+	free(s);
 }
