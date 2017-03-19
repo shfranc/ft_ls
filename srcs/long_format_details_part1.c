@@ -37,20 +37,20 @@ void	get_perms(char *long_format, t_file *file)
 	(file->lstat.st_mode & S_IXOTH) == S_IXOTH ? *(long_format + 9) = 'x' : 0;
 }
 
-void	get_nblink(char *long_format, t_file *file)
+void	get_nblink(char *long_format, t_file *file, t_max *max)
 {
 	int		padd;
 	char	*nlink;
 
 
 	nlink = ull_toa(file->stat.st_nlink); 
-	padd = file->max.nblink - file->len.nblink;
+	padd = max->nblink - file->len.nblink;
 	ft_memcpy(long_format + 12 + padd, nlink, file->len.nblink);
 	free(nlink);
 }
 
-void	get_user_owner(char *long_format, t_file *file)
+void	get_user_owner(char *long_format, t_file *file, t_max *max)
 {
-	ft_memcpy(long_format + 12 + file->max.nblink + 1, file->usr->pw_name, file->len.user);
-	ft_memcpy(long_format + 12 + file->max.nblink + 1 + file->max.user + 2, file->grp->gr_name, file->len.group);
+	ft_memcpy(long_format + 12 + max->nblink + 1, file->usr->pw_name, file->len.user);
+	ft_memcpy(long_format + 12 + max->nblink + 1 + max->user + 2, file->grp->gr_name, file->len.group);
 }

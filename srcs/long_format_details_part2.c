@@ -12,24 +12,24 @@
 
 #include "ft_ls.h"
 
-void	get_size(char *long_format, t_file *file)
+void	get_size(char *long_format, t_file *file, t_max *max)
 {
 	int		padd;
 	char	*size;
 
 	// faire majeur mineur
 
-	padd = file->max.size - file->len.size;
+	padd = max->size - file->len.size;
 	size = ull_toa(file->lstat.st_size);
 	ft_memcpy(long_format + 12
-		+ file->max.nblink + 1
-		+ file->max.user + 2
-		+ file->max.group + 2
+		+ max->nblink + 1
+		+ max->user + 2
+		+ max->group + 2
 		+ padd, size, file->len.size);
 	free(size);
 }
 
-void	get_timestamp(char *long_format, t_file *file, t_opt *option)
+void	get_timestamp(char *long_format, t_file *file, t_opt *option, t_max *max)
 {
 	char	*t_time;
 	char	*timestamp;
@@ -43,15 +43,15 @@ void	get_timestamp(char *long_format, t_file *file, t_opt *option)
 		|| file->lstat.st_mtimespec.tv_sec > time(NULL))
 		ft_memcpy(timestamp + 7, t_time + 19, 5);
 	ft_memcpy(long_format + 12
-		+ file->max.nblink + 1
-		+ file->max.user + 2
-		+ file->max.group + 2
-		+ file->max.size + 1, timestamp, 12);
+		+ max->nblink + 1
+		+ max->user + 2
+		+ max->group + 2
+		+ max->size + 1, timestamp, 12);
 	//free(t_time);
 	free(timestamp);
 }
 
-void	get_name(char *long_format, t_file *file)
+void	get_name(char *long_format, t_file *file, t_max *max)
 {
 	char	*link_name;
 	char	*arrow;
@@ -59,8 +59,8 @@ void	get_name(char *long_format, t_file *file)
 	int		padd;
 
 	len_name = ft_strlen(file->name);
-	padd = 12 + file->max.nblink + 1 + file->max.user + 2
-		+ file->max.group + 2 + file->max.size + 1 + 12 + 1;
+	padd = 12 + max->nblink + 1 + max->user + 2
+		+ max->group + 2 + max->size + 1 + 12 + 1;
 	ft_memcpy(long_format + padd, file->name, len_name);
 	if (*long_format == 'l')
 	{

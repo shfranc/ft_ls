@@ -43,6 +43,7 @@ typedef struct	s_max
 	int				user;
 	int				group;
 	int				size;
+	int				total;
 }				t_max;
 
 typedef struct	s_file
@@ -56,7 +57,7 @@ typedef struct	s_file
 	struct passwd	*usr;
 	struct group	*grp;
 	t_len			len;
-	t_max			max;
+//	t_max			max;
 	struct s_file	*inside;
 	struct s_file	*next;
 }				t_file;
@@ -130,7 +131,7 @@ void			display_inside(t_file *files, t_opt *option);
 void			classic_display(int ac, t_file *files, t_opt *option);
 
 /*
-** options_upper_r.c 
+** recursive_search.c 
 */
 void			readndisplay_inside(t_file *files_inside, t_opt *option);
 
@@ -163,24 +164,24 @@ void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
 ** long_format.c 
 */
 void			get_usr_group_struct(t_file *elem);
-int				set_max_len(t_file *files);
+void				set_max_len(t_file *files, t_max *max);
 void			fill_long_format(t_file *files, t_opt *option);
-char			*get_long_format(t_file *file, int max_len, t_opt *option);
+char			*get_long_format(t_file *file, t_max *max, t_opt *option);
 
 /*
 ** long_format_details_part1.c
 */
 void			get_type(char *long_format, t_file *file);
 void			get_perms(char *long_format, t_file *file);
-void			get_nblink(char *long_format, t_file *file);
-void			get_user_owner(char *long_format, t_file *file);
+void			get_nblink(char *long_format, t_file *file, t_max *max);
+void			get_user_owner(char *long_format, t_file *file, t_max *max);
 
 /*
 ** long_format_details_part2.c
 */
-void			get_size(char *long_format, t_file *file);
-void			get_timestamp(char *long_format, t_file *file, t_opt *options);
-void			get_name(char *long_format, t_file *file);
+void			get_size(char *long_format, t_file *file, t_max *max);
+void			get_timestamp(char *long_format, t_file *file, t_opt *options, t_max *max);
+void			get_name(char *long_format, t_file *file, t_max *max);
 
 /*
 ** long_display.c

@@ -16,6 +16,7 @@ notes/*.txt.swp
 
 # objects
 srcs/*.o
+libft/objs/*.o
 
 # executables
 libft/libft.a
