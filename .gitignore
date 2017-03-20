@@ -2,13 +2,14 @@
 test.txt
 Arbre
 fleur
-ft_ls
 nenuphar
 output.ft_ls
 output.ls
 lol
 new_file
 old_file
+futur
+past
 
 # swap
 srcs/*.c.swp
@@ -20,8 +21,7 @@ libft/objs/*.o
 
 # executables
 libft/libft.a
+ft_ls
 
 # debug
 *.dSYM
-futur
-past
