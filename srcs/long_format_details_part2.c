@@ -17,8 +17,8 @@ void	get_size(char *long_format, t_file *file, t_max *max)
 	int		padd;
 	char	*size;
 
-	// faire majeur mineur
-
+	if (*long_format == 'c' || *long_format == 'b')
+		return ;
 	padd = max->size - file->len.size;
 	size = ull_toa(file->lstat.st_size);
 	ft_memcpy(long_format + 12
@@ -27,6 +27,52 @@ void	get_size(char *long_format, t_file *file, t_max *max)
 		+ max->group + 2
 		+ padd, size, file->len.size);
 	free(size);
+}
+
+void	get_maj_min(char *long_format, t_file *file, t_max *max)
+{
+	int		padd_maj;
+	int		padd_min;
+	char	*s_maj;
+	char	*s_min;
+	char	*temp;
+
+	if (*long_format != 'c' && *long_format != 'b')
+		return ;
+
+	ft_putnbr_endl(max->maj);
+	ft_putnbr_endl(max->min);
+	// ft_putnbr_endl(file->len.size);
+	ft_putnbr_endl(max->size);
+	// padd_maj = (max->size - file->len.size) + max->maj - file->len.maj; 
+	padd_maj = max->maj - file->len.maj; 
+	// ft_putnbr_endl(padd_maj);
+
+	s_maj = ft_itoa(FT_MAJ(file->lstat.st_rdev));
+	temp = ft_strjoin(s_maj, ", ");
+	ft_memcpy(long_format + 12
+	+ max->nblink + 1
+	+ max->user + 2
+	+ max->group + 2
+	+ padd_maj, temp, file->len.maj + 2);
+	
+	// ft_memcpy(long_format + 12
+	// + max->nblink + 1
+	// + max->user + 2
+	// + max->group + 2
+	// + max->maj, ", ", 2);
+
+	padd_min = max->min - file->len.min;
+
+	s_min = ft_itoa(FT_MIN(file->lstat.st_rdev));
+	ft_memcpy(long_format + 12
+	+ max->nblink + 1
+	+ max->user + 2
+	+ max->group + 2
+	+ max->maj + 2 + padd_min, s_min, file->len.min);
+	free(temp);
+	free(s_maj);
+	free(s_min);
 }
 
 void	get_timestamp(char *long_format, t_file *file, t_opt *option, t_max *max)

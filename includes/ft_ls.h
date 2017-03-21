@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/13 18:27:30 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/21 17:38:20 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,17 @@
 # define ILLEGAL	"ft_ls: illegal option -- "
 # define LS			"ft_ls: "
 
+# define FT_MAJ(x) (int)(((unsigned int)(x) >> 24) & 0x000000ff)
+# define FT_MIN(x) (int)((unsigned int)(x) & 0x00ffffff)
+
 typedef struct	s_len
 {
 	int				nblink;
 	int				user;
 	int				group;
 	int				size;
+	int				maj;
+	int				min;
 }				t_len;
 
 typedef struct	s_max
@@ -44,6 +49,8 @@ typedef struct	s_max
 	int				group;
 	int				size;
 	int				total;
+	int				maj;
+	int				min;
 }				t_max;
 
 typedef struct	s_file
@@ -180,6 +187,7 @@ void			get_user_owner(char *long_format, t_file *file, t_max *max);
 ** long_format_details_part2.c
 */
 void			get_size(char *long_format, t_file *file, t_max *max);
+void			get_maj_min(char *long_format, t_file *file, t_max *max);
 void			get_timestamp(char *long_format, t_file *file, t_opt *options, t_max *max);
 void			get_name(char *long_format, t_file *file, t_max *max);
 

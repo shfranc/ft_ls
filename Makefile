@@ -6,7 +6,7 @@
 #    By: sfranc <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/03/13 16:20:55 by sfranc           ###   ########.fr        #
+#    Updated: 2017/03/21 14:20:40 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ $(NAME): $(LIB) $(OBJS)
 $(LIB):
 	@make -C $(LIB_PATH)
 
-%.o: %.c
+%.o: %.c $(INCLUDES)
 	@$(CC) $(FLAGS) -o $@ -c $< $(addprefix -I , $(INCLUDES))
 	@echo "compil $@ : $(YELLOW) OK $(RESET)"
 

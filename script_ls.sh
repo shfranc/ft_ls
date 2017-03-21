@@ -5,7 +5,7 @@ make -C libft
 #echo "compil ft_inspect_file : \033[01;32mOK\033[00m"
 #gcc -Wall -Werror -Wextra -o ft_ls ../libft_gitperso/libft.a -I ../libft_gitperso/includes -I includes srcs/main.c srcs/parsing_options.c srcs/display.c
 #echo "compil ft_ls : \033[01;32mOK\033[00m"
-gcc -g -Wall -Werror -Wextra -o ft_ls \
+gcc -g -Wall -Werror -Wextra -o ft_ls_bis \
 	libft/libft.a \
 	-I libft/includes \
 	-I includes \
@@ -15,7 +15,7 @@ gcc -g -Wall -Werror -Wextra -o ft_ls \
 	srcs/parsing_misc.c \
 	srcs/parsing_names.c \
 	srcs/classic_display.c \
-	srcs/option_upper_r.c \
+	srcs/recursive_search.c \
 	srcs/sorting.c \
 	srcs/merge_sorting.c \
 	srcs/reverse_sorting.c \
