@@ -29,7 +29,7 @@ void	get_usr_group_struct(t_file *elem)
 
 			// ft_putendl(ft_itoa(FT_MIN(elem->lstat.st_rdev)));
 			elem->len.min = ft_intsize(FT_MIN(elem->lstat.st_rdev));
-			// ft_putnbr_endl(elem->len.min);
+			ft_putnbr_endl(elem->len.min);
 			// 
 			elem->len.size = elem->len.maj + elem->len.min + 2;
 			// ft_putnbr_endl(elem->len.size);
@@ -59,6 +59,7 @@ void		set_max_len(t_file *files, t_max *max)
 		max->size < temp->len.size ? max->size = temp->len.size : 0;
 		temp = temp->next;
 	}
+	max->size < max->maj + max->min + 2 ? max->size = max->maj + max->min + 2 : 0;
 	max->total = max->nblink + max->user + max->group + max->size + 31;
 }
 
