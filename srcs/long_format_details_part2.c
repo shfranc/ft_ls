@@ -17,7 +17,8 @@ void	get_size(char *long_format, t_file *file, t_max *max)
 	int		padd;
 	char	*size;
 
-	if (*long_format == 'c' || *long_format == 'b')
+	if (((file->lstat.st_mode & S_IFMT) ^ S_IFCHR) == 0
+			|| ((file->lstat.st_mode & S_IFMT) ^ S_IFBLK) == 0)
 		return ;
 	padd = max->size - file->len.size;
 	size = ull_toa(file->lstat.st_size);
@@ -36,18 +37,11 @@ void	get_maj_min(char *long_format, t_file *file, t_max *max)
 	char	*s_maj;
 	char	*s_min;
 	char	*temp;
-
-	if (*long_format != 'c' && *long_format != 'b')
+	
+	if (((file->lstat.st_mode & S_IFMT) ^ S_IFCHR) != 0
+			&& ((file->lstat.st_mode & S_IFMT) ^ S_IFBLK) != 0)
 		return ;
-
-	ft_putnbr_endl(max->maj);
-	ft_putnbr_endl(max->min);
-	// ft_putnbr_endl(file->len.size);
-	ft_putnbr_endl(max->size);
-	// padd_maj = (max->size - file->len.size) + max->maj - file->len.maj; 
 	padd_maj = max->maj - file->len.maj; 
-	// ft_putnbr_endl(padd_maj);
-
 	s_maj = ft_itoa(FT_MAJ(file->lstat.st_rdev));
 	temp = ft_strjoin(s_maj, ", ");
 	ft_memcpy(long_format + 12
@@ -55,15 +49,8 @@ void	get_maj_min(char *long_format, t_file *file, t_max *max)
 	+ max->user + 2
 	+ max->group + 2
 	+ padd_maj, temp, file->len.maj + 2);
-	
-	// ft_memcpy(long_format + 12
-	// + max->nblink + 1
-	// + max->user + 2
-	// + max->group + 2
-	// + max->maj, ", ", 2);
 
 	padd_min = max->min - file->len.min;
-
 	s_min = ft_itoa(FT_MIN(file->lstat.st_rdev));
 	ft_memcpy(long_format + 12
 	+ max->nblink + 1
@@ -93,7 +80,6 @@ void	get_timestamp(char *long_format, t_file *file, t_opt *option, t_max *max)
 		+ max->user + 2
 		+ max->group + 2
 		+ max->size + 1, timestamp, 12);
-	//free(t_time);
 	free(timestamp);
 }
 
@@ -103,20 +89,21 @@ void	get_name(char *long_format, t_file *file, t_max *max)
 	char	*arrow;
 	int		len_name;
 	int		padd;
+	int		ret;
 
 	len_name = ft_strlen(file->name);
 	padd = 12 + max->nblink + 1 + max->user + 2
 		+ max->group + 2 + max->size + 1 + 12 + 1;
 	ft_memcpy(long_format + padd, file->name, len_name);
-	if (*long_format == 'l')
+	if (((file->lstat.st_mode & S_IFMT) ^ S_IFLNK) == 0)
 	{
-		if (!(link_name = (char*)malloc(sizeof(char) * (file->lstat.st_size + 1))))
+		if (!(link_name = ft_strnew(1024)))
 			ft_exit("Unable to malloc link_name");
-		if ((readlink(file->path, link_name, file->lstat.st_size + 1)) == -1)
-			ft_exit("Unable to get link name");
-		*(link_name + file->lstat.st_size) = 0;
+		if ((ret = readlink(file->path, link_name, 1024)) == -1)
+			ft_exit("Unable to get link name");	
 		arrow = ft_strjoin(" -> ", link_name);
-		ft_memcpy(long_format + padd + len_name, arrow, file->lstat.st_size + 4);
+		ft_memcpy(long_format + padd + len_name, arrow, ft_strlen(arrow));
+		*(long_format + padd + len_name + ft_strlen(arrow)) = 0;
 		free(link_name);
 		free(arrow);
 	}

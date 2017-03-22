@@ -23,16 +23,9 @@ void	get_usr_group_struct(t_file *elem)
 		if (((elem->lstat.st_mode & S_IFMT) ^ S_IFCHR) == 0
 			|| ((elem->lstat.st_mode & S_IFMT) ^ S_IFBLK) == 0)
 		{
-			// ft_putendl(ft_itoa(FT_MAJ(elem->lstat.st_rdev)));
 			elem->len.maj = ft_intsize(FT_MAJ(elem->lstat.st_rdev));
-			// ft_putnbr_endl(elem->len.maj);
-
-			// ft_putendl(ft_itoa(FT_MIN(elem->lstat.st_rdev)));
 			elem->len.min = ft_intsize(FT_MIN(elem->lstat.st_rdev));
-			ft_putnbr_endl(elem->len.min);
-			// 
-			elem->len.size = elem->len.maj + elem->len.min + 2;
-			// ft_putnbr_endl(elem->len.size);
+			elem->len.size = elem->len.maj + elem->len.min + 3;
 		}
 		else
 			elem->len.size = ull_len(elem->lstat.st_size);
@@ -45,21 +38,29 @@ void		set_max_len(t_file *files, t_max *max)
 	max->nblink = 0;
 	max->user = 0;
 	max->group = 0;
+	max->size = 0;
+
 	max->maj = 0;
 	max->min = 0;
-	max->size = 0;
+
 	temp = files;
 	while (temp)
 	{
 		max->nblink < temp->len.nblink ? max->nblink = temp->len.nblink : 0;
 		max->user < temp->len.user ? max->user = temp->len.user : 0;
 		max->group < temp->len.group ? max->group = temp->len.group : 0;
-		max->maj < temp->len.maj ? max->maj = temp->len.maj : 0;
-		max->min < temp->len.min ? max->min = temp->len.min : 0;
+		if (((temp->lstat.st_mode & S_IFMT) ^ S_IFCHR) == 0
+			|| ((temp->lstat.st_mode & S_IFMT) ^ S_IFBLK) == 0)
+		{
+			max->maj < temp->len.maj + 1 ? max->maj = temp->len.maj + 1: 0;
+			max->min < temp->len.min ? max->min = temp->len.min : 0;
+			max->size < max->maj + max->min + 2 ? max->size = max->maj + max->min + 2 : 0;
+		}
 		max->size < temp->len.size ? max->size = temp->len.size : 0;
 		temp = temp->next;
 	}
-	max->size < max->maj + max->min + 2 ? max->size = max->maj + max->min + 2 : 0;
+	// if (max->maj || max->min)
+	// 	max->size < max->maj + max->min + 2 ? max->size = max->maj + max->min + 2 : 0;
 	max->total = max->nblink + max->user + max->group + max->size + 31;
 }
 
@@ -83,12 +84,12 @@ char	*get_long_format(t_file *file, t_max *max, t_opt *option)
 	int		len;
 	
 	len = max->total + ft_strlen(file->name);
-
 	if (((file->lstat.st_mode & S_IFMT) ^ S_IFLNK) == 0)
-		len += file->lstat.st_size + 4;
+		len += 1024;
 	
 	long_format = ft_strnew(len);
 	ft_memset(long_format, ' ', len);
+
 	get_type(long_format, file);
 	get_perms(long_format, file);
 	get_nblink(long_format, file, max);
@@ -96,6 +97,6 @@ char	*get_long_format(t_file *file, t_max *max, t_opt *option)
 	get_size(long_format, file, max);
 	get_maj_min(long_format, file, max);
 	get_timestamp(long_format, file, option, max);
-	get_name(long_format, file, max);
+	get_name(long_format, file, max);	
 	return (long_format);
 }
