@@ -14,6 +14,7 @@
 
 void	init_options(t_opt *option)
 {
+	option->u_g = 0;
 	option->u_r = 0;
 	option->u_s = 0;
 	option->a = 0;
@@ -29,8 +30,8 @@ void	is_options(char *s, t_opt *option)
 	s++;
 	while (*s)
 	{
-		if (*s != 'R' && *s != 'S' && *s != 'a' && *s != 'f' && *s != 'l'
-				&& *s != 'r' && *s != 't' && *s != 'u')
+		if (*s != 'G' && *s != 'R' && *s != 'S' && *s != 'a' && *s != 'f'
+			&& *s != 'l' && *s != 'r' && *s != 't' && *s != 'u')
 			display_illegal_option(*s);
 		else if (check_priority(*s, option))
 			save_option(*s, option);
@@ -54,6 +55,7 @@ int		check_priority(char c, t_opt *option)
 
 void	save_option(char c, t_opt *option)
 {
+	c == 'G' ? option->u_g = 'G' : 0;
 	c == 'R' ? option->u_r = 'R' : 0;
 	c == 'S' ? option->u_s = 'S' : 0;
 	c == 'a' ? option->a = 'a' : 0;

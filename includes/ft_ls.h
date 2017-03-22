@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/21 17:38:20 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/22 19:47:25 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_LS_H
 
 # include "libft.h"
+# include "color.h"
 # include <errno.h> /* errno */
 # include <sys/stat.h> /* stat + struct stat */
 # include <stdio.h> /* strerror */
@@ -57,6 +58,7 @@ typedef struct	s_file
 {
 	char			*path;
 	char			*name;
+	char			*color_name;
 	char			*long_format;
 	int				error;
 	struct stat		lstat;
@@ -64,7 +66,6 @@ typedef struct	s_file
 	struct passwd	*usr;
 	struct group	*grp;
 	t_len			len;
-//	t_max			max;
 	struct s_file	*inside;
 	struct s_file	*next;
 }				t_file;
@@ -83,6 +84,7 @@ typedef struct	s_file
 
 typedef struct	s_options
 {
+	char	u_g;
 	char	u_r;
 	char	u_s;
 	char	a;
@@ -138,6 +140,13 @@ void			display_inside(t_file *files, t_opt *option);
 void			classic_display(int ac, t_file *files, t_opt *option);
 
 /*
+** display_colors.c
+*/
+char			*which_color(t_file *file);
+char			*type_color(t_file *file);
+void			join_color(t_file *file, t_opt *option);
+
+/*
 ** recursive_search.c 
 */
 void			readndisplay_inside(t_file *files_inside, t_opt *option);
@@ -171,7 +180,7 @@ void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
 ** long_format.c 
 */
 void			get_usr_group_struct(t_file *elem);
-void				set_max_len(t_file *files, t_max *max);
+void			set_max_len(t_file *files, t_max *max);
 void			fill_long_format(t_file *files, t_opt *option);
 char			*get_long_format(t_file *file, t_max *max, t_opt *option);
 

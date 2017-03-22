@@ -96,8 +96,8 @@ Fonctions autorisees :
 				#define        S_IFLNK  0120000  /* symbolic link */
 				#define        S_IFSOCK 0140000  /* socket */
 				#define        S_IFWHT  0160000  /* whiteout */
-				#define S_ISUID 0004000  /* set user id on execution */
-				#define S_ISGID 0002000  /* set group id on execution */
+				#define S_ISUID 0004000  /* set user id on execution */ --> special permissions (S/s)
+				#define S_ISGID 0002000  /* set group id on execution */ --> ""
 				#define S_ISVTX 0001000  /* save swapped text even after use */
 				#define S_IRUSR 0000400  /* read permission, owner */
 				#define S_IWUSR 0000200  /* write permission, owner */
@@ -284,9 +284,10 @@ file mode 	= entry type = b, c, d, l, s, p, -.
 					s : file is executable in the owner/group permissions and super user/group ID is set
 					x : file is executable or directory is searchable
 					- : none
-					for other people permission only, last charater :
+					for other people permission only (OTH), last charater :
 						T : sticky bit is set but no execute or search permission
 						t : sticky bit is set and is searchable or executable.
+						T ou t place en fin de droits, comme @ ou +.
 number of links
 owner name
 group name
@@ -338,3 +339,54 @@ ensuite elem = (t_list*)malloc(sizeof(t_list) reserve de la place pour une struc
 
 si on doit acceder a un caractere de la chaine *content, il est possible de noter : *elem->content (ce qui equivaut au caractere 0, soit (*elem).content[0])
 
+COLORS
+------
+
+-- type
+1. ex  directory = BLUE --> S_IFDIR
+2. fx  symbolic link = MAGENTA --> S_IFLNK
+3. cx  socket = GREEN --> S_IFSOCK
+4. dx  pipe = YELLOW --> S_IFIFO
+6. eg  block special = BLUE + BGCYAN --> S_IFBLK
+7. ed  character special = BLUE + BGYELLOW --> S_IFCHR
+
+-- perms
+8. ab  executable with setuid bit set = BLACK + BGRED --> S_ISUID
+9. ag  executable with setgid bit set = BLACK + BGCYAN --> S_ISGID
+5. bx  executable = RED --> S_IXUSR || S_IXGRP || S_IXOTH
+
+-- type + perms
+10. ac directory writable to others, with sticky bit = BLACK + BGGREEN --> S_IFDIR && S_IWOTH && S_ISVTX
+// 11. ad directory writable to others, without sticky bit = BLACK + BGYELLOW --> S_IFDIR && S_IWOTH
+
+1. ex  directory = BLUE
+2. fx  symbolic link = MAGENTA
+3. cx  socket = GREEN
+4. dx  pipe = YELLOW
+5. bx  executable = RED
+
+6. eg  block special = BLUE + BGCYAN
+7. ed  character special = BLUE + BGYELLOW
+
+8. ab  executable with setuid bit set = BLACK + BGRED
+9. ag  executable with setgid bit set = BLACK + BGCYAN
+10. ac directory writable to others, with sticky bit = BLACK + BGGREEN
+11. ad directory writable to others, without sticky bit = BLACK + BGYELLOW
+
+a     black
+b     red
+c     green
+d     brown
+e     blue
+f     magenta
+g     cyan
+h     light grey
+A     bold black, usually shows up as dark grey
+B     bold red
+C     bold green
+D     bold brown, usually shows up as yellow
+E     bold blue
+F     bold magenta
+G     bold cyan
+H     bold light grey; looks like bright white
+x     default foreground or background

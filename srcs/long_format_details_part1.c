@@ -35,6 +35,21 @@ void	get_perms(char *long_format, t_file *file)
 	(file->lstat.st_mode & S_IROTH) == S_IROTH ? *(long_format + 7) = 'r' : 0;
 	(file->lstat.st_mode & S_IWOTH) == S_IWOTH ? *(long_format + 8) = 'w' : 0;
 	(file->lstat.st_mode & S_IXOTH) == S_IXOTH ? *(long_format + 9) = 'x' : 0;
+	if ((file->lstat.st_mode & S_ISUID) == S_ISUID) 
+	{
+		*(long_format + 3) == '-' ?	*(long_format + 3) = 'S' : 0;
+		*(long_format + 3) == 'x' ?	*(long_format + 3) = 's' : 0;
+	}
+	if ((file->lstat.st_mode & S_ISGID) == S_ISGID) 
+	{
+		*(long_format + 6) == '-' ? *(long_format + 6) = 'S' : 0;
+		*(long_format + 6) == 'x' ?	*(long_format + 6) = 's' : 0;
+	}
+	if ((file->lstat.st_mode & S_ISVTX) == S_ISVTX) 
+	{
+		*(long_format + 9) == '-' ?	*(long_format + 9) = 'T' : 0;
+		*(long_format + 9) == 'x' ? *(long_format + 9) = 't' : 0;
+	}
 }
 
 void	get_nblink(char *long_format, t_file *file, t_max *max)

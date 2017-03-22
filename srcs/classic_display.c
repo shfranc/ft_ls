@@ -73,7 +73,13 @@ void	display_inside(t_file *files, t_opt *option)
 		while (temp)
 		{
 			//ft_putendl(ft_strrchr(temp->name, '/') + 1);
-			ft_putendl(temp->name);
+			if (option->u_g)
+			{
+				join_color(temp, option);
+				// ft_putendl(color);
+			}
+			// else
+				ft_putendl(temp->name);
 			temp = temp->next;
 		}
 	}
@@ -84,6 +90,7 @@ void	classic_display(int ac, t_file *files, t_opt *option)
 	int		nb_file;
 
 	display_errors(files);
+	files = which_sort(files, option);
 	nb_file = display_non_dir(files);
 	if (nb_file != 0 && nb_file != ac)
 		write(1, "\n", 1);

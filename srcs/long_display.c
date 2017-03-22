@@ -58,8 +58,7 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 				display_totalblocks(temp);
 				temp->inside = which_sort(temp->inside, option);
 				long_display_inside(temp->inside, option);
-
-				readndisplay_inside(temp->inside, option); // y'aura un truc a faire
+				readndisplay_inside(temp->inside, option);
 			}
 			if (++nb_file != ac)
 				write(1, "\n", 1);
@@ -86,6 +85,7 @@ void	long_display(int ac, t_file *files, t_opt *option)
 	int		nb_file;
 
 	display_errors(files);
+	files = which_sort(files, option);
 	nb_file = long_display_non_dir(files, option);
 	if (nb_file != 0 && nb_file != ac)
 		write(1, "\n", 1);
