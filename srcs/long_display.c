@@ -51,6 +51,8 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 				display_file_error(temp);
 			else
 			{
+				if (!(file_list_len(temp->inside)))
+					break ;
 				display_totalblocks(temp);
 				temp->inside = which_sort(temp->inside, option);
 				long_display_inside(temp->inside, option);

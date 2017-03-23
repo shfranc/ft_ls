@@ -22,6 +22,7 @@ libft/objs/*.o
 # executables
 libft/libft.a
 ft_ls
+ft_ls_bis
 
 # debug
 *.dSYM

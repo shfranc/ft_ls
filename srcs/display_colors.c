@@ -16,7 +16,7 @@ char	*which_color(t_file *file)
 {
 	char *color;
 
-	color = ft_strdup(RESET);
+	color = NULL;
 	if ((file->lstat.st_mode & S_ISUID) == S_ISUID)
 		color = ft_strjoin(BLACK, BGRED);
 	else if ((file->lstat.st_mode & S_ISGID) == S_ISGID)
@@ -27,6 +27,8 @@ char	*which_color(t_file *file)
 		|| (file->lstat.st_mode & S_IXGRP) == S_IXGRP
 		|| (file->lstat.st_mode & S_IXOTH) == S_IXOTH)
 		color = ft_strdup(RED);
+	else
+		color = ft_strdup(RESET);
 	return (color);
 }
 

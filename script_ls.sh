@@ -22,5 +22,6 @@ gcc -g -Wall -Werror -Wextra -o ft_ls_bis \
 	srcs/long_format.c \
 	srcs/long_format_details_part1.c \
 	srcs/long_format_details_part2.c \
-	srcs/long_display.c
+	srcs/long_display.c \
+	srcs/display_colors.c
 echo "compil ft_ls : \033[01;32mOK\033[00m"

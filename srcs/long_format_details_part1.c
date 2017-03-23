@@ -51,6 +51,11 @@ void	get_perms(char *long_format, t_file *file)
 	}
 }
 
+// void	get_acl(char *long_format, t_file *file)
+// {
+
+// }
+
 void	get_nblink(char *long_format, t_file *file, t_max *max)
 {
 	int		padd;

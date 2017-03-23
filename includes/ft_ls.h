@@ -25,7 +25,7 @@
 # include <uuid/uuid.h> /* getpwuid & getgrgid */
 # include <time.h> /* ctime */
 
-# define OPTIONS	"RSaflrtu"
+# define OPTIONS	"GRSaflrtu"
 # define USAGE		"\nusage: ft_ls [-"OPTIONS"] [file ...]"
 # define ILLEGAL	"ft_ls: illegal option -- "
 # define LS			"ft_ls: "
