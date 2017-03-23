@@ -59,21 +59,31 @@ char	*type_color(t_file *file)
 	 return (color);
 }
 
-void	join_color(t_file *file, t_opt *option)
+void	join_color(t_file *file, char *s)
 {
-	char	*new_name;
 	char	*color;
-	char	*temp;
 
+		color = which_color(file);
+		file->color_name = ft_strjoin3(color, s, RESET);
+		free(color);
+}
+
+void	long_display_line(t_file *temp, t_opt *option)
+{
 	if (option->u_g)
 	{
-		color = which_color(file);
-		new_name = ft_strnew(ft_strlen(file->name) + ft_strlen(color) + 7);
-		new_name = ft_strcat(ft_strcat(ft_strcpy(new_name, color), file->name), RESET);
-		temp = file->name;
-		file->name = ft_strdup(new_name);
-		// free(temp);
+		write(1, temp->long_format, (temp->len.total));
+		join_color(temp, temp->name);
+		if (S_ISLNK(temp->lstat.st_mode))
+		{
+			ft_putstr(temp->color_name);
+			ft_putendl(ft_strstr(temp->long_format, "->") - 1);
+		}
+		else
+			ft_putendl(temp->color_name);
 	}
+	else
+		ft_putendl(temp->long_format);
 }
 
 /*
@@ -84,10 +94,8 @@ void	join_color(t_file *file, t_opt *option)
 ** 4. dx  pipe = YELLOW --> S_IFIFO
 ** 6. eg  block special = BLUE + BGCYAN --> S_IFBLK
 ** 7. ed  character special = BLUE + BGYELLOW --> S_IFCHR
-
 ** 8. ab  executable with setuid bit set = BLACK + BGRED --> S_ISUID
 ** 9. ag  executable with setgid bit set = BLACK + BGCYAN --> S_ISGID
-
 ** 11. ad directory writable to others, without sticky bit = BLACK + BGYELLOW --> S_IFDIR && S_IWOTH
 ** 10. ac directory writable to others, with sticky bit = BLACK + BGGREEN --> S_IFDIR && S_IWOTH && S_ISVTX
 */

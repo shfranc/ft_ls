@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-int		display_non_dir(t_file *files)
+int		display_non_dir(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 	int		nb_file;
@@ -24,7 +24,15 @@ int		display_non_dir(t_file *files)
 		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) != 0)
 		{
 			if (temp->error == 0 || temp->error == 20)
-				ft_putendl(temp->path);
+			{
+				if (option->u_g)
+				{
+					join_color(temp, temp->path);
+					ft_putendl(temp->color_name);
+				}
+				else
+					ft_putendl(temp->path);
+			}
 			nb_file++;
 		}
 		temp = temp->next;
@@ -75,10 +83,10 @@ void	display_inside(t_file *files, t_opt *option)
 			//ft_putendl(ft_strrchr(temp->name, '/') + 1);
 			if (option->u_g)
 			{
-				join_color(temp, option);
-				// ft_putendl(color);
+				join_color(temp, temp->name);
+				ft_putendl(temp->color_name);
 			}
-			// else
+			else
 				ft_putendl(temp->name);
 			temp = temp->next;
 		}
@@ -91,7 +99,7 @@ void	classic_display(int ac, t_file *files, t_opt *option)
 
 	display_errors(files);
 	files = which_sort(files, option);
-	nb_file = display_non_dir(files);
+	nb_file = display_non_dir(files, option);
 	if (nb_file != 0 && nb_file != ac)
 		write(1, "\n", 1);
 	display_dir(nb_file, ac, files, option);

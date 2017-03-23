@@ -44,18 +44,14 @@ void	get_maj_min(char *long_format, t_file *file, t_max *max)
 	padd_maj = max->maj - file->len.maj; 
 	s_maj = ft_itoa(FT_MAJ(file->lstat.st_rdev));
 	temp = ft_strjoin(s_maj, ", ");
-	ft_memcpy(long_format + 12
-	+ max->nblink + 1
-	+ max->user + 2
-	+ max->group + 2
+	ft_memcpy(long_format + 12 + max->nblink + 1
+	+ max->user + 2	+ max->group + 2
 	+ padd_maj, temp, file->len.maj + 2);
 
 	padd_min = max->min - file->len.min;
 	s_min = ft_itoa(FT_MIN(file->lstat.st_rdev));
-	ft_memcpy(long_format + 12
-	+ max->nblink + 1
-	+ max->user + 2
-	+ max->group + 2
+	ft_memcpy(long_format + 12 + max->nblink + 1
+	+ max->user + 2	+ max->group + 2
 	+ max->maj + 2 + padd_min, s_min, file->len.min);
 	free(temp);
 	free(s_maj);

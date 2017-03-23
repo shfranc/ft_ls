@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/22 19:47:25 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/23 12:35:43 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct	s_len
 	int				size;
 	int				maj;
 	int				min;
+	int				total;
 }				t_len;
 
 typedef struct	s_max
@@ -49,7 +50,7 @@ typedef struct	s_max
 	int				user;
 	int				group;
 	int				size;
-	int				total;
+//	int				total;
 	int				maj;
 	int				min;
 }				t_max;
@@ -77,6 +78,7 @@ typedef struct	s_file
 ** r	reverse any sorting (except no sorting)
 ** t	sort by modification time
 ** -- BONUS --
+** G	bonus color, 11 special colors, same as LS
 ** S	sort by size, bigger to smaller
 ** u	sort by last access time with -t and -l, no effect otherwise
 ** f	no acsii sorting + option 'a' active
@@ -134,7 +136,7 @@ void			display_errors(t_file *names);
 /*
 ** classic_display.c
 */
-int				display_non_dir(t_file *files);
+int				display_non_dir(t_file *files, t_opt *option);
 void			display_dir(int nb_file, int ac, t_file *files, t_opt *option);
 void			display_inside(t_file *files, t_opt *option);
 void			classic_display(int ac, t_file *files, t_opt *option);
@@ -144,7 +146,8 @@ void			classic_display(int ac, t_file *files, t_opt *option);
 */
 char			*which_color(t_file *file);
 char			*type_color(t_file *file);
-void			join_color(t_file *file, t_opt *option);
+void			join_color(t_file *file, char *s);
+void			long_display_line(t_file *temp, t_opt *option);
 
 /*
 ** recursive_search.c 

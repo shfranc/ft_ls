@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_misc.c                                     :+:      :+:    :+:   */
+/*   printbit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/13 12:57:39 by sfranc           ###   ########.fr       */
+/*   Created: 2017/03/20 14:32:51 by sfranc            #+#    #+#             */
+/*   Updated: 2017/03/20 15:32:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-void	check_arg_vide(int ac, char **av)
+void	printbit(int nb)
 {
-	struct stat	av_stat;
+	unsigned int	mask;
 
-	while (--ac)
+	mask = (1 << 31);
+	while (mask)
 	{
-		++av;
-		if ((ft_strequ(*av, "")))
-		{
-			stat("", &av_stat);
-			ft_putstr_fd(LS, 2);
-			ft_putstr_fd(""":", 2);
-			ft_exit(strerror(errno));
-		}
+		if (nb & mask)
+			write(1, "1", 1);
+		else
+			write(1, "0", 1);
+		mask >>= 1;
 	}
-}
-
-int		set_current_dir(int ac, char ***av)
-{
-	if (ac == 0)
-	{
-		ac++;
-		**av = ".";
-	}
-	return (ac);
 }

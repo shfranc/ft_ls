@@ -27,7 +27,7 @@ int		long_display_non_dir(t_file *files, t_opt *option)
 			if (temp->error == 0 || temp->error == 20)
 			{
 				fill_long_format(files, option);
-				ft_putendl(temp->long_format);
+				long_display_line(temp, option);
 			}
 			nb_file++;
 		}
@@ -43,8 +43,7 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 	temp = files;
 	while (temp)
 	{
-		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0
-				&& ((temp->lstat.st_mode & S_IFMT) ^ S_IFLNK) != 0)
+		if (S_ISDIR(temp->stat.st_mode) && !S_ISLNK(temp->lstat.st_mode))
 		{
 			if (ac != 1)
 			{
@@ -75,7 +74,7 @@ void	long_display_inside(t_file *files, t_opt *option)
 	temp = files;
 	while (temp)
 	{
-		ft_putendl(temp->long_format);
+		long_display_line(temp, option);
 		temp = temp->next;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 16:47:23 by sfranc            #+#    #+#              #
-#    Updated: 2017/03/03 12:32:25 by sfranc           ###   ########.fr        #
+#    Updated: 2017/03/23 11:50:07 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRCS = 	$(addprefix $(PATH_SRCS)/, ft_atoi.c \
 		ft_striter.c \
 		ft_striteri.c \
 		ft_strjoin.c \
+		ft_strjoin3.c \
 		ft_strlcat.c \
 		ft_strlen.c \
 		ft_strmap.c \
@@ -81,6 +82,7 @@ SRCS = 	$(addprefix $(PATH_SRCS)/, ft_atoi.c \
 		ft_strtrim.c \
 		ft_tolower.c \
 		ft_toupper.c \
+		printbit.c \
 		sort_int_tab.c \
 		ull_len.c \
 		ull_toa.c)
@@ -98,7 +100,7 @@ $(NAME): $(OBJS)
 	@ranlib $@
 	@echo "make $@ : $(GREEN)OK$(RESET)"
 
-$(PATH_OBJS)/%.o: $(PATH_SRCS)/%.c
+$(PATH_OBJS)/%.o: $(PATH_SRCS)/%.c $(INCLUDES)
 	@gcc $(FLAGS) -I $(INCLUDES) -c $< -o $@
 	@echo "compil $@ : $(YELLOW)OK$(RESET)"
 

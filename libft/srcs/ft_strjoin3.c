@@ -1,40 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_misc.c                                     :+:      :+:    :+:   */
+/*   ft_strjoin3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/13 12:57:39 by sfranc           ###   ########.fr       */
+/*   Created: 2017/03/23 11:48:25 by sfranc            #+#    #+#             */
+/*   Updated: 2017/03/23 11:49:06 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-void	check_arg_vide(int ac, char **av)
+char	*ft_strjoin3(char *s1, char *s2, char *s3)
 {
-	struct stat	av_stat;
+	char *new;
 
-	while (--ac)
-	{
-		++av;
-		if ((ft_strequ(*av, "")))
-		{
-			stat("", &av_stat);
-			ft_putstr_fd(LS, 2);
-			ft_putstr_fd(""":", 2);
-			ft_exit(strerror(errno));
-		}
-	}
-}
-
-int		set_current_dir(int ac, char ***av)
-{
-	if (ac == 0)
-	{
-		ac++;
-		**av = ".";
-	}
-	return (ac);
+	new = ft_strnew(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3));
+	new = ft_strcat(ft_strcat(ft_strcpy(new, s1), s2), s3);
+	return (new);
 }

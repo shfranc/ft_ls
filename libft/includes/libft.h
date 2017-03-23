@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:37:22 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/03 12:28:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/23 11:50:40 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int				ft_strequ(char const *s1, char const *s2);
 int				ft_strnequ(char const *s1, char const *s2, size_t n);
 char			*ft_strsub(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_strjoin3(char *s1, char *s2, char *s3);
 char			*ft_strtrim(char const *s);
 char			**ft_strsplit(char const *s, char c);
 int				ft_nb_words(char const *s, char c);
@@ -88,7 +89,7 @@ void			ft_putstr_fd(char const *str, int fd);
 void			ft_putendl_fd(char const *str, int fd);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_putnbr_endl(int n);
-
+void			printbit(int nb);
 /*
 ** Fonctions sur des listes
 */

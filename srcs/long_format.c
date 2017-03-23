@@ -59,9 +59,12 @@ void		set_max_len(t_file *files, t_max *max)
 		max->size < temp->len.size ? max->size = temp->len.size : 0;
 		temp = temp->next;
 	}
-	// if (max->maj || max->min)
-	// 	max->size < max->maj + max->min + 2 ? max->size = max->maj + max->min + 2 : 0;
-	max->total = max->nblink + max->user + max->group + max->size + 31;
+	temp = files;
+	while (temp)
+	{
+		temp->len.total = max->nblink + max->user + max->group + max->size + 31;
+		temp = temp->next;
+	}
 }
 
 void	fill_long_format(t_file *files, t_opt *option)
@@ -83,7 +86,7 @@ char	*get_long_format(t_file *file, t_max *max, t_opt *option)
 	char	*long_format;
 	int		len;
 	
-	len = max->total + ft_strlen(file->name);
+	len = file->len.total + ft_strlen(file->name);
 	if (((file->lstat.st_mode & S_IFMT) ^ S_IFLNK) == 0)
 		len += 1024;
 	

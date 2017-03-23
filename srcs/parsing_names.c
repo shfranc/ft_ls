@@ -38,17 +38,6 @@ t_file	*file_new(char *path, t_opt *option)
 	return (elem);
 }
 
-/*void	file_add(t_file **begin, t_file *new) // on ne surprotege pas file_add, donc bien verifier que begin existe
-{
-	if (*begin == NULL)
-		*begin = new;
-	else
-	{
-		new->next = *begin;
-		*begin = new;
-	}
-}*/
-
 void	file_add_last(t_file **begin, t_file *new)
 {
 	t_file	*temp;
@@ -83,7 +72,7 @@ void	walk_dir(char *av_dir, t_file **files, t_opt *option)
 	{
 		if (!option->a && *dir_temp->d_name == '.')
 			continue ;
-		path = create_path(av_dir, dir_temp->d_name);
+		path = ft_strjoin3(av_dir, "/", dir_temp->d_name);
 		elem = file_new(path, option);
 		file_add_last(&begin, elem);
 		ft_strdel(&path);
