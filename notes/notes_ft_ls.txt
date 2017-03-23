@@ -4,7 +4,7 @@ FT_LS
 API : Application programming Interface, set of routines, protocols, tools for building software applications, how software components should interact.
 Se pencher sur un design initial.
 Optimiser la libft.
-Rendre avec un Makefile qui compile la lib avec son Makefile, puis compile le projet (et le recompile que si necessaire).
+Rendre avec un Makefile qui compile la lib avec son Makefile, puis compile le projet (et le recompile que si nécessaire).
 
 File System :
 -------------
@@ -20,7 +20,7 @@ Architecture = 3 layers
 	interact with the device drivers or the channel (input/output) to drive the storage device.
 Filename from the Unicode character set.
 
-Fonctions autorisees :
+Fonctions autorisées :
 ----------------------
 	write		<unistd.h>		void	write(int fd, const void *buf, size_t nbyte)
 				write output

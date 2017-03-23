@@ -94,6 +94,7 @@ char	*get_long_format(t_file *file, t_max *max, t_opt *option)
 	ft_memset(long_format, ' ', len);
 	get_type(long_format, file);
 	get_perms(long_format, file);
+	get_attr_acl(long_format, file);
 	get_nblink(long_format, file, max);
 	get_user_owner(long_format, file, max);
 	get_size(long_format, file, max);

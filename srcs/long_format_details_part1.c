@@ -51,10 +51,23 @@ void	get_perms(char *long_format, t_file *file)
 	}
 }
 
-// void	get_acl(char *long_format, t_file *file)
-// {
+void	get_attr_acl(char *long_format, t_file *file)
+{
+	acl_t	acl;
 
-// }
+	if (S_ISLNK(file->lstat.st_mode))
+	{
+		listxattr(file->path, NULL, 0, XATTR_NOFOLLOW) > 0 ? *(long_format + 10) = '@': 0;
+		acl_get_link_np(file->path, ACL_TYPE_EXTENDED) ? *(long_format + 10) = '+': 0;
+		acl_free()
+	}
+	else
+	{
+		listxattr(file->path, NULL, 0, 0) > 0 ? *(long_format + 10) = '@': 0;
+		acl_get_file(file->path, ACL_TYPE_EXTENDED) ? *(long_format + 10) = '+': 0;
+	}
+
+	}
 
 void	get_nblink(char *long_format, t_file *file, t_max *max)
 {

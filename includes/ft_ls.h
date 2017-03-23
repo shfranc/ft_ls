@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/23 15:11:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/23 17:12:32 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <grp.h> /* getgrgid */
 # include <uuid/uuid.h> /* getpwuid & getgrgid */
 # include <time.h> /* ctime */
+# include <sys/xattr.h> /* extended attributes */
 
 # define OPTIONS	"GRSaflrtu"
 # define USAGE		"\nusage: ft_ls [-"OPTIONS"] [file ...]"
@@ -186,6 +187,7 @@ char			*get_long_format(t_file *file, t_max *max, t_opt *option);
 */
 void			get_type(char *long_format, t_file *file);
 void			get_perms(char *long_format, t_file *file);
+void			get_attr_acl(char *long_format, t_file *file);
 void			get_nblink(char *long_format, t_file *file, t_max *max);
 void			get_user_owner(char *long_format, t_file *file, t_max *max);
 

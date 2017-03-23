@@ -27,6 +27,6 @@ int		main(int ac, char **av)
 		long_display(ac, files, &option);
 	else
 		classic_display(ac, files, &option);
-	while (1);
+	// while (1);
 	return (0);
 }
