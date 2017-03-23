@@ -80,7 +80,6 @@ void	display_inside(t_file *files, t_opt *option)
 		temp = files;
 		while (temp)
 		{
-			//ft_putendl(ft_strrchr(temp->name, '/') + 1);
 			if (option->u_g)
 			{
 				join_color(temp, temp->name);

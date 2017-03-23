@@ -37,28 +37,28 @@ void	get_maj_min(char *long_format, t_file *file, t_max *max)
 	char	*s_maj;
 	char	*s_min;
 	char	*temp;
-	
+
 	if (((file->lstat.st_mode & S_IFMT) ^ S_IFCHR) != 0
 			&& ((file->lstat.st_mode & S_IFMT) ^ S_IFBLK) != 0)
 		return ;
-	padd_maj = max->maj - file->len.maj; 
+	padd_maj = max->maj - file->len.maj;
 	s_maj = ft_itoa(FT_MAJ(file->lstat.st_rdev));
 	temp = ft_strjoin(s_maj, ", ");
 	ft_memcpy(long_format + 12 + max->nblink + 1
-	+ max->user + 2	+ max->group + 2
-	+ padd_maj, temp, file->len.maj + 2);
-
+		+ max->user + 2 + max->group + 2
+		+ padd_maj, temp, file->len.maj + 2);
 	padd_min = max->min - file->len.min;
 	s_min = ft_itoa(FT_MIN(file->lstat.st_rdev));
 	ft_memcpy(long_format + 12 + max->nblink + 1
-	+ max->user + 2	+ max->group + 2
-	+ max->maj + 2 + padd_min, s_min, file->len.min);
+		+ max->user + 2 + max->group + 2
+		+ max->maj + 2 + padd_min, s_min, file->len.min);
 	free(temp);
 	free(s_maj);
 	free(s_min);
 }
 
-void	get_timestamp(char *long_format, t_file *file, t_opt *option, t_max *max)
+void	get_timestamp(char *long_format, t_file *file,
+	t_opt *option, t_max *max)
 {
 	char	*t_time;
 	char	*timestamp;
@@ -96,7 +96,7 @@ void	get_name(char *long_format, t_file *file, t_max *max)
 		if (!(link_name = ft_strnew(1024)))
 			ft_exit("Unable to malloc link_name");
 		if ((ret = readlink(file->path, link_name, 1024)) == -1)
-			ft_exit("Unable to get link name");	
+			ft_exit("Unable to get link name");
 		arrow = ft_strjoin(" -> ", link_name);
 		ft_memcpy(long_format + padd + len_name, arrow, ft_strlen(arrow));
 		*(long_format + padd + len_name + ft_strlen(arrow)) = 0;

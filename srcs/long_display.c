@@ -46,10 +46,7 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 		if (S_ISDIR(temp->stat.st_mode) && !S_ISLNK(temp->lstat.st_mode))
 		{
 			if (ac != 1)
-			{
-				ft_putstr(temp->path);
-				ft_putendl(":");
-			}
+				ft_putendl2(temp->path, ":");
 			if (temp->error == 13)
 				display_file_error(temp);
 			else
@@ -91,21 +88,18 @@ void	long_display(int ac, t_file *files, t_opt *option)
 	long_display_dir(nb_file, ac, files, option);
 }
 
-void	display_totalblocks(t_file *file)
+void	long_display_line(t_file *temp, t_opt *option)
 {
-	unsigned long long	size;
-	t_file				*temp;
-	char				*s;
-
-	temp = file->inside;
-	size = 0;
-	while (temp)
+	if (option->u_g)
 	{
-		size += temp->lstat.st_blocks;
-		temp = temp->next;
+		write(1, temp->long_format, (temp->len.total));
+		join_color(temp, temp->name);
+		if (S_ISLNK(temp->lstat.st_mode))
+			ft_putendl2(temp->color_name,
+				ft_strstr(temp->long_format, "->") - 1);
+		else
+			ft_putendl(temp->color_name);
 	}
-	ft_putstr("total ");
-	s = ull_toa(size);
-	ft_putendl(s);
-	free(s);
+	else
+		ft_putendl(temp->long_format);
 }

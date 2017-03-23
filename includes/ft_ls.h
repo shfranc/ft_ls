@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/23 12:35:43 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/23 15:11:22 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,14 +142,6 @@ void			display_inside(t_file *files, t_opt *option);
 void			classic_display(int ac, t_file *files, t_opt *option);
 
 /*
-** display_colors.c
-*/
-char			*which_color(t_file *file);
-char			*type_color(t_file *file);
-void			join_color(t_file *file, char *s);
-void			long_display_line(t_file *temp, t_opt *option);
-
-/*
 ** recursive_search.c 
 */
 void			readndisplay_inside(t_file *files_inside, t_opt *option);
@@ -161,6 +153,7 @@ t_file			*which_sort(t_file *files, t_opt *option);
 t_file			*merge_sort(t_file *files, void (*f)(t_file**, t_file**, t_file**));
 t_file			*merge(t_file *left, t_file *right, void (*f)(t_file**, t_file**, t_file**));
 int				file_list_len(t_file *files);
+void			pick_last_elem(t_file **temp, t_file **side);
 
 
 /*
@@ -183,6 +176,7 @@ void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
 ** long_format.c 
 */
 void			get_usr_group_struct(t_file *elem);
+void			init_max(t_max *max);
 void			set_max_len(t_file *files, t_max *max);
 void			fill_long_format(t_file *files, t_opt *option);
 char			*get_long_format(t_file *file, t_max *max, t_opt *option);
@@ -210,5 +204,15 @@ int				long_display_non_dir(t_file *files, t_opt *option);
 void			long_display_dir(int nb_file, int ac, t_file *files, t_opt *option);
 void			long_display_inside(t_file *files, t_opt *option);
 void			long_display(int ac, t_file *files, t_opt *option);
+void			long_display_line(t_file *temp, t_opt *option);
+
+/*
+** display_colors.c
+*/
+char			*which_color(t_file *file);
+char			*type_color(t_file *file);
+void			join_color(t_file *file, char *s);
 void			display_totalblocks(t_file *file);
+void			ft_putendl2(char *s1, char *s2);
+
 #endif

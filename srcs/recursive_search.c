@@ -16,20 +16,17 @@ void	readndisplay_inside(t_file *files_inside, t_opt *option)
 {
 	t_file *temp;
 
-	if (option->u_r != 'R')
+	if (!option->u_r)
 		return ;
 	temp = files_inside;
 	while (temp)
 	{
-		if (!(ft_strequ(temp->name, "."))
-				&& !(ft_strequ(temp->name, ".."))
-				&& (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
-				&& (((temp->lstat.st_mode & S_IFMT) ^ S_IFLNK) != 0))
+		if (!(ft_strequ(temp->name, ".")) && !(ft_strequ(temp->name, ".."))
+			&& S_ISDIR(temp->stat.st_mode) && !(S_ISLNK(temp->lstat.st_mode)))
 		{
 			walk_dir(temp->path, &temp, option);
 			write(1, "\n", 1);
-			ft_putstr(temp->path);
-			ft_putendl(":");
+			ft_putendl2(temp->path, ":");
 			if (temp->error != 0)
 				display_file_error(temp);
 			else

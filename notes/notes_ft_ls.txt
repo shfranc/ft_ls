@@ -98,7 +98,7 @@ Fonctions autorisees :
 				#define        S_IFWHT  0160000  /* whiteout */
 				#define S_ISUID 0004000  /* set user id on execution */ --> special permissions (S/s)
 				#define S_ISGID 0002000  /* set group id on execution */ --> ""
-				#define S_ISVTX 0001000  /* save swapped text even after use */
+				#define S_ISVTX 0001000  /* save swapped text even after use */ --> Sticky bit (T/t)
 				#define S_IRUSR 0000400  /* read permission, owner */
 				#define S_IWUSR 0000200  /* write permission, owner */
 				#define S_IXUSR 0000100  /* execute/search permission, owner */	
@@ -106,6 +106,21 @@ Fonctions autorisees :
 				S_IRUSR	S_IWUSR	S_IXUSR
 				S_IRGRP	S_IWGRP	S_IXGRP
 				S_IROTH	S_IWOTH	S_IXOTH
+
+				S_ISBLK(m)
+				Test for a block special file.
+				S_ISCHR(m)
+				Test for a character special file.
+				S_ISDIR(m)
+				Test for a directory.
+				S_ISFIFO(m)
+				Test for a pipe or FIFO special file.
+				S_ISREG(m)
+				Test for a regular file.
+				S_ISLNK(m)
+				Test for a symbolic link.
+				S_ISSOCK(m)
+				Test for a socket.
 
 				ces macros sont des masques unsigned short en octal.
 				http://stackoverflow.com/questions/15055634/understanding-and-decoding-the-file-mode-value-from-stat-function-output

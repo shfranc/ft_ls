@@ -21,18 +21,8 @@ void	ft_exit(char *s)
 void	display_option(t_opt *option)
 {
 	ft_putstr("option : ");
-	write(1, (char*)option, 8);
+	write(1, (char*)option, 9);
 	write(1, "\n", 1);
-/*	ft_putchar(option->u_r);
-	ft_putchar(option->u_s);
-	ft_putchar(option->a);
-	ft_putchar(option->f);
-	ft_putchar(option->l);
-	ft_putchar(option->r);
-	ft_putchar(option->t);
-	ft_putchar(option->u);
-//	if (option->u_r || option->a || option->l || option->r || option->t)
-		ft_putchar('\n');*/
 }
 
 void	display_illegal_option(char c)
@@ -50,7 +40,7 @@ void	display_file_error(t_file *file)
 	ft_putendl_fd(strerror(file->error), 2);
 }
 
-void	display_errors(t_file *names) /* hors Permission Denied */
+void	display_errors(t_file *names)
 {
 	t_file	*temp;
 
