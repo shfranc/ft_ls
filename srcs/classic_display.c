@@ -72,11 +72,19 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 void	display_inside(t_file *files, t_opt *option)
 {
 	t_file	*temp;
+	
+
 
 	if (option->l)
 		long_display_inside(files, option);
+
 	else
 	{
+		if (!option->c1)
+		{
+			ft_putnbr(fetch_nb_column(files));
+			ft_putendl2("\n", "\n");
+		}
 		temp = files;
 		while (temp)
 		{

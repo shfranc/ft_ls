@@ -405,3 +405,25 @@ F     bold magenta
 G     bold cyan
 H     bold light grey; looks like bright white
 x     default foreground or background
+
+TERMWIDTH
+---------
+
+#include <sys/ioctl.h> --> ioctl rend winsize avec w_row.
+
+man 4 tty --> man tcgetattr --> man 4 termios
+#include <termios.h> int tcgetattr(int fildes, struct termios *termios_p);
+
+termios -- general terminal line discipline
+
+The termios structure
+		tcflag_t c_iflag;      /* input modes */
+        tcflag_t c_oflag;      /* output modes */
+        tcflag_t c_cflag;      /* control modes */
+        tcflag_t c_lflag;      /* local modes */
+        cc_t     c_cc[NCCS];   /* special characters */
+
+IGNCR  Ignore carriage return on input.
+
+ICRNL  Translate carriage return to newline on input (unless IGNCR is
+              set).

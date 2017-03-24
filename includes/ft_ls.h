@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/23 17:12:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/24 11:43:29 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@
 # include <sys/stat.h> /* stat + struct stat */
 # include <stdio.h> /* strerror */
 # include <dirent.h> /* opendir + DIR, readdir + struct dirent */
-# include <sys/types.h> /* getpwuid */
+# include <sys/types.h> /* getpwuid, acl */
 # include <pwd.h> /* getpwuid */
 # include <grp.h> /* getgrgid */
 # include <uuid/uuid.h> /* getpwuid & getgrgid */
 # include <time.h> /* ctime */
 # include <sys/xattr.h> /* extended attributes */
+# include <sys/acl.h> /* acl */
+#include <sys/ioctl.h> /* winsize */
 
-# define OPTIONS	"GRSaflrtu"
+# define OPTIONS	"GRSaflrtu1"
 # define USAGE		"\nusage: ft_ls [-"OPTIONS"] [file ...]"
 # define ILLEGAL	"ft_ls: illegal option -- "
 # define LS			"ft_ls: "
@@ -96,6 +98,7 @@ typedef struct	s_options
 	char	r;
 	char	t;
 	char	u;
+	char	c1;
 }				t_opt;
 
 typedef void	(*t_comp)(t_file **temp, t_file **left, t_file **right);
@@ -216,5 +219,11 @@ char			*type_color(t_file *file);
 void			join_color(t_file *file, char *s);
 void			display_totalblocks(t_file *file);
 void			ft_putendl2(char *s1, char *s2);
+
+/*
+** display_colors.c
+*/
+int				fetch_nb_column(t_file *files);
+int				set_name_max(t_file	*files);
 
 #endif

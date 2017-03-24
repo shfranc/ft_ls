@@ -6,7 +6,7 @@
 #    By: sfranc <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/03/23 11:54:50 by sfranc           ###   ########.fr        #
+#    Updated: 2017/03/24 17:08:55 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 	long_format_details_part1.c \
 	long_format_details_part2.c \
 	classic_display.c \
+	column.c \
 	display_colors.c \
 	long_display.c \
 	display_errors.c)

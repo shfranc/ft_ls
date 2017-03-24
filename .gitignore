@@ -23,6 +23,7 @@ libft/objs/*.o
 libft/libft.a
 ft_ls
 ft_ls_bis
+essais/a.out
 
 # debug
 *.dSYM

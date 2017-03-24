@@ -57,17 +57,19 @@ void	get_attr_acl(char *long_format, t_file *file)
 
 	if (S_ISLNK(file->lstat.st_mode))
 	{
+		acl = acl_get_link_np(file->path, ACL_TYPE_EXTENDED);
+		acl ? *(long_format + 10) = '+': 0;
+		acl_free((void*)acl);
 		listxattr(file->path, NULL, 0, XATTR_NOFOLLOW) > 0 ? *(long_format + 10) = '@': 0;
-		acl_get_link_np(file->path, ACL_TYPE_EXTENDED) ? *(long_format + 10) = '+': 0;
-		acl_free()
 	}
 	else
 	{
+		acl = acl_get_file(file->path, ACL_TYPE_EXTENDED);
+		acl ? *(long_format + 10) = '+': 0;
+		acl_free((void*)acl);
 		listxattr(file->path, NULL, 0, 0) > 0 ? *(long_format + 10) = '@': 0;
-		acl_get_file(file->path, ACL_TYPE_EXTENDED) ? *(long_format + 10) = '+': 0;
 	}
-
-	}
+}
 
 void	get_nblink(char *long_format, t_file *file, t_max *max)
 {
