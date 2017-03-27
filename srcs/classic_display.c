@@ -82,20 +82,24 @@ void	display_inside(t_file *files, t_opt *option)
 	{
 		if (!option->c1)
 		{
-			ft_putnbr(fetch_nb_column(files));
-			ft_putendl2("\n", "\n");
+			ft_print_column(create_tab_name(files, file_list_len(files), option), fetch_nb_column(files), file_list_len(files));
+			// ft_putnbr(fetch_nb_column(files));
+			// ft_putendl2("\n", "\n");
 		}
-		temp = files;
-		while (temp)
+		else
 		{
-			if (option->u_g)
+			temp = files;
+			while (temp)
 			{
-				join_color(temp, temp->name);
-				ft_putendl(temp->color_name);
+				if (option->u_g)
+				{
+					join_color(temp, temp->name);
+					ft_putendl(temp->color_name);
+				}
+				else
+					ft_putendl(temp->name);
+				temp = temp->next;
 			}
-			else
-				ft_putendl(temp->name);
-			temp = temp->next;
 		}
 	}
 }

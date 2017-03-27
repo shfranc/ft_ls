@@ -225,5 +225,8 @@ void			ft_putendl2(char *s1, char *s2);
 */
 int				fetch_nb_column(t_file *files);
 int				set_name_max(t_file	*files);
+int				get_max(char **tab);
+char			**create_tab_name(t_file *files, int nb_file, t_opt *option);
+void			ft_print_column(char **tab, int col, int nb_file);
 
 #endif
