@@ -3,12 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   column.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:03:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/24 16:03:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/28 16:14:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_ls.h"
+
+int		get_colwidth(t_file *files, int i)
+{
+	struct winsize	w;
+	int				colwidth;
+	int				tab;
+	t_file			*temp;
+	char			**display;
+
+	temp = files;
+	
+
+
+
+
+}
+
+void	ft_print_column(t_file *files, t_opt *option, int non_dir)
+{
+	int	i;
+	int	colwidth;
+
+	i = 0;
+	if (!non_dir)
+		i = 1;
+	if (option->u_g)
+		i = 2;
+	colwidth = get_colwidth(files, i);
+
+
+
+}
+// ===============================================================================
 
 #include "ft_ls.h"
 
@@ -18,10 +53,23 @@ int		fetch_nb_column(t_file *files)
 	int	nb_col;
 	int	max_len;
 	int	tab;
+	char	**temp;
+
 
 	ioctl(0, TIOCGWINSZ, &w);
 	// ft_putnbr_endl(w.ws_col);
 	tab = 8;
+
+	temp = (char**)files;
+	ft_putendl(*(temp + 0));
+	ft_putendl(*(temp + 1));
+	ft_putendl(*(temp + 2));
+
+	temp = (char**)files->next;
+	ft_putendl(*(temp + 0));
+	ft_putendl(*(temp + 1));
+	ft_putendl(*(temp + 2));
+
 
 	max_len = set_name_max(files);
 	ft_putnbr_endl(max_len + tab);
@@ -35,6 +83,7 @@ int		fetch_nb_column(t_file *files)
 	write(1, "\n", 1);
 	max_len = (max_len + tab) & ~(tab - 1);
 	ft_putnbr_endl(max_len);
+
 	nb_col = w.ws_col / max_len; // un critere si le max est plus grand que la largeur
 	// nb_file = file_list_len(files);
 	// ft_putnbr_endl(nb_file);

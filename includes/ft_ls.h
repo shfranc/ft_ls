@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/24 11:43:29 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/28 15:13:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,12 +221,17 @@ void			display_totalblocks(t_file *file);
 void			ft_putendl2(char *s1, char *s2);
 
 /*
-** display_colors.c
+** column.c
 */
 int				fetch_nb_column(t_file *files);
 int				set_name_max(t_file	*files);
 int				get_max(char **tab);
 char			**create_tab_name(t_file *files, int nb_file, t_opt *option);
 void			ft_print_column(char **tab, int col, int nb_file);
+
+// /*
+// ** column.c
+// */
+// void			ft_print_column(t_file *files, t_opt *option, int non_dir);
 
 #endif
