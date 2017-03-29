@@ -16,7 +16,7 @@ srcs/*.c.swp
 notes/*.txt.swp
 
 # objects
-srcs/*.o
+objs/*.o
 libft/objs/*.o
 
 # executables

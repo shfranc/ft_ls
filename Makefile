@@ -3,15 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sfranc <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/03/24 17:08:55 by sfranc           ###   ########.fr        #
+#    Updated: 2017/03/29 11:51:54 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
 SRCS_PATH = srcs
+OBJS_PATH = objs
 SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 	parsing_options.c \
 	parsing_names.c \
@@ -28,7 +29,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 	display_colors.c \
 	long_display.c \
 	display_errors.c)
-OBJS =  $(SRCS:%.c=%.o)
+OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a
 LIB_PATH = libft
@@ -48,7 +49,7 @@ $(NAME): $(LIB) $(OBJS)
 $(LIB):
 	@make -C $(LIB_PATH)
 
-%.o: %.c $(INCLUDES)
+$(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c $(INCLUDES)
 	@$(CC) $(FLAGS) -o $@ -c $< $(addprefix -I , $(INCLUDES))
 	@echo "compil $@ : $(YELLOW) OK $(RESET)"
 

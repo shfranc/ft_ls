@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 15:13:36 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/29 18:11:45 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,14 @@ typedef struct	s_file
 	struct s_file	*inside;
 	struct s_file	*next;
 }				t_file;
+
+typedef struct s_dim
+{
+	int				colwidth;
+	int				col;
+	int				row;
+	int				nb_file;
+}				t_dim;
 
 /*
 ** R	recursive search into folder
@@ -220,18 +228,23 @@ void			join_color(t_file *file, char *s);
 void			display_totalblocks(t_file *file);
 void			ft_putendl2(char *s1, char *s2);
 
-/*
-** column.c
-*/
-int				fetch_nb_column(t_file *files);
-int				set_name_max(t_file	*files);
-int				get_max(char **tab);
-char			**create_tab_name(t_file *files, int nb_file, t_opt *option);
-void			ft_print_column(char **tab, int col, int nb_file);
-
 // /*
 // ** column.c
 // */
-// void			ft_print_column(t_file *files, t_opt *option, int non_dir);
+// int				fetch_nb_column(t_file *files);
+// int				set_name_max(t_file	*files);
+// int				get_max(char **tab);
+// char			**create_tab_name(t_file *files, int nb_file, t_opt *option);
+// void			ft_print_column(char **tab, int col, int nb_file);
+
+/*
+** column.c
+*/
+int				get_nb_column(int colwidth);
+int				get_colwidth(t_file *files, int i);
+char			**create_tab_name(t_file *files, int nb_file, int i);
+void			print_column(char **tab_ref, char **tab, t_dim *dim, int i);
+void			display_column(t_file *files, t_opt *option);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 14:20:31 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/29 20:09:15 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,20 @@
 int		display_non_dir(t_file *files, t_opt *option)
 {
 	t_file	*temp;
+	t_file	*disp;
 	int		nb_file;
 
 	temp = files;
 	nb_file = 0;
+	disp = NULL;
 	while (temp)
 	{
 		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) != 0)
 		{
 			if (temp->error == 0 || temp->error == 20)
 			{
+				if (!option->c1)
+					file_add_last(&disp, temp);
 				if (option->u_g)
 				{
 					join_color(temp, temp->path);
@@ -37,6 +41,8 @@ int		display_non_dir(t_file *files, t_opt *option)
 		}
 		temp = temp->next;
 	}
+	if (!option->c1)
+		display_column(disp, option);
 	return (nb_file);
 }
 
@@ -72,34 +78,27 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 void	display_inside(t_file *files, t_opt *option)
 {
 	t_file	*temp;
-	
-
 
 	if (option->l)
+	{
 		long_display_inside(files, option);
-
+		return ;
+	}
+	if (!option->c1)
+		display_column(files, option);
 	else
 	{
-		if (!option->c1)
+		temp = files;
+		while (temp)
 		{
-			ft_print_column(create_tab_name(files, file_list_len(files), option), fetch_nb_column(files), file_list_len(files));
-			// ft_putnbr(fetch_nb_column(files));
-			// ft_putendl2("\n", "\n");
-		}
-		else
-		{
-			temp = files;
-			while (temp)
+			if (option->u_g)
 			{
-				if (option->u_g)
-				{
-					join_color(temp, temp->name);
-					ft_putendl(temp->color_name);
-				}
-				else
-					ft_putendl(temp->name);
-				temp = temp->next;
+				join_color(temp, temp->name);
+				ft_putendl(temp->color_name);
 			}
+			else
+				ft_putendl(temp->name);
+			temp = temp->next;
 		}
 	}
 }

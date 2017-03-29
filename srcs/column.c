@@ -6,46 +6,129 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:03:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 16:14:44 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/29 19:40:25 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		get_colwidth(t_file *files, int i)
+int		get_nb_column(int colwidth)
 {
 	struct winsize	w;
+	int				col;
+
+	if ((ioctl(0, TIOCGWINSZ, &w)) == -1)
+		ft_exit("Unable to fetch term width");
+	col = w.ws_col / colwidth;
+	return (col); 
+}
+
+int		get_colwidth(t_file *files, int i)
+{
 	int				colwidth;
 	int				tab;
+	int				len;
 	t_file			*temp;
-	char			**display;
 
+	colwidth = 0;
 	temp = files;
-	
-
-
-
-
+	while (temp)
+	{
+		if (i == 2)
+			join_color(temp, temp->name);
+		len = ft_strlen(temp->name);
+		colwidth < len ? colwidth = len : 0;
+		temp = temp->next;
+	}
+	if (i != 2)
+		tab = 8;
+	else
+		tab = 1;
+	colwidth = (colwidth + tab) & ~(tab - 1);
+	return (colwidth);
 }
 
-void	ft_print_column(t_file *files, t_opt *option, int non_dir)
+char	**create_tab_name(t_file *files, int nb_file, int i)
 {
-	int	i;
-	int	colwidth;
+	char 	**tab;
+	t_file	*temp;
+	char	**disp;
+	int		j;
 
-	i = 0;
-	if (!non_dir)
-		i = 1;
+	if (!(tab = (char**)malloc(sizeof(char*) * (nb_file + 1))))
+		ft_exit("Unable to malloc tab");
+	tab[nb_file] = 0;
+	temp = files;
+	j = 0;
+	while (temp)
+	{
+		disp = (char**)temp;
+		tab[j] = *(disp + i);
+		temp = temp->next;
+		j++;
+	}
+	return (tab);
+}
+
+void	print_column(char **tab_ref, char **tab, t_dim *dim, int i)
+{
+	int 	j;
+	// int		k;
+	char	*blank;
+
+	(void)i;
+	(void)tab_ref;
+
+	blank = ft_strnew(dim->colwidth);
+	ft_memset(blank, ' ', dim->colwidth);
+	
+	j = 0;
+	while (j < dim->row)
+	{
+		k = 0;
+		while (k < dim->col)
+		{
+			if ((j + k * dim->row) < dim->nb_file)
+			{
+				ft_putstr(tab[j + k * dim->row]);
+				write(1, blank, dim->colwidth - ft_strlen(tab_ref[j + k * dim->row]));
+			}
+			++k;
+		}
+		write(1, "\n", 1);
+		++j;
+	}
+	free(blank);
+}
+
+void	display_column(t_file *files, t_opt *option)
+{
+	int		i;
+	t_dim	dim;
+	char	**tab;
+	char	**tab_ref;
+
+	i = 1;
 	if (option->u_g)
 		i = 2;
-	colwidth = get_colwidth(files, i);
+	dim.colwidth = get_colwidth(files, i);
+	dim.col = get_nb_column(dim.colwidth);
+	dim.nb_file = file_list_len(files);
 
-
-
+	dim.row = file_list_len(files) / dim.col;
+	if (dim.row * dim.col < dim.nb_file)
+		dim.row += 1;
+	tab = create_tab_name(files, dim.nb_file, i);
+	if (i == 2)
+		tab_ref = create_tab_name(files, dim.nb_file, 1);
+	else
+		tab_ref = tab;
+	print_column(tab_ref, tab, &dim, i);
 }
+
 // ===============================================================================
 
-#include "ft_ls.h"
+/*#include "ft_ls.h"
 
 int		fetch_nb_column(t_file *files)
 {
@@ -56,7 +139,8 @@ int		fetch_nb_column(t_file *files)
 	char	**temp;
 
 
-	ioctl(0, TIOCGWINSZ, &w);
+	if ((ioctl(0, TIOCGWINSZ, &w)) == -1)
+		ft_exit("Unable to fetch term width");
 	// ft_putnbr_endl(w.ws_col);
 	tab = 8;
 
@@ -213,4 +297,4 @@ void	ft_print_column(char **tab, int col, int nb_file)
 		i++;
 	}
 	free(blank);
-}
+}*/
