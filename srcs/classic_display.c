@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 16:34:01 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 19:20:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void	classic_display(int ac, t_file *files, t_opt *option)
 	int		nb_file;
 
 	nb_file = display_errors(files);
-	if (nb_file == ac)
-		write(1, "\n", 1);
+	// if (nb_file == ac)
+	// 	write(1, "\n", 1);
 	files = which_sort(files, option);
 	nb_file = display_non_dir(files, option, nb_file);
 	if (nb_file != 0 && nb_file != ac)

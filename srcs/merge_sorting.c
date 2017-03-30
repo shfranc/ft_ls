@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:57:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 15:22:23 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 19:15:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 **	reverse_sort_ascii,				// 1 r
 **	sort_size,						// 2 S	-- S = 2
 **	reverse_sort_size,				// 3 Sr
-**	sort_time_modified,				// 4 t	-- t = 3
+**	sort_time_modified,				// 4 t	-- t = 4
 **	reverse_sort_time_modified,		// 5 tr
 **	sort_last_access,				// 6 tu	u = +2
 **	reverse_sort_last_access,		// 7 tur
+**	sort_birth_time,				// 8 tU u = +4
+**	reverse_sort_birth_time			// 9 tUr
 */
 
 t_comp	g_comp[] =
@@ -33,6 +35,8 @@ t_comp	g_comp[] =
 	reverse_sort_time_modified,
 	sort_last_access,
 	reverse_sort_last_access,
+	sort_birth_time,
+	reverse_sort_birth_time
 };
 
 t_file	*which_sort(t_file *files, t_opt *option)
@@ -48,8 +52,11 @@ t_file	*which_sort(t_file *files, t_opt *option)
 		i = 4;
 	if (option->t && option->u)
 		i += 2;
+	if (option->t && option->u_u)
+		i += 4;
 	if (option->r)
 		i += 1;
+	// ft_putnbr_endl(i);
 	return (merge_sort(files, g_comp[i]));
 }
 

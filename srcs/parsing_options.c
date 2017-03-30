@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 12:14:49 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 18:02:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 18:26:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_options(t_opt *option)
 	option->u_g = 0;
 	option->u_r = 0;
 	option->u_s = 0;
+	option->u_u = 0;
 	option->a = 0;
 	option->f = 0;
 	option->l = 0;
@@ -31,7 +32,7 @@ void	is_options(char *s, t_opt *option)
 	s++;
 	while (*s)
 	{
-		if (*s != 'G' && *s != 'R' && *s != 'S' && *s != 'a' && *s != 'f'
+		if (*s != 'G' && *s != 'R' && *s != 'S' && *s != 'U' && *s != 'a' && *s != 'f'
 			&& *s != 'l' && *s != 'r' && *s != 't' && *s != 'u' && *s != '1')
 			display_illegal_option(*s);
 		else if (check_priority(*s, option))
@@ -44,12 +45,17 @@ int		check_priority(char c, t_opt *option)
 {
 	if (c == 'f')
 		option->a = 'a';
-	if ((c == 't' || c == 'u') && option->u_s)
+	if (c == 'U' && option->u)
+		option->u = 0;
+	if (c == 'u' && option->u_u)
+		option->u_u = 0;
+	if ((c == 't' || c == 'u' || c == 'U') && option->u_s)
 		return (0);
-	if (c == 'S' && (option->t || option->u))
+	if (c == 'S' && (option->t || option->u || option->u_u))
 	{
 		option->t = 0;
 		option->u = 0;
+		option->u_u = 0;
 	}
 	if (c == '1' && option->l)
 		option->l = 0;
@@ -63,6 +69,7 @@ void	save_option(char c, t_opt *option)
 	c == 'G' ? option->u_g = 'G' : 0;
 	c == 'R' ? option->u_r = 'R' : 0;
 	c == 'S' ? option->u_s = 'S' : 0;
+	c == 'U' ? option->u_u = 'U' : 0;
 	c == 'a' ? option->a = 'a' : 0;
 	c == 'f' ? option->f = 'f' : 0;
 	c == 'l' ? option->l = 'l' : 0;

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 10:31:09 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 17:30:29 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 18:34:07 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,27 @@ void	reverse_sort_size(t_file **temp, t_file **left, t_file **right)
 	else
 	{
 		if ((*left)->lstat.st_size < (*right)->lstat.st_size)
+		{
+			*temp = *left;
+			*left = (*left)->next;
+		}
+		else
+		{
+			*temp = *right;
+			*right = (*right)->next;
+		}
+	}
+}
+
+void	reverse_sort_birth_time(t_file **temp, t_file **left, t_file **right)
+{
+	if ((*left)->lstat.st_birthtimespec.tv_sec
+		== (*right)->lstat.st_birthtimespec.tv_sec)
+		reverse_sort_ascii(temp, left, right);
+	else
+	{
+		if ((*left)->lstat.st_birthtimespec.tv_sec
+			< (*right)->lstat.st_birthtimespec.tv_sec)
 		{
 			*temp = *left;
 			*left = (*left)->next;

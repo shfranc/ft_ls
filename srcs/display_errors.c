@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:20:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 16:31:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 19:19:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	ft_exit(char *s)
 	exit(0);
 }
 
-void	display_option(t_opt *option)
+void	display_options(t_opt *option)
 {
 	ft_putstr("option : ");
-	write(1, (char*)option, 9);
+	write(1, (char*)option, 11);
 	write(1, "\n", 1);
 }
 
@@ -37,7 +37,7 @@ void	display_file_error(t_file *file)
 	ft_putstr_fd(LS, 2);
 	ft_putstr_fd(file->path, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(file->error), 2);
+	ft_putendl_fd(strerror(file->error), 2);
 }
 
 int		display_errors(t_file *files)
@@ -51,8 +51,8 @@ int		display_errors(t_file *files)
 	{
 		if (temp->error != 13 && temp->error != 0 && temp->error != 20)
 		{
-			if (nb_file)
-				write(1, "\n", 1);
+			// if (nb_file)
+			// 	write(1, "\n", 1);
 			display_file_error(temp);
 			nb_file++;
 		}

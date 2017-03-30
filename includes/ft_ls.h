@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 16:26:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 19:01:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct	s_max
 	int				user;
 	int				group;
 	int				size;
-//	int				total;
 	int				maj;
 	int				min;
 }				t_max;
@@ -100,6 +99,7 @@ typedef struct	s_options
 	char	u_g;
 	char	u_r;
 	char	u_s;
+	char	u_u;
 	char	a;
 	char	f;
 	char	l;
@@ -175,6 +175,7 @@ void			sort_ascii(t_file **temp, t_file **left, t_file **right);
 void			sort_time_modified(t_file **temp, t_file **left, t_file **right);
 void			sort_size(t_file **temp, t_file **left, t_file **right);
 void			sort_last_access(t_file **temp, t_file **left, t_file **right);
+void			sort_birth_time(t_file **temp, t_file **left, t_file **right);
 
 /*
 ** reverse_sorting.c
@@ -183,6 +184,7 @@ void			reverse_sort_ascii(t_file **temp, t_file **left, t_file **right);
 void			reverse_sort_time_modified(t_file **temp, t_file **left, t_file **right);
 void			reverse_sort_last_access(t_file **temp, t_file **left, t_file **right);
 void			reverse_sort_size(t_file **temp, t_file **left, t_file **right);
+void			reverse_sort_birth_time(t_file **temp, t_file **left, t_file **right);
 
 /*
 ** long_format.c 

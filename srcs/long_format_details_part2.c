@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:04:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 16:08:59 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 18:37:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	get_timestamp(char *long_format, t_file *file,
 
 	if (option->u)
 		file->lstat.st_mtimespec.tv_sec = file->lstat.st_atimespec.tv_sec;
+	if (option->u_u)
+		file->lstat.st_mtimespec.tv_sec = file->lstat.st_birthtimespec.tv_sec;
 	t_time = ctime(&file->lstat.st_mtimespec.tv_sec);
 	timestamp = ft_strnew(12);
 	ft_memcpy(timestamp, t_time + 4, 12);
