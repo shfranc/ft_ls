@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/29 18:11:45 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 11:26:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,15 +228,6 @@ void			join_color(t_file *file, char *s);
 void			display_totalblocks(t_file *file);
 void			ft_putendl2(char *s1, char *s2);
 
-// /*
-// ** column.c
-// */
-// int				fetch_nb_column(t_file *files);
-// int				set_name_max(t_file	*files);
-// int				get_max(char **tab);
-// char			**create_tab_name(t_file *files, int nb_file, t_opt *option);
-// void			ft_print_column(char **tab, int col, int nb_file);
-
 /*
 ** column.c
 */
@@ -246,5 +237,16 @@ char			**create_tab_name(t_file *files, int nb_file, int i);
 void			print_column(char **tab_ref, char **tab, t_dim *dim, int i);
 void			display_column(t_file *files, t_opt *option);
 
+/*
+** column_part2.c
+*/
+int				display_non_dir_column(t_file *files, t_opt *option);
+t_file			*copy_file(char *path);
+
+/*
+** free.c
+*/
+void			free_file(t_file **files);
+void			del_file(t_file *file);
 
 #endif

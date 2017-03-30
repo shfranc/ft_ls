@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 14:10:24 by sfranc           ###   ########.fr       */
+/*   Created: 2017/03/30 11:22:55 by sfranc            #+#    #+#             */
+/*   Updated: 2017/03/30 12:28:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		main(int ac, char **av)
+void	free_file(t_file **files)
 {
-	t_file	*files;
-	t_opt	option;
+	t_file	*delete;
 
-	files = NULL;
-	check_arg_vide(ac, av);
-	init_options(&option);
-	ac = read_options(ac, &av, &option);
-	read_names(ac, av, &files, &option);
-	// display_option(&option);
-	if (option.l)
-		long_display(ac, files, &option);
-	else
-		classic_display(ac, files, &option);
-	free_file(&files);
-	while (1);
-	return (0);
+	if (!files)
+		return ;
+	while (*files)
+	{
+		delete = *files;
+		*files = (*files)->next;
+		if (delete->inside)
+			free_file(&delete->inside);
+		del_file(delete);
+		free(delete);
+	}
+	*files = NULL;
+}
+
+void	del_file(t_file *file)
+{
+	file->path ? free(file->path) : 0;
+	file->color_name ? free(file->color_name) : 0;
+	file->long_format ? free(file->long_format) : 0;
 }

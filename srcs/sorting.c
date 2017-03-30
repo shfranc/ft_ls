@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 10:41:01 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 14:21:17 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 13:31:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,6 @@ void	sort_ascii(t_file **temp, t_file **left, t_file **right)
 		*right = (*right)->next;
 	}
 }
-
-/*void	sort_time_modified(t_file **temp, t_file **left, t_file **right)
-{
-	if ((*left)->lstat.st_mtimespec.tv_sec
-			> (*right)->lstat.st_mtimespec.tv_sec
-			|| ((*left)->lstat.st_mtimespec.tv_sec
-				== (*right)->lstat.st_mtimespec.tv_sec
-				&& (*left)->lstat.st_mtimespec.tv_nsec
-				>= (*right)->lstat.st_mtimespec.tv_nsec))
-	{
-		*temp = *left;
-		*left = (*left)->next;
-	}
-	else
-	{
-		*temp = *right;
-		*right = (*right)->next;
-	}
-}*/
 
 void	sort_time_modified(t_file **temp, t_file **left, t_file **right)
 {

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/29 20:09:15 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 10:57:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,27 @@
 int		display_non_dir(t_file *files, t_opt *option)
 {
 	t_file	*temp;
-	t_file	*disp;
 	int		nb_file;
 
+	if (!option->c1)
+		return (display_non_dir_column(files, option));
 	temp = files;
 	nb_file = 0;
-	disp = NULL;
 	while (temp)
 	{
-		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) != 0)
+		if (!S_ISDIR(temp->stat.st_mode) && (temp->error == 0 || temp->error == 20))
 		{
-			if (temp->error == 0 || temp->error == 20)
+			if (option->u_g)
 			{
-				if (!option->c1)
-					file_add_last(&disp, temp);
-				if (option->u_g)
-				{
-					join_color(temp, temp->path);
-					ft_putendl(temp->color_name);
-				}
-				else
-					ft_putendl(temp->path);
+				join_color(temp, temp->path);
+				ft_putendl(temp->color_name);
 			}
+			else
+				ft_putendl(temp->path);
 			nb_file++;
 		}
 		temp = temp->next;
 	}
-	if (!option->c1)
-		display_column(disp, option);
 	return (nb_file);
 }
 

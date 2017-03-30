@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/03/29 11:51:54 by sfranc           ###   ########.fr        #
+#    Updated: 2017/03/30 11:57:08 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,16 +25,18 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 	long_format_details_part1.c \
 	long_format_details_part2.c \
 	classic_display.c \
-	column.c \
 	display_colors.c \
+	column.c \
+	column_part2.c \
 	long_display.c \
-	display_errors.c)
+	display_errors.c \
+	free.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a
 LIB_PATH = libft
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 GREEN = \033[01;32m
 YELLOW = \033[01;33m
 CYAN = \033[01;36m
