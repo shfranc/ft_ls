@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:03:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 12:21:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 16:05:40 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		get_nb_column(int colwidth)
 	if ((ioctl(0, TIOCGWINSZ, &w)) == -1)
 		ft_exit("Unable to fetch term width");
 	col = w.ws_col / colwidth;
-	return (col); 
+	return (col);
 }
 
 int		get_colwidth(t_file *files, int i)
@@ -50,7 +50,7 @@ int		get_colwidth(t_file *files, int i)
 
 char	**create_tab_name(t_file *files, int nb_file, int i)
 {
-	char 	**tab;
+	char	**tab;
 	t_file	*temp;
 	char	**disp;
 	int		j;
@@ -70,18 +70,13 @@ char	**create_tab_name(t_file *files, int nb_file, int i)
 	return (tab);
 }
 
-void	print_column(char **tab_ref, char **tab, t_dim *dim, int i)
+void	print_column(char **tab_ref, char **tab, t_dim *dim)
 {
-	int 	j;
+	int		j;
 	int		k;
 	char	*blank;
 
-	(void)i;
-	(void)tab_ref;
-
-	blank = ft_strnew(dim->colwidth);
-	ft_memset(blank, ' ', dim->colwidth);
-	
+	blank = ft_strnew_set(dim->colwidth, ' ');
 	j = 0;
 	while (j < dim->row)
 	{
@@ -91,7 +86,8 @@ void	print_column(char **tab_ref, char **tab, t_dim *dim, int i)
 			if ((j + k * dim->row) < dim->nb_file)
 			{
 				ft_putstr(tab[j + k * dim->row]);
-				write(1, blank, dim->colwidth - ft_strlen(tab_ref[j + k * dim->row]));
+				write(1, blank, dim->colwidth
+					- ft_strlen(tab_ref[j + k * dim->row]));
 			}
 			++k;
 		}
@@ -116,11 +112,10 @@ void	display_column(t_file *files, t_opt *option)
 	dim.colwidth = get_colwidth(files, i);
 	dim.col = get_nb_column(dim.colwidth);
 	dim.nb_file = file_list_len(files);
-
 	dim.row = file_list_len(files) / dim.col;
 	if (dim.row * dim.col < dim.nb_file)
 		dim.row += 1;
 	tab = create_tab_name(files, dim.nb_file, i);
 	tab_ref = create_tab_name(files, dim.nb_file, 1);
-	print_column(tab_ref, tab, &dim, i);
+	print_column(tab_ref, tab, &dim);
 }

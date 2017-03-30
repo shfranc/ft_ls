@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 14:21:27 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 16:35:26 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,17 @@ int		set_current_dir(int ac, char ***av)
 		**av = ".";
 	}
 	return (ac);
+}
+
+void	file_init(t_file *elem)
+{
+	elem->error = 0;
+	elem->path = NULL;
+	elem->name = NULL;
+	elem->color_name = NULL;
+	elem->long_format = NULL;
+	elem->usr = NULL;
+	elem->grp = NULL;
+	elem->next = NULL;
+	elem->inside = NULL;
 }

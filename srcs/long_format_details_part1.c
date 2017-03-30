@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:01:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 14:21:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 16:08:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,17 @@ void	get_attr_acl(char *long_format, t_file *file)
 	if (S_ISLNK(file->lstat.st_mode))
 	{
 		acl = acl_get_link_np(file->path, ACL_TYPE_EXTENDED);
-		acl ? *(long_format + 10) = '+': 0;
+		acl ? *(long_format + 10) = '+' : 0;
 		acl_free((void*)acl);
-		listxattr(file->path, NULL, 0, XATTR_NOFOLLOW) > 0 ? *(long_format + 10) = '@': 0;
+		listxattr(file->path, NULL, 0, XATTR_NOFOLLOW) > 0 ?
+			*(long_format + 10) = '@' : 0;
 	}
 	else
 	{
 		acl = acl_get_file(file->path, ACL_TYPE_EXTENDED);
-		acl ? *(long_format + 10) = '+': 0;
+		acl ? *(long_format + 10) = '+' : 0;
 		acl_free((void*)acl);
-		listxattr(file->path, NULL, 0, 0) > 0 ? *(long_format + 10) = '@': 0;
+		listxattr(file->path, NULL, 0, 0) > 0 ? *(long_format + 10) = '@' : 0;
 	}
 }
 

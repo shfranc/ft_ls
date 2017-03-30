@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 10:41:01 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 13:31:47 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 17:30:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ void	sort_ascii(t_file **temp, t_file **left, t_file **right)
 
 void	sort_time_modified(t_file **temp, t_file **left, t_file **right)
 {
-	if ((*left)->lstat.st_mtimespec.tv_sec == (*right)->lstat.st_mtimespec.tv_sec)
+	if ((*left)->lstat.st_mtimespec.tv_sec
+		== (*right)->lstat.st_mtimespec.tv_sec)
 		sort_ascii(temp, left, right);
 	else
 	{
-		if ((*left)->lstat.st_mtimespec.tv_sec > (*right)->lstat.st_mtimespec.tv_sec)
+		if ((*left)->lstat.st_mtimespec.tv_sec
+			> (*right)->lstat.st_mtimespec.tv_sec)
 		{
 			*temp = *left;
 			*left = (*left)->next;
@@ -47,11 +49,13 @@ void	sort_time_modified(t_file **temp, t_file **left, t_file **right)
 
 void	sort_last_access(t_file **temp, t_file **left, t_file **right)
 {
-	if ((*left)->lstat.st_atimespec.tv_sec == (*right)->lstat.st_atimespec.tv_sec)
+	if ((*left)->lstat.st_atimespec.tv_sec
+		== (*right)->lstat.st_atimespec.tv_sec)
 		sort_ascii(temp, left, right);
 	else
 	{
-		if ((*left)->lstat.st_atimespec.tv_sec > (*right)->lstat.st_atimespec.tv_sec)
+		if ((*left)->lstat.st_atimespec.tv_sec
+			> (*right)->lstat.st_atimespec.tv_sec)
 		{
 			*temp = *left;
 			*left = (*left)->next;

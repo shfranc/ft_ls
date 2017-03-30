@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:20:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 14:20:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 16:31:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,26 @@ void	display_file_error(t_file *file)
 	ft_putstr_fd(LS, 2);
 	ft_putstr_fd(file->path, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(strerror(file->error), 2);
+	ft_putstr_fd(strerror(file->error), 2);
 }
 
-void	display_errors(t_file *names)
+int		display_errors(t_file *files)
 {
 	t_file	*temp;
+	int		nb_file;
 
-	temp = names;
+	nb_file = 0;
+	temp = files;
 	while (temp)
 	{
 		if (temp->error != 13 && temp->error != 0 && temp->error != 20)
+		{
+			if (nb_file)
+				write(1, "\n", 1);
 			display_file_error(temp);
+			nb_file++;
+		}
 		temp = temp->next;
 	}
+	return (nb_file);
 }

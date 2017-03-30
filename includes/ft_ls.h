@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 11:26:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 16:26:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void			read_names(int ac, char **av, t_file **names, t_opt *option);
 */
 void			check_arg_vide(int ac, char **av);
 int				set_current_dir(int ac, char ***av);
-char			*create_path(char *dir, char *file);
+void			file_init(t_file *elem);
 
 /*
 ** display_errors.c
@@ -143,12 +143,12 @@ void			ft_exit(char *s);
 void			display_options(t_opt *option); /* pour debug */
 void			display_illegal_option(char c);
 void			display_file_error(t_file *file);
-void			display_errors(t_file *names);
+int				display_errors(t_file *files);
 
 /*
 ** classic_display.c
 */
-int				display_non_dir(t_file *files, t_opt *option);
+int				display_non_dir(t_file *files, t_opt *option, int nb_file);
 void			display_dir(int nb_file, int ac, t_file *files, t_opt *option);
 void			display_inside(t_file *files, t_opt *option);
 void			classic_display(int ac, t_file *files, t_opt *option);
@@ -234,13 +234,13 @@ void			ft_putendl2(char *s1, char *s2);
 int				get_nb_column(int colwidth);
 int				get_colwidth(t_file *files, int i);
 char			**create_tab_name(t_file *files, int nb_file, int i);
-void			print_column(char **tab_ref, char **tab, t_dim *dim, int i);
+void			print_column(char **tab_ref, char **tab, t_dim *dim);
 void			display_column(t_file *files, t_opt *option);
 
 /*
 ** column_part2.c
 */
-int				display_non_dir_column(t_file *files, t_opt *option);
+int				display_non_dir_column(t_file *files, t_opt *option, int nb_file);
 t_file			*copy_file(char *path);
 
 /*

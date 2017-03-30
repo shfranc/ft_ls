@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 14:08:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 16:34:57 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,17 @@ t_file	*file_new(char *path, t_opt *option)
 
 	if (!(elem = (t_file*)malloc(sizeof(t_file))))
 		ft_exit("Unable to malloc t_file");
-	elem->error = 0;
-	if ((ret_lstat = lstat(path, &elem->lstat)) == -1
-		|| (ret_sstat = stat(path, &elem->stat)) == -1) // 2 assignations
+	file_init(elem);
+	if ((ret_lstat = lstat(path, &elem->lstat)) == -1)
 		elem->error = errno;
-	elem->path = NULL;
+	if ((ret_sstat = stat(path, &elem->stat)) == -1)
+		elem->error = errno;
 	if (!(elem->path = ft_strdup(path)))
 		ft_exit("Unable to malloc path");
-	// elem->name = NULL;
 	if (!(temp = ft_strrchr(elem->path, '/')))
 		elem->name = elem->path;
 	else
 		elem->name = temp + 1;
-	elem->color_name = NULL;
-	elem->long_format = NULL;
-	elem->usr = NULL;
-	elem->grp = NULL;
-	elem->next = NULL;
-	elem->inside = NULL;
 	if (option->l)
 		get_usr_group_struct(elem);
 	return (elem);

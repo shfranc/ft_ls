@@ -6,24 +6,23 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 10:57:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 16:34:01 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		display_non_dir(t_file *files, t_opt *option)
+int		display_non_dir(t_file *files, t_opt *option, int nb_file)
 {
 	t_file	*temp;
-	int		nb_file;
 
 	if (!option->c1)
-		return (display_non_dir_column(files, option));
+		return (display_non_dir_column(files, option, nb_file));
 	temp = files;
-	nb_file = 0;
 	while (temp)
 	{
-		if (!S_ISDIR(temp->stat.st_mode) && (temp->error == 0 || temp->error == 20))
+		if (!S_ISDIR(temp->stat.st_mode)
+			&& (temp->error == 0 || temp->error == 20))
 		{
 			if (option->u_g)
 			{
@@ -100,9 +99,11 @@ void	classic_display(int ac, t_file *files, t_opt *option)
 {
 	int		nb_file;
 
-	display_errors(files);
+	nb_file = display_errors(files);
+	if (nb_file == ac)
+		write(1, "\n", 1);
 	files = which_sort(files, option);
-	nb_file = display_non_dir(files, option);
+	nb_file = display_non_dir(files, option, nb_file);
 	if (nb_file != 0 && nb_file != ac)
 		write(1, "\n", 1);
 	display_dir(nb_file, ac, files, option);

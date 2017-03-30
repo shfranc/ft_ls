@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 14:10:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 17:34:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int		main(int ac, char **av)
 	else
 		classic_display(ac, files, &option);
 	free_file(&files);
-	while (1);
+	// while (1);
 	return (0);
 }

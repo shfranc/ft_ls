@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 12:14:49 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 14:21:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 18:02:10 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ int		check_priority(char c, t_opt *option)
 		option->t = 0;
 		option->u = 0;
 	}
+	if (c == '1' && option->l)
+		option->l = 0;
+	if (c == 'l' && option->c1)
+		option->c1 = 0;
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:04:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 12:24:12 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/30 16:08:59 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	get_timestamp(char *long_format, t_file *file,
 	char	*t_time;
 	char	*timestamp;
 
-	// t_time = ft_strnew(26);
 	if (option->u)
 		file->lstat.st_mtimespec.tv_sec = file->lstat.st_atimespec.tv_sec;
 	t_time = ctime(&file->lstat.st_mtimespec.tv_sec);
@@ -78,7 +77,6 @@ void	get_timestamp(char *long_format, t_file *file,
 		+ max->group + 2
 		+ max->size + 1, timestamp, 12);
 	free(timestamp);
-	// free(t_time);
 }
 
 void	get_name(char *long_format, t_file *file, t_max *max)
