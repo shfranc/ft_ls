@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 10:49:12 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 14:20:53 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 17:31:18 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@ int		long_display_non_dir(t_file *files, t_opt *option)
 	nb_file = 0;
 	while (temp)
 	{
-		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) != 0
-				|| ((temp->lstat.st_mode & S_IFMT) ^ S_IFLNK) == 0)
+		if ((!S_ISDIR(temp->stat.st_mode) || (S_ISLNK(temp->lstat.st_mode))))
 		{
 			if (temp->error == 0 || temp->error == 20)
 			{
+				ft_charswap(&temp->path, &temp->name);
 				fill_long_format(files, option);
 				long_display_line(temp, option);
+				ft_charswap(&temp->name, &temp->path);
+				nb_file++;
 			}
-			nb_file++;
 		}
 		temp = temp->next;
 	}
@@ -80,14 +81,15 @@ void	long_display_inside(t_file *files, t_opt *option)
 
 void	long_display(int ac, t_file *files, t_opt *option)
 {
+	int		nb_error;
 	int		nb_file;
 
-	display_errors(files);
+	nb_error = display_errors(files);
 	files = which_sort(files, option);
 	nb_file = long_display_non_dir(files, option);
-	if (nb_file != 0 && nb_file != ac)
+	if (nb_file != 0 && (nb_file + nb_error) != ac)
 		write(1, "\n", 1);
-	long_display_dir(nb_file, ac, files, option);
+	long_display_dir(nb_file + nb_error, ac, files, option);
 }
 
 void	long_display_line(t_file *temp, t_opt *option)

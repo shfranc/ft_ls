@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/03/30 19:01:25 by sfranc           ###   ########.fr        #
+#    Updated: 2017/03/31 16:49:37 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a
 LIB_PATH = libft
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 GREEN = \033[01;32m
 YELLOW = \033[01;33m
 CYAN = \033[01;36m
@@ -45,7 +45,7 @@ RESET = \033[00m
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJS)
-	@$(CC) $(FLAGS) -o $@ $^ $(LIB)
+	@$(CC) -g $(FLAGS) -o $@ $^ $(LIB)
 	@echo "compil $(NAME) : $(GREEN) OK $(RESET)"
 
 $(LIB):

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 16:34:57 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 16:04:10 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_file	*file_new(char *path, t_opt *option)
 		elem->name = elem->path;
 	else
 		elem->name = temp + 1;
-	if (option->l)
+	if (option->l && (elem->error == 0 || elem->error == 20))
 		get_usr_group_struct(elem);
 	return (elem);
 }

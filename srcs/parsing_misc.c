@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 16:35:26 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 17:07:06 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,20 @@
 void	check_arg_vide(int ac, char **av)
 {
 	struct stat	av_stat;
+	int			ret;
 
 	while (--ac)
 	{
 		++av;
 		if ((ft_strequ(*av, "")))
 		{
-			stat("", &av_stat);
-			ft_putstr_fd(LS, 2);
-			ft_putstr_fd(""":", 2);
-			ft_exit(strerror(errno));
+			if ((ret = stat("", &av_stat)) == -1)
+			{
+				ft_putstr_fd(LS, 2);
+				ft_putstr_fd(""":", 2);
+				ft_exit(strerror(errno));
+			}
+
 		}
 	}
 }

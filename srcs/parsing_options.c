@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 12:14:49 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 18:26:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 12:56:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	is_options(char *s, t_opt *option)
 	s++;
 	while (*s)
 	{
-		if (*s != 'G' && *s != 'R' && *s != 'S' && *s != 'U' && *s != 'a' && *s != 'f'
-			&& *s != 'l' && *s != 'r' && *s != 't' && *s != 'u' && *s != '1')
+		if (*s != 'G' && *s != 'R' && *s != 'S' && *s != 'U' && *s != 'a'
+			&& *s != 'f' && *s != 'l' && *s != 'r' && *s != 't' && *s != 'u'
+			&& *s != '1')
 			display_illegal_option(*s);
 		else if (check_priority(*s, option))
 			save_option(*s, option);

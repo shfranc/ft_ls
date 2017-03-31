@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 19:01:47 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 12:57:24 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # include <time.h> /* ctime */
 # include <sys/xattr.h> /* extended attributes */
 # include <sys/acl.h> /* acl */
-#include <sys/ioctl.h> /* winsize */
+# include <sys/ioctl.h> /* winsize */
 
-# define OPTIONS	"GRSaflrtu1"
+# define OPTIONS	"GRSUaflrtu1"
 # define USAGE		"\nusage: ft_ls [-"OPTIONS"] [file ...]"
 # define ILLEGAL	"ft_ls: illegal option -- "
 # define LS			"ft_ls: "
@@ -90,8 +90,10 @@ typedef struct s_dim
 ** -- BONUS --
 ** G	bonus color, 11 special colors, same as LS
 ** S	sort by size, bigger to smaller
+** U	sort by birth time with -t and -l, no effect otherwise
 ** u	sort by last access time with -t and -l, no effect otherwise
 ** f	no acsii sorting + option 'a' active
+** 1	display in a single column
 */
 
 typedef struct	s_options
@@ -148,7 +150,7 @@ int				display_errors(t_file *files);
 /*
 ** classic_display.c
 */
-int				display_non_dir(t_file *files, t_opt *option, int nb_file);
+int				display_non_dir(t_file *files, t_opt *option);
 void			display_dir(int nb_file, int ac, t_file *files, t_opt *option);
 void			display_inside(t_file *files, t_opt *option);
 void			classic_display(int ac, t_file *files, t_opt *option);
@@ -242,7 +244,7 @@ void			display_column(t_file *files, t_opt *option);
 /*
 ** column_part2.c
 */
-int				display_non_dir_column(t_file *files, t_opt *option, int nb_file);
+int				display_non_dir_column(t_file *files, t_opt *option);
 t_file			*copy_file(char *path);
 
 /*

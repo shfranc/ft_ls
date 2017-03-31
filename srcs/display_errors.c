@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:20:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 19:19:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 16:55:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,31 @@ void	display_illegal_option(char c)
 
 void	display_file_error(t_file *file)
 {
+	char	*temp;
+
 	ft_putstr_fd(LS, 2);
 	ft_putstr_fd(file->path, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(strerror(file->error), 2);
+	temp = strerror(file->error);
+	ft_putendl_fd(temp, 2);
+	free(temp);
 }
 
 int		display_errors(t_file *files)
 {
 	t_file	*temp;
-	int		nb_file;
+	int		nb_error;
 
-	nb_file = 0;
+	nb_error = 0;
 	temp = files;
 	while (temp)
 	{
 		if (temp->error != 13 && temp->error != 0 && temp->error != 20)
 		{
-			// if (nb_file)
-			// 	write(1, "\n", 1);
 			display_file_error(temp);
-			nb_file++;
+			nb_error++;
 		}
 		temp = temp->next;
 	}
-	return (nb_file);
+	return (nb_error);
 }

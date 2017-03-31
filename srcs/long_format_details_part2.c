@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:04:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 18:37:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 17:16:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	get_timestamp(char *long_format, t_file *file,
 	if (option->u_u)
 		file->lstat.st_mtimespec.tv_sec = file->lstat.st_birthtimespec.tv_sec;
 	t_time = ctime(&file->lstat.st_mtimespec.tv_sec);
-	timestamp = ft_strnew(12);
+	if (!(timestamp = ft_strnew(12)))
+		ft_exit("Unable to malloc timestamp");
 	ft_memcpy(timestamp, t_time + 4, 12);
 	if ((time(NULL) - file->lstat.st_mtimespec.tv_sec) > 15811200
 		|| file->lstat.st_mtimespec.tv_sec > time(NULL))
@@ -99,7 +100,8 @@ void	get_name(char *long_format, t_file *file, t_max *max)
 			ft_exit("Unable to malloc link_name");
 		if ((ret = readlink(file->path, link_name, 1024)) == -1)
 			ft_exit("Unable to get link name");
-		arrow = ft_strjoin(" -> ", link_name);
+		if (!(arrow = ft_strjoin(" -> ", link_name)))
+			ft_exit("Unable to malloc arrow");
 		ft_memcpy(long_format + padd + len_name, arrow, ft_strlen(arrow));
 		*(long_format + padd + len_name + ft_strlen(arrow)) = 0;
 		free(link_name);

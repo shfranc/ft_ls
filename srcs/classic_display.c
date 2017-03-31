@@ -6,18 +6,20 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 19:20:27 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 16:17:29 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		display_non_dir(t_file *files, t_opt *option, int nb_file)
+int		display_non_dir(t_file *files, t_opt *option)
 {
 	t_file	*temp;
+	int		nb_file;
 
+	nb_file = 0;
 	if (!option->c1)
-		return (display_non_dir_column(files, option, nb_file));
+		return (display_non_dir_column(files, option));
 	temp = files;
 	while (temp)
 	{
@@ -97,14 +99,13 @@ void	display_inside(t_file *files, t_opt *option)
 
 void	classic_display(int ac, t_file *files, t_opt *option)
 {
+	int		nb_error;
 	int		nb_file;
 
-	nb_file = display_errors(files);
-	// if (nb_file == ac)
-	// 	write(1, "\n", 1);
+	nb_error = display_errors(files);
 	files = which_sort(files, option);
-	nb_file = display_non_dir(files, option, nb_file);
-	if (nb_file != 0 && nb_file != ac)
+	nb_file = display_non_dir(files, option);
+	if (nb_file != 0 && (nb_file + nb_error) != ac)
 		write(1, "\n", 1);
-	display_dir(nb_file, ac, files, option);
+	display_dir(nb_file + nb_error, ac, files, option);
 }

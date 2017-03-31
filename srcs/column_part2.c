@@ -6,18 +6,20 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 10:47:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 16:25:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 12:19:35 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		display_non_dir_column(t_file *files, t_opt *option, int nb_file)
+int		display_non_dir_column(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 	t_file	*cpy;
 	t_file	*non_dir;
+	int		nb_file;
 
+	nb_file = 0;
 	non_dir = NULL;
 	temp = files;
 	while (temp)

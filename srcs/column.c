@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:03:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 16:05:40 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 17:10:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,13 @@ void	print_column(char **tab_ref, char **tab, t_dim *dim)
 	int		k;
 	char	*blank;
 
-	blank = ft_strnew_set(dim->colwidth, ' ');
-	j = 0;
-	while (j < dim->row)
+	if (!(blank = ft_strnew_set(dim->colwidth, ' ')))
+		ft_exit("Unable to malloc blank");
+	j = -1;
+	while (++j < dim->row)
 	{
-		k = 0;
-		while (k < dim->col)
+		k = -1;
+		while (++k < dim->col)
 		{
 			if ((j + k * dim->row) < dim->nb_file)
 			{
@@ -89,10 +90,8 @@ void	print_column(char **tab_ref, char **tab, t_dim *dim)
 				write(1, blank, dim->colwidth
 					- ft_strlen(tab_ref[j + k * dim->row]));
 			}
-			++k;
 		}
 		write(1, "\n", 1);
-		++j;
 	}
 	free(tab);
 	free(tab_ref);

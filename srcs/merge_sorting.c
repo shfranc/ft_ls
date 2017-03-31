@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:57:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 19:15:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 12:55:39 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_file	*which_sort(t_file *files, t_opt *option)
 		i += 4;
 	if (option->r)
 		i += 1;
-	// ft_putnbr_endl(i);
 	return (merge_sort(files, g_comp[i]));
 }
 

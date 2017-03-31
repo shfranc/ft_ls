@@ -10,6 +10,8 @@ new_file
 old_file
 futur
 past
+a
+b
 
 # swap
 srcs/*.c.swp

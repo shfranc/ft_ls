@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 15:52:35 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 17:39:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ char	*get_long_format(t_file *file, t_max *max, t_opt *option)
 	len = file->len.total + ft_strlen(file->name);
 	if (((file->lstat.st_mode & S_IFMT) ^ S_IFLNK) == 0)
 		len += 1024;
-	long_format = ft_strnew_set(len, ' ');
+	if (!(long_format = ft_strnew_set(len, ' ')))
+		ft_exit("Unable to malloc long_format");
 	get_type(long_format, file);
 	get_perms(long_format, file);
 	get_attr_acl(long_format, file);

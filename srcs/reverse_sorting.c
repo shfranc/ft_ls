@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 10:31:09 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 18:34:07 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 17:30:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	reverse_sort_ascii(t_file **temp, t_file **left, t_file **right)
 {
-	if ((ft_strcmp((*left)->name, (*right)->name)) > 0)
+	if ((ft_strcmp((*left)->path, (*right)->path)) > 0)
 	{
 		*temp = *left;
 		*left = (*left)->next;

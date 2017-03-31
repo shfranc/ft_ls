@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:39:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 19:15:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/03/31 15:49:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ int		main(int ac, char **av)
 	init_options(&option);
 	ac = read_options(ac, &av, &option);
 	read_names(ac, av, &files, &option);
-	// display_options(&option);
 	if (option.l)
 		long_display(ac, files, &option);
 	else
 		classic_display(ac, files, &option);
 	free_file(&files);
-	// while (1);
 	return (0);
 }
