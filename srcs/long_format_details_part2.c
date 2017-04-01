@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:04:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/31 17:16:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/01 16:35:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	get_timestamp(char *long_format, t_file *file,
 	if (option->u_u)
 		file->lstat.st_mtimespec.tv_sec = file->lstat.st_birthtimespec.tv_sec;
 	t_time = ctime(&file->lstat.st_mtimespec.tv_sec);
+
 	if (!(timestamp = ft_strnew(12)))
 		ft_exit("Unable to malloc timestamp");
 	ft_memcpy(timestamp, t_time + 4, 12);

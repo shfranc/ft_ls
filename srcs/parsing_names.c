@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/31 16:04:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/01 17:51:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_file	*file_new(char *path, t_opt *option)
 	int			ret_sstat;
 	char		*temp;
 
+	errno = 0;
 	if (!(elem = (t_file*)malloc(sizeof(t_file))))
 		ft_exit("Unable to malloc t_file");
 	file_init(elem);
