@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/01 17:48:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/03 12:03:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	get_usr_group_struct(t_file *elem)
 {
-	// errno = 0;
 	elem->len.nblink = ull_len(elem->lstat.st_nlink);
 	if (!(elem->usr = getpwuid(elem->lstat.st_uid)))
 		ft_exit("Unable to get struct passwd");
@@ -60,7 +59,7 @@ void	set_max_len(t_file *files, t_max *max)
 			max->size < max->maj + max->min + 2 ?
 			max->size = max->maj + max->min + 2 : 0;
 		}
-		max->size < temp->len.size ? max->size = temp->len.size : 0;	
+		max->size < temp->len.size ? max->size = temp->len.size : 0;
 		temp = temp->next;
 	}
 	temp = files;
@@ -90,9 +89,6 @@ char	*get_long_format(t_file *file, t_max *max, t_opt *option)
 {
 	char	*long_format;
 	int		len;
-
-	(void)option;
-	(void)max;
 
 	len = file->len.total + ft_strlen(file->name);
 	if (((file->lstat.st_mode & S_IFMT) ^ S_IFLNK) == 0)

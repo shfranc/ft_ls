@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/01 17:51:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/03 22:51:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,17 @@ t_file	*file_new(char *path, t_opt *option)
 		ft_exit("Unable to malloc t_file");
 	file_init(elem);
 	if ((ret_lstat = lstat(path, &elem->lstat)) == -1)
+	{
 		elem->error = errno;
+		ft_putnbr_endl(elem->error);
+		ft_putendl(strerror(elem->error));
+	}
 	if ((ret_sstat = stat(path, &elem->stat)) == -1)
+	{
 		elem->error = errno;
+		ft_putnbr_endl(elem->error);
+		ft_putendl(strerror(elem->error));
+	}
 	if (!(elem->path = ft_strdup(path)))
 		ft_exit("Unable to malloc path");
 	if (!(temp = ft_strrchr(elem->path, '/')))

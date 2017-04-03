@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/31 12:57:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/03 22:52:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ void			get_size(char *long_format, t_file *file, t_max *max);
 void			get_maj_min(char *long_format, t_file *file, t_max *max);
 void			get_timestamp(char *long_format, t_file *file, t_opt *options, t_max *max);
 void			get_name(char *long_format, t_file *file, t_max *max);
+void			display_totalblocks(t_file *file);
 
 /*
 ** long_display.c
@@ -229,7 +230,6 @@ void			long_display_line(t_file *temp, t_opt *option);
 char			*which_color(t_file *file);
 char			*type_color(t_file *file);
 void			join_color(t_file *file, char *s);
-void			display_totalblocks(t_file *file);
 void			ft_putendl2(char *s1, char *s2);
 
 /*

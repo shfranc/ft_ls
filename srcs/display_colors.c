@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 17:48:28 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 11:06:02 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/03 22:52:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,6 @@ void	join_color(t_file *file, char *s)
 	color = which_color(file);
 	file->color_name = ft_strjoin3(color, s, RESET);
 	free(color);
-}
-
-void	display_totalblocks(t_file *file)
-{
-	unsigned long long	size;
-	t_file				*temp;
-	char				*s;
-
-	temp = file->inside;
-	size = 0;
-	while (temp)
-	{
-		size += temp->lstat.st_blocks;
-		temp = temp->next;
-	}
-	s = ull_toa(size);
-	ft_putendl2("total ", s);
-	free(s);
 }
 
 void	ft_putendl2(char *s1, char *s2)

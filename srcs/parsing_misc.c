@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/31 17:07:06 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/03 12:02:22 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	check_arg_vide(int ac, char **av)
 				ft_putstr_fd(""":", 2);
 				ft_exit(strerror(errno));
 			}
-
 		}
 	}
 }
