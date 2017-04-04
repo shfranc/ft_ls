@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/03 12:00:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/04 14:46:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 void	display_inside(t_file *files, t_opt *option)
 {
 	t_file	*temp;
+
+	// if (files->error == 13)
+	// {
+	// 	display_file_error(files);
+	// 	return ;
+	// }
 
 	if (option->l)
 	{

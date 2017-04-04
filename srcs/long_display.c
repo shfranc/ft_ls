@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 10:49:12 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/03 12:02:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:11:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 				display_file_error(temp);
 			else
 			{
+				ft_putnbr_endl(temp->error);
 				if (!(file_list_len(temp->inside)))
 					break ;
 				display_totalblocks(temp);

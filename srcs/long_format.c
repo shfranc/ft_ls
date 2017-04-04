@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/03 12:03:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:09:54 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,20 @@
 
 void	get_usr_group_struct(t_file *elem)
 {
+	errno = 0;
 	elem->len.nblink = ull_len(elem->lstat.st_nlink);
 	if (!(elem->usr = getpwuid(elem->lstat.st_uid)))
+	{
+		ft_putnbr_endl(errno);
 		ft_exit("Unable to get struct passwd");
+	}
 	elem->len.user = ft_strlen(elem->usr->pw_name);
+	errno = 0;
 	if (!(elem->grp = getgrgid(elem->lstat.st_gid)))
+	{
+		ft_putnbr_endl(errno);
 		ft_exit("Unable tot get struct group");
+	}
 	elem->len.group = ft_strlen(elem->grp->gr_name);
 	if (S_ISCHR(elem->lstat.st_mode) || S_ISBLK(elem->lstat.st_mode))
 	{
