@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 17:48:28 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/03 22:52:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/04 19:45:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,14 @@ void	join_color(t_file *file, char *s)
 {
 	char	*color;
 
-	color = which_color(file);
-	file->color_name = ft_strjoin3(color, s, RESET);
-	free(color);
+	if ((lstat(file->path, &file->lstat)) == -1)
+		file->color_name = ft_strdup(s);
+	else
+	{
+		color = which_color(file);
+		file->color_name = ft_strjoin3(color, s, RESET);
+		free(color);
+	}
 }
 
 void	ft_putendl2(char *s1, char *s2)

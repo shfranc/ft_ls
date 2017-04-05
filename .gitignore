@@ -12,6 +12,8 @@ futur
 past
 a
 b
+black_bgyellow
+munki_test
 
 # swap
 srcs/*.c.swp

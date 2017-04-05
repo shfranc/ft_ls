@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/03 12:02:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 16:14:20 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,22 @@ void	file_init(t_file *elem)
 	elem->grp = NULL;
 	elem->next = NULL;
 	elem->inside = NULL;
+	elem->len.nblink = 0;
+	elem->len.user = 0;
+	elem->len.group = 0;
+	elem->len.size = 0;
+	elem->len.maj = 0;
+	elem->len.min = 0;
+	elem->len.total = 0;
+}
+
+char	*create_path(char *s1, char *s2, char *s3)
+{
+	char	*path;
+
+	if (ft_strequ(s1, "/"))
+		path = ft_strjoin(s2, s3);
+	else
+		path = ft_strjoin3(s1, s2, s3);
+	return (path);
 }

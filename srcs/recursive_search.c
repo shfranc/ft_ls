@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:40:51 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 14:21:11 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 12:11:57 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,18 @@ void	readndisplay_inside(t_file *files_inside, t_opt *option)
 			{
 				option->l ? display_totalblocks(temp) : 0;
 				temp->inside = which_sort(temp->inside, option);
-				display_inside(temp->inside, option);
+				recursive_display(temp->inside, option);
 			}
 			readndisplay_inside(temp->inside, option);
 		}
 		temp = temp->next;
 	}
+}
+
+void	recursive_display(t_file *files, t_opt *option)
+{
+	if (option->l)
+		long_display_inside(files, option);
+	else
+		display_inside(files, option);
 }

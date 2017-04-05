@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/04 14:49:40 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 11:47:55 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,12 @@ t_file	*file_new(char *path, t_opt *option)
 	file_init(elem);
 	if ((ret_lstat = lstat(path, &elem->lstat)) == -1)
 	{
+		// ft_putendl(path);
+		// ft_putnbr_endl(errno);
 		elem->error = errno;
-		elem->lstat = NULL;
 	}
 	if ((ret_sstat = stat(path, &elem->stat)) == -1)
-	{
 		elem->error = errno;
-		elem->stat = NULL;
-	}
 	if (!(elem->path = ft_strdup(path)))
 		ft_exit("Unable to malloc path");
 	if (!(temp = ft_strrchr(elem->path, '/')))
@@ -78,7 +76,8 @@ void	walk_dir(char *av_dir, t_file **files, t_opt *option)
 	{
 		if (!option->a && *dir_temp->d_name == '.')
 			continue ;
-		path = ft_strjoin3(av_dir, "/", dir_temp->d_name);
+		// path = ft_strjoin3(av_dir, "/", dir_temp->d_name);
+		path = create_path(av_dir, "/", dir_temp->d_name);
 		elem = file_new(path, option);
 		file_add_last(&begin, elem);
 		ft_strdel(&path);
@@ -96,8 +95,6 @@ void	read_names(int ac, char **av, t_file **files, t_opt *option)
 	while (ac)
 	{
 		elem = file_new(*av, option);
-		ft_putendl(elem->name);
-		ft_putendl(strerror(elem->error));
 		if ((S_ISDIR(elem->stat.st_mode)))
 			walk_dir(elem->path, &elem, option);
 		file_add_last(files, elem);

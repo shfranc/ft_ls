@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:01:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/01 16:57:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 11:57:35 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,17 @@ void	get_nblink(char *long_format, t_file *file, t_max *max)
 
 void	get_user_owner(char *long_format, t_file *file, t_max *max)
 {
-	ft_memcpy(long_format + 12 + max->nblink + 1,
-		file->usr->pw_name, file->len.user);
-	ft_memcpy(long_format + 12 + max->nblink + 1 + max->user + 2,
-		file->grp->gr_name, file->len.group);
+	if (file->usr)
+		ft_memcpy(long_format + 12 + max->nblink + 1,
+			file->usr->pw_name, file->len.user);
+	else
+		ft_memcpy(long_format + 12 + max->nblink + 1,
+			ft_itoa(file->lstat.st_uid), file->len.user);
+	if (file->grp)
+		ft_memcpy(long_format + 12 + max->nblink + 1 + max->user + 2,
+			file->grp->gr_name, file->len.group);
+	else
+		ft_memcpy(long_format + 12 + max->nblink + 1 + max->user + 2,
+			ft_itoa(file->lstat.st_gid), file->len.group);
+
 }

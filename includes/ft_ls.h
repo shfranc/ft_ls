@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/03 22:52:58 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 16:29:25 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void			read_names(int ac, char **av, t_file **names, t_opt *option);
 void			check_arg_vide(int ac, char **av);
 int				set_current_dir(int ac, char ***av);
 void			file_init(t_file *elem);
+char			*create_path(char *s1, char *s2, char *s3);
 
 /*
 ** display_errors.c
@@ -146,6 +147,7 @@ void			display_options(t_opt *option); /* pour debug */
 void			display_illegal_option(char c);
 void			display_file_error(t_file *file);
 int				display_errors(t_file *files);
+void			check_perm_inside(t_file *files);
 
 /*
 ** classic_display.c
@@ -154,11 +156,13 @@ int				display_non_dir(t_file *files, t_opt *option);
 void			display_dir(int nb_file, int ac, t_file *files, t_opt *option);
 void			display_inside(t_file *files, t_opt *option);
 void			classic_display(int ac, t_file *files, t_opt *option);
+int				check_readable(t_file *files);
 
 /*
 ** recursive_search.c 
 */
 void			readndisplay_inside(t_file *files_inside, t_opt *option);
+void			recursive_display(t_file *files, t_opt *option);
 
 /*
 ** merge_sorting.c
@@ -222,7 +226,7 @@ int				long_display_non_dir(t_file *files, t_opt *option);
 void			long_display_dir(int nb_file, int ac, t_file *files, t_opt *option);
 void			long_display_inside(t_file *files, t_opt *option);
 void			long_display(int ac, t_file *files, t_opt *option);
-void			long_display_line(t_file *temp, t_opt *option);
+void			long_display_path(t_file *temp, t_opt *option);
 
 /*
 ** display_colors.c

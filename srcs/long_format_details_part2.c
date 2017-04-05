@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:04:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/03 22:52:43 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 17:04:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	get_maj_min(char *long_format, t_file *file, t_max *max)
 	if (((file->lstat.st_mode & S_IFMT) ^ S_IFCHR) != 0
 			&& ((file->lstat.st_mode & S_IFMT) ^ S_IFBLK) != 0)
 		return ;
-	padd_maj = max->maj - file->len.maj;
+	padd_maj = max->size - file->len.maj - max->min - 2;
 	s_maj = ft_itoa(FT_MAJ(file->lstat.st_rdev));
 	temp = ft_strjoin(s_maj, ", ");
 	ft_memcpy(long_format + 12 + max->nblink + 1
@@ -51,7 +51,7 @@ void	get_maj_min(char *long_format, t_file *file, t_max *max)
 	s_min = ft_itoa(FT_MIN(file->lstat.st_rdev));
 	ft_memcpy(long_format + 12 + max->nblink + 1
 		+ max->user + 2 + max->group + 2
-		+ max->maj + 2 + padd_min, s_min, file->len.min);
+		+ padd_maj + file->len.maj + 2 + padd_min, s_min, file->len.min);
 	free(temp);
 	free(s_maj);
 	free(s_min);
@@ -119,6 +119,8 @@ void	display_totalblocks(t_file *file)
 	size = 0;
 	while (temp)
 	{
+		if ((lstat(temp->path, &temp->lstat)) == -1)
+			return ;
 		size += temp->lstat.st_blocks;
 		temp = temp->next;
 	}

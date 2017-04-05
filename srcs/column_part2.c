@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 10:47:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/01 17:52:53 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 11:23:15 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int		display_non_dir_column(t_file *files, t_opt *option)
 		}
 		temp = temp->next;
 	}
-	display_column(non_dir, option);
+	if (non_dir)
+		display_column(non_dir, option);
 	free_file(&non_dir);
 	return (nb_file);
 }

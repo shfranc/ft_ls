@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:03:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/03 20:30:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 11:37:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int		get_nb_column(int colwidth)
 
 	if ((ioctl(0, TIOCGWINSZ, &w)) == -1)
 		ft_exit("Unable to fetch term width");
-	col = w.ws_col / colwidth;
+	if (colwidth && colwidth < w.ws_col)
+		col = w.ws_col / colwidth;
+	else
+		col = 1;
 	return (col);
 }
 
@@ -108,12 +111,27 @@ void	display_column(t_file *files, t_opt *option)
 	i = 1;
 	if (option->u_g)
 		i = 2;
-	dim.colwidth = get_colwidth(files, i);
-	dim.col = get_nb_column(dim.colwidth);
+	
 	dim.nb_file = file_list_len(files);
+	// ft_putstr("nb_file : ");
+	// ft_putnbr_endl(dim.nb_file);
+
+	dim.colwidth = get_colwidth(files, i);
+	// ft_putstr("colwidth : ");
+	// ft_putnbr_endl(dim.colwidth);
+
+	dim.col = get_nb_column(dim.colwidth);
+	// ft_putstr("col : ");
+	// ft_putnbr_endl(dim.col);
+
 	dim.row = file_list_len(files) / dim.col;
+
+
 	if (dim.row * dim.col < dim.nb_file)
 		dim.row += 1;
+	// ft_putstr("row : ");
+	// ft_putnbr_endl(dim.row);
+
 	tab = create_tab_name(files, dim.nb_file, i);
 	tab_ref = create_tab_name(files, dim.nb_file, 1);
 	print_column(tab_ref, tab, &dim);

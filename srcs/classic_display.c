@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/04 14:46:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 12:07:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		display_non_dir(t_file *files, t_opt *option)
 	int		nb_file;
 
 	nb_file = 0;
-	if (!option->c1)
+	if (!option->c1 && file_list_len(files) > 1)
 		return (display_non_dir_column(files, option));
 	temp = files;
 	while (temp)
@@ -47,7 +47,7 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 	temp = files;
 	while (temp)
 	{
-		if (((temp->stat.st_mode & S_IFMT) ^ S_IFDIR) == 0)
+		if (S_ISDIR(temp->stat.st_mode))
 		{
 			if (ac != 1)
 			{
@@ -58,9 +58,9 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 				display_file_error(temp);
 			else
 			{
-				temp->inside = which_sort(temp->inside, option);
-				display_inside(temp->inside, option);
-				readndisplay_inside(temp->inside, option);
+					temp->inside = which_sort(temp->inside, option);
+					display_inside(temp->inside, option);
+					readndisplay_inside(temp->inside, option);
 			}
 			if (++nb_file != ac)
 				write(1, "\n", 1);
@@ -73,18 +73,7 @@ void	display_inside(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 
-	// if (files->error == 13)
-	// {
-	// 	display_file_error(files);
-	// 	return ;
-	// }
-
-	if (option->l)
-	{
-		long_display_inside(files, option);
-		return ;
-	}
-	if (!option->c1)
+	if (!option->c1 && file_list_len(files) > 1)
 		display_column(files, option);
 	else
 	{

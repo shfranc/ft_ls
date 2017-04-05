@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 10:49:12 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/04 12:11:48 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 17:12:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int		long_display_non_dir(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 	int		nb_file;
-
+	
+	fill_long_format(files, option);
 	temp = files;
 	nb_file = 0;
 	while (temp)
@@ -25,10 +26,7 @@ int		long_display_non_dir(t_file *files, t_opt *option)
 		{
 			if (temp->error == 0 || temp->error == 20)
 			{
-				ft_charswap(&temp->path, &temp->name);
-				fill_long_format(files, option);
-				long_display_line(temp, option);
-				ft_charswap(&temp->name, &temp->path);
+				long_display_path(temp, option);
 				nb_file++;
 			}
 		}
@@ -52,7 +50,6 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 				display_file_error(temp);
 			else
 			{
-				ft_putnbr_endl(temp->error);
 				if (!(file_list_len(temp->inside)))
 					break ;
 				display_totalblocks(temp);
@@ -75,7 +72,20 @@ void	long_display_inside(t_file *files, t_opt *option)
 	temp = files;
 	while (temp)
 	{
-		long_display_line(temp, option);
+		if ((lstat(temp->path, &temp->lstat)) == -1)
+			display_file_error(temp);
+		else if (option->u_g)
+		{
+			write(1, temp->long_format, (temp->len.total));
+			join_color(temp, temp->name);
+			if (S_ISLNK(temp->lstat.st_mode))
+				ft_putendl2(temp->color_name,
+					ft_strstr(temp->long_format, "->") - 1);
+			else
+				ft_putendl(temp->color_name);
+		}
+		else
+			ft_putendl(temp->long_format);
 		temp = temp->next;
 	}
 }
@@ -93,18 +103,17 @@ void	long_display(int ac, t_file *files, t_opt *option)
 	long_display_dir(nb_file + nb_error, ac, files, option);
 }
 
-void	long_display_line(t_file *temp, t_opt *option)
+void	long_display_path(t_file *temp, t_opt *option)
 {
+	write(1, temp->long_format, (temp->len.total));
 	if (option->u_g)
 	{
-		write(1, temp->long_format, (temp->len.total));
-		join_color(temp, temp->name);
-		if (S_ISLNK(temp->lstat.st_mode))
-			ft_putendl2(temp->color_name,
-				ft_strstr(temp->long_format, "->") - 1);
-		else
-			ft_putendl(temp->color_name);
+		join_color(temp, temp->path);
+		ft_putstr(temp->color_name);
 	}
 	else
-		ft_putendl(temp->long_format);
+		ft_putstr(temp->path);
+	if (S_ISLNK(temp->lstat.st_mode))
+		ft_putstr(ft_strstr(temp->long_format, "->") - 1);
+	write(1, "\n", 1);
 }
