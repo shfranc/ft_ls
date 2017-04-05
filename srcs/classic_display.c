@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 12:07:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 19:54:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 			else
 			{
 					temp->inside = which_sort(temp->inside, option);
-					display_inside(temp->inside, option);
+					if (temp->error == 13)
+						display_file_error(temp);
+					else
+						display_inside(temp->inside, option);
 					readndisplay_inside(temp->inside, option);
 			}
 			if (++nb_file != ac)

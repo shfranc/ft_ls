@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 16:29:25 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 19:29:29 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void			display_options(t_opt *option); /* pour debug */
 void			display_illegal_option(char c);
 void			display_file_error(t_file *file);
 int				display_errors(t_file *files);
-void			check_perm_inside(t_file *files);
+int				not_searchable(t_file *file, t_opt *option);
 
 /*
 ** classic_display.c
@@ -156,7 +156,7 @@ int				display_non_dir(t_file *files, t_opt *option);
 void			display_dir(int nb_file, int ac, t_file *files, t_opt *option);
 void			display_inside(t_file *files, t_opt *option);
 void			classic_display(int ac, t_file *files, t_opt *option);
-int				check_readable(t_file *files);
+// int				check_readable(t_file *files);
 
 /*
 ** recursive_search.c 

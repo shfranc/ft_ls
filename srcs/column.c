@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:03:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 11:37:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/05 19:06:02 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	display_column(t_file *files, t_opt *option)
 	i = 1;
 	if (option->u_g)
 		i = 2;
-	
 	dim.nb_file = file_list_len(files);
 	// ft_putstr("nb_file : ");
 	// ft_putnbr_endl(dim.nb_file);
