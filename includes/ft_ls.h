@@ -6,14 +6,14 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/06 17:20:33 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 19:09:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 
-# include "libft.h"
+# include "../libft/includes/libft.h"
 # include "color.h"
 # include <errno.h> /* errno */
 # include <sys/stat.h> /* stat + struct stat */

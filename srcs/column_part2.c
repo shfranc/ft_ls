@@ -6,11 +6,11 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 10:47:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 11:23:15 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 19:02:33 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 int		display_non_dir_column(t_file *files, t_opt *option)
 {

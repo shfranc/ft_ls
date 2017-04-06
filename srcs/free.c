@@ -6,11 +6,11 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 11:22:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/30 16:07:14 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 19:02:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 void	free_file(t_file **files)
 {

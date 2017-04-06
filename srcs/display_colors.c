@@ -6,11 +6,11 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 17:48:28 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/04 19:45:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 19:02:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 char	*which_color(t_file *file)
 {

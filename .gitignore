@@ -14,10 +14,14 @@ a
 b
 black_bgyellow
 munki_test
+Makefile.bkup
+Makefile_lib_ramzi
+Makefile_ls_ramzi
+libft/Makefile.backup
 
 # swap
 srcs/*.c.swp
-notes/*.txt.swp
+	  notes/*.txt.swp
 
 # objects
 objs/*.o
