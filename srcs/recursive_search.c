@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:40:51 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 12:11:57 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 14:26:17 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	readndisplay_inside(t_file *files_inside, t_opt *option)
 {
 	t_file *temp;
 
-	if (!option->u_r)
+	if (!option->u_r || not_searchable(files_inside, option))
 		return ;
 	temp = files_inside;
 	while (temp)
@@ -47,4 +47,38 @@ void	recursive_display(t_file *files, t_opt *option)
 		long_display_inside(files, option);
 	else
 		display_inside(files, option);
+}
+
+int		not_searchable(t_file *files, t_opt *option)
+{
+	t_file	*temp;
+	int	i;
+
+	i = 0;
+	temp = files;
+	while (temp)
+	{
+		if (lstat(temp->path, &temp->lstat) == -1
+			&& (option->u_r))
+			i++;
+		temp = temp->next;
+	}
+	return (i);
+}
+
+int		not_sortable(t_file *files, t_opt *option)
+{
+	t_file	*temp;
+	int	i;
+
+	i = 0;
+	temp = files;
+	while (temp)
+	{
+		if (lstat(temp->path, &temp->lstat) == -1
+			&& (option->t || option->u_s))
+			i++;
+		temp = temp->next;
+	}
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:57:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/31 12:55:39 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 14:18:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_file	*which_sort(t_file *files, t_opt *option)
 {
 	int i;
 
-	if ((file_list_len(files)) < 2 || option->f)
+	if ((file_list_len(files)) < 2 || option->f || not_sortable(files, option))
 		return (files);
 	i = 0;
 	if (option->u_s)

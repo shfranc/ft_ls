@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 16:14:20 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 12:30:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,11 @@ char	*create_path(char *s1, char *s2, char *s3)
 	else
 		path = ft_strjoin3(s1, s2, s3);
 	return (path);
+}
+
+void	display_options(t_opt *option)
+{
+	ft_putstr("option : ");
+	write(1, (char*)option, 11);
+	write(1, "\n", 1);
 }

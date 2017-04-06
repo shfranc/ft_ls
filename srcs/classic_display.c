@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 19:54:34 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 17:29:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,9 @@ void	display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 				display_file_error(temp);
 			else
 			{
-					temp->inside = which_sort(temp->inside, option);
-					if (temp->error == 13)
-						display_file_error(temp);
-					else
-						display_inside(temp->inside, option);
-					readndisplay_inside(temp->inside, option);
+				temp->inside = which_sort(temp->inside, option);
+				display_inside(temp->inside, option);
+				readndisplay_inside(temp->inside, option);
 			}
 			if (++nb_file != ac)
 				write(1, "\n", 1);
@@ -76,8 +73,10 @@ void	display_inside(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 
-	if (!option->c1 && file_list_len(files) > 1)
-		display_column(files, option);
+	if (read_only(files, option))
+		return ;
+	if (!display_column(files, option))
+		;
 	else
 	{
 		temp = files;
@@ -100,8 +99,8 @@ void	classic_display(int ac, t_file *files, t_opt *option)
 	int		nb_error;
 	int		nb_file;
 
-	nb_error = display_errors(files);
 	files = which_sort(files, option);
+	nb_error = display_errors(files);
 	nb_file = display_non_dir(files, option);
 	if (nb_file != 0 && (nb_file + nb_error) != ac)
 		write(1, "\n", 1);

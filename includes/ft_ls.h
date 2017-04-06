@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 19:29:29 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 17:20:33 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,16 +138,15 @@ void			check_arg_vide(int ac, char **av);
 int				set_current_dir(int ac, char ***av);
 void			file_init(t_file *elem);
 char			*create_path(char *s1, char *s2, char *s3);
+void			display_options(t_opt *option); /* pour debug */
 
 /*
 ** display_errors.c
 */
 void			ft_exit(char *s);
-void			display_options(t_opt *option); /* pour debug */
 void			display_illegal_option(char c);
 void			display_file_error(t_file *file);
 int				display_errors(t_file *files);
-int				not_searchable(t_file *file, t_opt *option);
 
 /*
 ** classic_display.c
@@ -156,13 +155,15 @@ int				display_non_dir(t_file *files, t_opt *option);
 void			display_dir(int nb_file, int ac, t_file *files, t_opt *option);
 void			display_inside(t_file *files, t_opt *option);
 void			classic_display(int ac, t_file *files, t_opt *option);
-// int				check_readable(t_file *files);
+int				read_only(t_file *files, t_opt *option);
 
 /*
 ** recursive_search.c 
 */
 void			readndisplay_inside(t_file *files_inside, t_opt *option);
 void			recursive_display(t_file *files, t_opt *option);
+int				not_searchable(t_file *files, t_opt *option);
+int				not_sortable(t_file *files, t_opt *option);
 
 /*
 ** merge_sorting.c
@@ -172,7 +173,6 @@ t_file			*merge_sort(t_file *files, void (*f)(t_file**, t_file**, t_file**));
 t_file			*merge(t_file *left, t_file *right, void (*f)(t_file**, t_file**, t_file**));
 int				file_list_len(t_file *files);
 void			pick_last_elem(t_file **temp, t_file **side);
-
 
 /*
 ** sorting.c
@@ -239,11 +239,11 @@ void			ft_putendl2(char *s1, char *s2);
 /*
 ** column.c
 */
-int				get_nb_column(int colwidth);
+// int				get_nb_column(int colwidth);
 int				get_colwidth(t_file *files, int i);
 char			**create_tab_name(t_file *files, int nb_file, int i);
 void			print_column(char **tab_ref, char **tab, t_dim *dim);
-void			display_column(t_file *files, t_opt *option);
+int				display_column(t_file *files, t_opt *option);
 
 /*
 ** column_part2.c

@@ -6,25 +6,36 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 16:30:26 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 16:00:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	get_usr_group_struct(t_file *elem)
+void	get_usr_group_struct(t_file *elem) // fuite sur les itoa ?
 {
+	char	*temp;
+
+	temp = NULL;
 	elem->usr = NULL;
 	elem->grp = NULL;
 	elem->len.nblink = ull_len(elem->lstat.st_nlink);
 	
-	if (!(elem->usr = getpwuid(elem->lstat.st_uid)))
-		elem->len.user = ft_strlen(ft_itoa(elem->lstat.st_uid));
+	if ((elem->usr = getpwuid(elem->lstat.st_uid)) == NULL)
+	{
+		temp = ft_itoa(elem->lstat.st_uid);
+		elem->len.user = ft_strlen(temp);
+		free(temp);
+	}
 	else
 		elem->len.user = ft_strlen(elem->usr->pw_name);
 	
-	if (!(elem->grp = getgrgid(elem->lstat.st_gid)))
-		elem->len.user = ft_strlen(ft_itoa(elem->lstat.st_gid));
+	if ((elem->grp = getgrgid(elem->lstat.st_gid)) == NULL)
+	{
+		temp = ft_itoa(elem->lstat.st_uid);
+		elem->len.group = ft_strlen(temp);
+		free(temp);
+	}
 	else
 		elem->len.group = ft_strlen(elem->grp->gr_name);
 	
@@ -90,17 +101,22 @@ void	fill_long_format(t_file *files, t_opt *option)
 	temp = files;
 	set_max_len(files, &max);
 	while (temp)
-	{
+	{	
 		if (temp->error == 0 || temp->error == 20)
 			temp->long_format = get_long_format(temp, &max, option);
+		// ft_putendl(temp->name);
 		temp = temp->next;
 	}
+	// ft_putendl("fin");
 }
 
 char	*get_long_format(t_file *file, t_max *max, t_opt *option)
 {
 	char	*long_format;
 	int		len;
+
+	(void)option;
+	(void)max;
 
 	len = file->len.total + ft_strlen(file->name);
 	if (S_ISLNK(file->lstat.st_mode))
@@ -116,5 +132,6 @@ char	*get_long_format(t_file *file, t_max *max, t_opt *option)
 	get_maj_min(long_format, file, max);
 	get_timestamp(long_format, file, option, max);
 	get_name(long_format, file, max);
+	ft_putendl(file->long_format);
 	return (long_format);
 }

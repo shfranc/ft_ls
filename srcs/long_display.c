@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 10:49:12 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 17:12:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 17:29:26 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,15 @@ void	long_display_inside(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 
+	if (read_only(files, option))
+		return ;
 	fill_long_format(files, option);
 	temp = files;
 	while (temp)
 	{
-		if ((lstat(temp->path, &temp->lstat)) == -1)
-			display_file_error(temp);
-		else if (option->u_g)
+		// if ((lstat(temp->path, &temp->lstat)) == -1)
+		// 	display_file_error(temp);
+		if (option->u_g)
 		{
 			write(1, temp->long_format, (temp->len.total));
 			join_color(temp, temp->name);
@@ -95,8 +97,8 @@ void	long_display(int ac, t_file *files, t_opt *option)
 	int		nb_error;
 	int		nb_file;
 
-	nb_error = display_errors(files);
 	files = which_sort(files, option);
+	nb_error = display_errors(files);
 	nb_file = long_display_non_dir(files, option);
 	if (nb_file != 0 && (nb_file + nb_error) != ac)
 		write(1, "\n", 1);

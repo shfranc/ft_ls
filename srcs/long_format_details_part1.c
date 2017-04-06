@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:01:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/05 19:23:38 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/06 15:18:01 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	get_nblink(char *long_format, t_file *file, t_max *max)
 	int		padd;
 	char	*nlink;
 
-	nlink = ull_toa(file->stat.st_nlink);
+	nlink = ull_toa(file->lstat.st_nlink);
 	padd = max->nblink - file->len.nblink;
 	ft_memcpy(long_format + 12 + padd, nlink, file->len.nblink);
 	free(nlink);
@@ -85,17 +85,27 @@ void	get_nblink(char *long_format, t_file *file, t_max *max)
 
 void	get_user_owner(char *long_format, t_file *file, t_max *max)
 {
-	if (file->usr)
+	char	*temp;
+
+	temp = NULL;
+	if ((file->usr = getpwuid(file->lstat.st_uid)))
 		ft_memcpy(long_format + 12 + max->nblink + 1,
 			file->usr->pw_name, file->len.user);
 	else
+	{
+		temp = ft_itoa(file->lstat.st_uid);
 		ft_memcpy(long_format + 12 + max->nblink + 1,
-			ft_itoa(file->lstat.st_uid), file->len.user);
-	if (file->grp)
+			temp, file->len.user);
+		free(temp);
+	}
+	if ((file->grp = getgrgid(file->lstat.st_gid)))
 		ft_memcpy(long_format + 12 + max->nblink + 1 + max->user + 2,
 			file->grp->gr_name, file->len.group);
 	else
+	{
+		temp = ft_itoa(file->lstat.st_gid);
 		ft_memcpy(long_format + 12 + max->nblink + 1 + max->user + 2,
-			ft_itoa(file->lstat.st_gid), file->len.group);
-
+			temp, file->len.group);
+		free(temp);
+	}
 }
