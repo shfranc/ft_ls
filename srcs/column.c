@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:03:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/10 17:35:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 18:17:11 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		display_column(t_file *files, t_opt *option)
 	struct winsize	w;
 
 	if (option->c1 || file_list_len(files) <= 1
-		|| (ioctl(1, TIOCGWINSZ, &w)) == -1 || read_only(files, option))
+		|| (ioctl(1, TIOCGWINSZ, &w)) == -1 || read_only(files))
 		return (1);
 	i = 1;
 	if (option->u_g)
