@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/06 19:02:31 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 17:37:41 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ void	display_inside(t_file *files, t_opt *option)
 {
 	t_file	*temp;
 
-	if (read_only(files, option))
-		return ;
 	if (!display_column(files, option))
 		;
 	else
@@ -82,7 +80,12 @@ void	display_inside(t_file *files, t_opt *option)
 		temp = files;
 		while (temp)
 		{
-			if (option->u_g)
+			if (lstat(temp->path, &temp->lstat) == -1)
+			{
+				if (errno != 9)
+					display_file_error(temp);
+			}
+			else if (option->u_g)
 			{
 				join_color(temp, temp->name);
 				ft_putendl(temp->color_name);

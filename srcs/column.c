@@ -6,25 +6,11 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:03:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/06 19:02:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 17:35:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
-
-// int		get_nb_column(int colwidth)
-// {
-// 	struct winsize	w;
-// 	int				col;
-
-// 	if ((ioctl(1, TIOCGWINSZ, &w)) != 0)
-// 		return (1);
-// 	if (colwidth && colwidth < w.ws_col)
-// 		col = w.ws_col / colwidth;
-// 	else
-// 		col = 1;
-// 	return (col);
-// }
 
 int		get_colwidth(t_file *files, int i)
 {
@@ -103,14 +89,14 @@ void	print_column(char **tab_ref, char **tab, t_dim *dim)
 
 int		display_column(t_file *files, t_opt *option)
 {
-	int		i;
-	t_dim	dim;
-	char	**tab;
-	char	**tab_ref;
+	int				i;
+	t_dim			dim;
+	char			**tab;
+	char			**tab_ref;
 	struct winsize	w;
 
-	if (!option->c1 && file_list_len(files) > 1
-		&& (ioctl(1, TIOCGWINSZ, &w)) != 0)
+	if (option->c1 || file_list_len(files) <= 1
+		|| (ioctl(1, TIOCGWINSZ, &w)) == -1 || read_only(files, option))
 		return (1);
 	i = 1;
 	if (option->u_g)

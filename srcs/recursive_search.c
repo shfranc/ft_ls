@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:40:51 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/06 19:02:18 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 11:20:35 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	recursive_display(t_file *files, t_opt *option)
 int		not_searchable(t_file *files, t_opt *option)
 {
 	t_file	*temp;
-	int	i;
+	int		i;
 
 	i = 0;
 	temp = files;
@@ -69,7 +69,7 @@ int		not_searchable(t_file *files, t_opt *option)
 int		not_sortable(t_file *files, t_opt *option)
 {
 	t_file	*temp;
-	int	i;
+	int		i;
 
 	i = 0;
 	temp = files;

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:04:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/06 19:02:27 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 16:47:07 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,3 @@ void	display_totalblocks(t_file *file)
 	ft_putendl2("total ", s);
 	free(s);
 }
-

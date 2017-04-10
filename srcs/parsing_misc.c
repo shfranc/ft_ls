@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:19:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/06 19:02:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 11:40:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,27 @@ char	*create_path(char *s1, char *s2, char *s3)
 	return (path);
 }
 
-void	display_options(t_opt *option)
+void	get_usr_group_struct(t_file *elem)
 {
-	ft_putstr("option : ");
-	write(1, (char*)option, 11);
-	write(1, "\n", 1);
+	char	*temp;
+
+	temp = NULL;
+	elem->usr = NULL;
+	elem->grp = NULL;
+	if ((elem->usr = getpwuid(elem->lstat.st_uid)) == NULL)
+	{
+		temp = ft_itoa(elem->lstat.st_uid);
+		elem->len.user = ft_strlen(temp);
+		free(temp);
+	}
+	else
+		elem->len.user = ft_strlen(elem->usr->pw_name);
+	if ((elem->grp = getgrgid(elem->lstat.st_gid)) == NULL)
+	{
+		temp = ft_itoa(elem->lstat.st_uid);
+		elem->len.group = ft_strlen(temp);
+		free(temp);
+	}
+	else
+		elem->len.group = ft_strlen(elem->grp->gr_name);
 }

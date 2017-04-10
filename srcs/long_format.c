@@ -6,47 +6,21 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/06 19:02:38 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 12:09:55 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void	get_usr_group_struct(t_file *elem) // fuite sur les itoa ?
+void	get_len(t_file *elem)
 {
-	char	*temp;
-
-	temp = NULL;
-	elem->usr = NULL;
-	elem->grp = NULL;
 	elem->len.nblink = ull_len(elem->lstat.st_nlink);
-	
-	if ((elem->usr = getpwuid(elem->lstat.st_uid)) == NULL)
-	{
-		temp = ft_itoa(elem->lstat.st_uid);
-		elem->len.user = ft_strlen(temp);
-		free(temp);
-	}
-	else
-		elem->len.user = ft_strlen(elem->usr->pw_name);
-	
-	if ((elem->grp = getgrgid(elem->lstat.st_gid)) == NULL)
-	{
-		temp = ft_itoa(elem->lstat.st_uid);
-		elem->len.group = ft_strlen(temp);
-		free(temp);
-	}
-	else
-		elem->len.group = ft_strlen(elem->grp->gr_name);
-	
+	get_usr_group_struct(elem);
 	if (S_ISCHR(elem->lstat.st_mode) || S_ISBLK(elem->lstat.st_mode))
 	{
 		elem->len.maj = ft_intsize(FT_MAJ(elem->lstat.st_rdev));
 		elem->len.min = ft_intsize(FT_MIN(elem->lstat.st_rdev));
-		// elem->len.size = elem->len.maj + elem->len.min + 3;
 		elem->len.size = elem->len.maj + elem->len.min + 2;
-		// if ((elem->len.size = elem->len.maj + elem->len.min + 2) < 8)
-		// 	elem->len.size = 8;
 	}
 	else
 		elem->len.size = ull_len(elem->lstat.st_size);
@@ -75,11 +49,8 @@ void	set_max_len(t_file *files, t_max *max)
 		max->group < temp->len.group ? max->group = temp->len.group : 0;
 		if (S_ISCHR(temp->lstat.st_mode) || S_ISBLK(temp->lstat.st_mode))
 		{
-			// max->maj < temp->len.maj + 1 ? max->maj = temp->len.maj + 1 : 0;
 			max->maj < temp->len.maj ? max->maj = temp->len.maj : 0;
 			max->min < temp->len.min ? max->min = temp->len.min : 0;
-			// max->size < max->maj + max->min + 2 ?
-			// max->size = max->maj + max->min + 2 : 0;
 			temp->len.size < 8 ? max->size = 8 : 0;
 		}
 		max->size < temp->len.size ? max->size = temp->len.size : 0;
@@ -101,22 +72,16 @@ void	fill_long_format(t_file *files, t_opt *option)
 	temp = files;
 	set_max_len(files, &max);
 	while (temp)
-	{	
-		if (temp->error == 0 || temp->error == 20)
-			temp->long_format = get_long_format(temp, &max, option);
-		// ft_putendl(temp->name);
+	{
+		temp->long_format = get_long_format(temp, &max, option);
 		temp = temp->next;
 	}
-	// ft_putendl("fin");
 }
 
 char	*get_long_format(t_file *file, t_max *max, t_opt *option)
 {
 	char	*long_format;
 	int		len;
-
-	(void)option;
-	(void)max;
 
 	len = file->len.total + ft_strlen(file->name);
 	if (S_ISLNK(file->lstat.st_mode))

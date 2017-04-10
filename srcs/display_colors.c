@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 17:48:28 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/06 19:02:34 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 12:15:04 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ char	*which_color(t_file *file)
 	char *color;
 
 	color = NULL;
-	if ((file->lstat.st_mode & S_ISUID) == S_ISUID)
+	if (S_ISREG(file->lstat.st_mode)
+		&& (file->lstat.st_mode & S_ISUID) == S_ISUID)
 		color = ft_strjoin(BLACK, BGRED);
-	else if ((file->lstat.st_mode & S_ISGID) == S_ISGID)
+	else if (S_ISREG(file->lstat.st_mode)
+		&& (file->lstat.st_mode & S_ISGID) == S_ISGID)
 		color = ft_strjoin(BLACK, BGCYAN);
 	else if (!(S_ISREG(file->lstat.st_mode)))
 		color = type_color(file);

@@ -1,115 +1,115 @@
-RED = \033[48;5;9m
-GREEN = \033[48;5;10m
-LOL = \033[48;5;106m
-LIL = \033[48;5;129m
-END = \033[0m
-X = 0
-Y = 0
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2016/11/07 16:47:23 by sfranc            #+#    #+#              #
+#    Updated: 2017/04/10 13:48:54 by sfranc           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME = libft.a
-
-SRC = ./srcs/ft_atoi.c \
-		./srcs/ft_bzero.c \
-		./srcs/ft_charswap.c \
-		./srcs/ft_del.c \
-		./srcs/ft_intsize.c \
-		./srcs/ft_isalnum.c \
-		./srcs/ft_isalpha.c \
-		./srcs/ft_isascii.c \
-		./srcs/ft_isdigit.c \
-		./srcs/ft_isprint.c \
-		./srcs/ft_itoa.c \
-		./srcs/ft_itoa_base.c \
-		./srcs/ft_lstadd.c \
-		./srcs/ft_lstadd_last.c \
-		./srcs/ft_lstdel.c \
-		./srcs/ft_lstdelone.c \
-		./srcs/ft_lstiter.c \
-		./srcs/ft_lstlen.c \
-		./srcs/ft_lstmap.c \
-		./srcs/ft_lstnew.c \
-		./srcs/ft_lstprint.c \
-		./srcs/ft_memalloc.c \
-		./srcs/ft_memccpy.c \
-		./srcs/ft_memchr.c \
-		./srcs/ft_memcmp.c \
-		./srcs/ft_memcpy.c \
-		./srcs/ft_memdel.c \
-		./srcs/ft_memmove.c \
-		./srcs/ft_memset.c \
-		./srcs/ft_nb_words.c \
-		./srcs/ft_putchar.c \
-		./srcs/ft_putchar_fd.c \
-		./srcs/ft_putendl.c \
-		./srcs/ft_putendl_fd.c \
-		./srcs/ft_putnbr.c \
-		./srcs/ft_putnbr_endl.c \
-		./srcs/ft_putnbr_fd.c \
-		./srcs/ft_putstr.c \
-		./srcs/ft_putstr_fd.c \
-		./srcs/ft_range.c \
-		./srcs/ft_strcat.c \
-		./srcs/ft_strchr.c \
-		./srcs/ft_strclr.c \
-		./srcs/ft_strcmp.c \
-		./srcs/ft_strcpy.c \
-		./srcs/ft_strdel.c \
-		./srcs/ft_strdup.c \
-		./srcs/ft_strequ.c \
-		./srcs/ft_striter.c \
-		./srcs/ft_striteri.c \
-		./srcs/ft_strjoin.c \
-		./srcs/ft_strjoin3.c \
-		./srcs/ft_strlcat.c \
-		./srcs/ft_strlen.c \
-		./srcs/ft_strmap.c \
-		./srcs/ft_strmapi.c \
-		./srcs/ft_strncat.c \
-		./srcs/ft_strncmp.c \
-		./srcs/ft_strncpy.c \
-		./srcs/ft_strnequ.c \
-		./srcs/ft_strnew.c \
-		./srcs/ft_strnew_set.c \
-		./srcs/ft_strnstr.c \
-		./srcs/ft_strrchr.c \
-		./srcs/ft_strsplit.c \
-		./srcs/ft_strstr.c \
-		./srcs/ft_strsub.c \
-		./srcs/ft_strtrim.c \
-		./srcs/ft_tolower.c \
-		./srcs/ft_toupper.c \
-		./srcs/printbit.c \
-		./srcs/sort_int_tab.c \
-		./srcs/ull_len.c \
-		./srcs/ull_toa.c
-
-OBJS = $(SRC:.c=.o)
-
-CC = clang
-
-#FLAG = -Weverything -O3
-FLAG = -Wall -Wextra -Werror
-
-HEAD = ./includes/
+PATH_SRCS = srcs
+PATH_OBJS = objs
+INCLUDES = includes
+SRCS = 	$(addprefix $(PATH_SRCS)/, ft_atoi.c \
+		ft_bzero.c \
+		ft_charswap.c \
+		ft_del.c \
+		ft_intsize.c \
+		ft_isalnum.c \
+		ft_isalpha.c \
+		ft_isascii.c \
+		ft_isdigit.c \
+		ft_isprint.c \
+		ft_itoa.c \
+		ft_itoa_base.c \
+		ft_lstadd.c \
+		ft_lstadd_last.c \
+		ft_lstdel.c \
+		ft_lstdelone.c \
+		ft_lstiter.c \
+		ft_lstlen.c \
+		ft_lstmap.c \
+		ft_lstnew.c \
+		ft_lstprint.c \
+		ft_memalloc.c \
+		ft_memccpy.c \
+		ft_memchr.c \
+		ft_memcmp.c \
+		ft_memcpy.c \
+		ft_memdel.c \
+		ft_memmove.c \
+		ft_memset.c \
+		ft_nb_words.c \
+		ft_putchar.c \
+		ft_putchar_fd.c \
+		ft_putendl.c \
+		ft_putendl_fd.c \
+		ft_putnbr.c \
+		ft_putnbr_endl.c \
+		ft_putnbr_fd.c \
+		ft_putstr.c \
+		ft_putstr_fd.c \
+		ft_range.c \
+		ft_strcat.c \
+		ft_strchr.c \
+		ft_strclr.c \
+		ft_strcmp.c \
+		ft_strcpy.c \
+		ft_strdel.c \
+		ft_strdup.c \
+		ft_strequ.c \
+		ft_striter.c \
+		ft_striteri.c \
+		ft_strjoin.c \
+		ft_strjoin3.c \
+		ft_strlcat.c \
+		ft_strlen.c \
+		ft_strmap.c \
+		ft_strmapi.c \
+		ft_strncat.c \
+		ft_strncmp.c \
+		ft_strncpy.c \
+		ft_strnequ.c \
+		ft_strnew.c \
+		ft_strnew_set.c \
+		ft_strnstr.c \
+		ft_strrchr.c \
+		ft_strsplit.c \
+		ft_strstr.c \
+		ft_strsub.c \
+		ft_strtrim.c \
+		ft_tolower.c \
+		ft_toupper.c \
+		printbit.c \
+		sort_int_tab.c \
+		ull_len.c \
+		ull_toa.c)
+OBJS = $(SRCS:$(PATH_SRCS)/%.c=$(PATH_OBJS)/%.o)
+FLAGS = -Wall -Wextra -Werror
+GREEN = \033[01;32m
+YELLOW = \033[01;33m
+CYAN = \033[01;36m
+RESET = \033[00m
 
 all: $(NAME)
 
-$(NAME): $(OBJS) ./includes/libft.h
-	@$(CC) $(FLAG) -c $(SRC) -I $(HEAD)
-	@ar rc $(NAME) $(OBJS)
-	@ranlib $(NAME)
+$(NAME): $(OBJS)
+	ar rc $@ $^
+	ranlib $@
 
-%.o : %.c $(HEAD)
-	@printf " ✅                                                              \r"
-	@printf "✅  $(notdir $<)\r"
-	$(CC) -c $(FLAG) $< -o $@
-
-mc: fclean all clean
+$(PATH_OBJS)/%.o: $(PATH_SRCS)/%.c $(INCLUDES)
+	gcc $(FLAGS) -I $(INCLUDES) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: clean fclean re

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 16:23:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/03/28 14:20:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 11:21:23 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 /*
 ** Bold
-*/ 
+*/
 # define BBLACK 	"\033[1;30m"
 # define BRED		"\033[1;31m"
 # define BGREEN		"\033[1;32m"
@@ -44,7 +44,7 @@
 
 /*
 ** Underline
-*/ 
+*/
 # define UBLACK  	"\033[4;30m"
 # define URED		"\033[4;31m"
 # define UGREEN		"\033[4;32m"
@@ -65,9 +65,5 @@
 # define BGMAGENTA	"\033[45m"
 # define BGCYAN		"\033[46m"
 # define BGWHITE	"\033[47m"
-
-/*
-** Source : https://gist.github.com/vratiu/9780109
-*/ 
 
 #endif

@@ -1,62 +1,66 @@
-####################################_COLOR_#####################################
-GREEN = \033[38;5;10m
-GREY = \033[38;5;60m
-RED = \033[38;5;9m
-END = \033[0m
-##################################_COMPILATION_#################################
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
+#    Updated: 2017/04/10 13:49:08 by sfranc           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = ft_ls
+SRCS_PATH = srcs
+OBJS_PATH = objs
+SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
+	parsing_options.c \
+	parsing_names.c \
+	parsing_misc.c \
+	recursive_search.c \
+	merge_sorting.c \
+	sorting.c \
+	reverse_sorting.c \
+	long_format.c \
+	long_format_details_part1.c \
+	long_format_details_part2.c \
+	classic_display.c \
+	display_colors.c \
+	column.c \
+	column_part2.c \
+	long_display.c \
+	display_errors.c \
+	free.c)
+OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
+INCLUDES = includes libft/includes
+LIB = $(LIB_PATH)/libft.a
+LIB_PATH = ./libft
 CC = gcc
-FLAG = -Wall -Wextra -Werror
-LFT = ./libft/libft.a
-SRCS =	./srcs/main.c \
-	./srcs/parsing_options.c \
-	./srcs/parsing_names.c \
-	./srcs/parsing_misc.c \
-	./srcs/recursive_search.c \
-	./srcs/merge_sorting.c \
-	./srcs/sorting.c \
-	./srcs/reverse_sorting.c \
-	./srcs/long_format.c \
-	./srcs/long_format_details_part1.c \
-	./srcs/long_format_details_part2.c \
-	./srcs/classic_display.c \
-	./srcs/display_colors.c \
-	./srcs/column.c \
-	./srcs/column_part2.c \
-	./srcs/long_display.c \
-	./srcs/display_errors.c \
-	./srcs/free.c
-
-OBJS = $(SRCS:.c=.o)
-
-INCLUDE = -I ./includes \
-		  -I ./libft/includes
-###########################_RELINK_MODIFY_.h####################################
-RELINK = ./includes/ft_ls.h
-################################################################################
+FLAGS = -Wall -Wextra -Werror
+GREEN = \033[01;32m
+YELLOW = \033[01;33m
+CYAN = \033[01;36m
+RESET = \033[00m
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@make -s -C ./libft/
-	@$(CC) $(FLAG) -o $(NAME) $(OBJS) $(LFT)
-	@printf "✅  Compilation done.\n"
+$(NAME): $(LIB) $(OBJS)
+	$(CC) $(FLAGS) -o $@ $^
 
-%.o : %.c $(RELINK) ./Makefile
-	@printf " ✅                                                              \r"
-	@printf "✅  $(notdir $<)\r"
-	@$(CC) -c $(FLAG) $< -o $@ $(INCLUDE)
+$(LIB):
+	make -C $(LIB_PATH)
+
+$(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c $(INCLUDES)
+	$(CC) $(FLAGS) -o $@ -c $< $(addprefix -I , $(INCLUDES))
 
 clean:
-	@printf "                                                               \r"
-	@printf "✅  all .o deleted\n"
-	@rm -f $(OBJS)
-	@make -s clean -C ./libft/
+	make clean -C $(LIB_PATH)
+	rm -f $(OBJS)
 
-fclean:
-	@printf "                                                               \r"
-	@printf "✅  libft.a, all .o and rabougue.filler deleted\n"
-	@rm -f $(NAME) $(OBJS)
-	@make -s fclean -C ./libft/
+fclean: clean
+	make fclean -C $(LIB_PATH)
+	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: clean fclean re
