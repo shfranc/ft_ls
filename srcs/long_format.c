@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 17:40:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/10 12:09:55 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 19:28:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	fill_long_format(t_file *files, t_opt *option)
 	set_max_len(files, &max);
 	while (temp)
 	{
-		temp->long_format = get_long_format(temp, &max, option);
+		if ((temp->error == 0 || temp->error == 20 || temp->error == 2))
+			temp->long_format = get_long_format(temp, &max, option);
 		temp = temp->next;
 	}
 }

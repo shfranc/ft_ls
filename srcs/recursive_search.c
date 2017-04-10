@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:40:51 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/10 11:20:35 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/10 19:12:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	readndisplay_inside(t_file *files_inside, t_opt *option)
 			ft_putendl2(temp->path, ":");
 			if (temp->error != 0)
 				display_file_error(temp);
-			else
+			else if ((file_list_len(temp->inside)))
 			{
-				option->l ? display_totalblocks(temp) : 0;
-				temp->inside = which_sort(temp->inside, option);
-				recursive_display(temp->inside, option);
+					display_totalblocks(temp);
+					temp->inside = which_sort(temp->inside, option);
+					recursive_display(temp->inside, option);
 			}
 			readndisplay_inside(temp->inside, option);
 		}
