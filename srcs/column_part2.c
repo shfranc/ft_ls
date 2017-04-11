@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 10:47:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/11 14:03:43 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 16:21:35 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int		display_non_dir_column(t_file *files, t_opt *option)
 t_file	*copy_file(char *path)
 {
 	t_file	*elem;
-	char	*temp;
 	int		ret_lstat;
 
 	if (!(elem = (t_file*)malloc(sizeof(t_file))))
@@ -52,10 +51,8 @@ t_file	*copy_file(char *path)
 		elem->error = errno;
 	if (!(elem->path = ft_strdup(path)))
 		ft_exit("Unable to malloc path");
-	if (!(temp = ft_strrchr(elem->path, '/')))
-		elem->name = elem->path;
-	else
-		elem->name = temp + 1;
+	if (!(elem->name = ft_strdup(path)))
+		ft_exit("Unable to malloc path");
 	elem->next = NULL;
 	elem->inside = NULL;
 	return (elem);

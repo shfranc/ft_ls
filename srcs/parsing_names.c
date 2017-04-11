@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/10 18:59:38 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 15:42:56 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ t_file	*file_new(char *path, t_opt *option)
 	file_init(elem);
 	if ((ret_lstat = lstat(path, &elem->lstat)) == -1)
 		elem->error = errno;
+	errno = 0;
 	if ((ret_sstat = stat(path, &elem->stat)) == -1)
-		elem->error = errno;
+		elem->error_stat = errno;
 	if (!(elem->path = ft_strdup(path)))
 		ft_exit("Unable to malloc path");
 	if (!(temp = ft_strrchr(elem->path, '/')))
@@ -89,8 +90,7 @@ void	read_names(int ac, char **av, t_file **files, t_opt *option)
 	while (ac)
 	{
 		elem = file_new(*av, option);
-		if ((S_ISDIR(elem->stat.st_mode)
-			&& lstat(elem->path, &elem->lstat) != -1))
+		if (S_ISDIR(elem->stat.st_mode))
 			walk_dir(elem->path, &elem, option);
 		file_add_last(files, elem);
 		if (--ac)

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/10 17:37:02 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 16:26:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct	s_file
 	char			*color_name;
 	char			*long_format;
 	int				error;
+	int				error_stat;
 	struct stat		lstat;
 	struct stat		stat;
 	struct passwd	*usr;
@@ -160,6 +161,7 @@ void			classic_display(int ac, t_file *files, t_opt *option);
 ** recursive_search.c
 */
 void			readndisplay_inside(t_file *files_inside, t_opt *option);
+int				go_recursive(t_file *file);
 void			recursive_display(t_file *files, t_opt *option);
 int				not_searchable(t_file *files, t_opt *option);
 int				not_sortable(t_file *files, t_opt *option);
