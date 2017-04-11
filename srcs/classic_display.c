@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 13:00:35 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/10 17:37:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 13:44:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		display_non_dir(t_file *files, t_opt *option)
 	int		nb_file;
 
 	nb_file = 0;
-	if (!option->c1 && file_list_len(files) > 1)
+	if (!option->c1)
 		return (display_non_dir_column(files, option));
 	temp = files;
 	while (temp)

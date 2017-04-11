@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 12:20:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/10 17:36:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 14:04:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ int		read_only(t_file *files)
 	int		i;
 
 	i = 0;
+	
 	temp = files;
 	while (temp)
 	{
 		if (lstat(temp->path, &temp->lstat) == -1)
-			i++;
+			i++;	
 		temp = temp->next;
 	}
 	return (i);
