@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 12:14:49 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/06 19:02:20 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 12:27:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,14 @@ int		check_priority(char c, t_opt *option)
 {
 	if (c == 'f')
 		option->a = 'a';
+	if ((c == 't') && option->u_s)
+		return (0);
+	if (c == 'S' && (option->t))
+		option->t = 0;
 	if (c == 'U' && option->u)
 		option->u = 0;
 	if (c == 'u' && option->u_u)
 		option->u_u = 0;
-	if ((c == 't' || c == 'u' || c == 'U') && option->u_s)
-		return (0);
-	if (c == 'S' && (option->t || option->u || option->u_u))
-	{
-		option->t = 0;
-		option->u = 0;
-		option->u_u = 0;
-	}
 	if (c == '1' && option->l)
 		option->l = 0;
 	if (c == 'l' && option->c1)
