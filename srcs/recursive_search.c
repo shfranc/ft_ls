@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:40:51 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/10 19:56:14 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 12:09:05 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	readndisplay_inside(t_file *files_inside, t_opt *option)
 				display_file_error(temp);
 			else if ((file_list_len(temp->inside)))
 			{
-				display_totalblocks(temp);
-				temp->inside = which_sort(temp->inside, option);
+				if (option->l)
+					display_totalblocks(temp);
 				recursive_display(temp->inside, option);
 			}
 			readndisplay_inside(temp->inside, option);
@@ -43,6 +43,7 @@ void	readndisplay_inside(t_file *files_inside, t_opt *option)
 
 void	recursive_display(t_file *files, t_opt *option)
 {
+	files = which_sort(files, option);
 	if (option->l)
 		long_display_inside(files, option);
 	else
