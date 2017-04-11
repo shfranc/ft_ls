@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 12:04:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/10 16:47:07 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 11:50:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	display_totalblocks(t_file *file)
 	size = 0;
 	while (temp)
 	{
-		if ((lstat(temp->path, &temp->lstat)) == -1)
+		if ((lstat(temp->path, &temp->lstat)) == -1 && errno != 9)
 			return ;
 		size += temp->lstat.st_blocks;
 		temp = temp->next;
