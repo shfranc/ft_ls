@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 10:47:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/11 16:21:35 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 19:32:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,22 @@ int		display_non_dir_column(t_file *files, t_opt *option)
 		}
 		temp = temp->next;
 	}
-	if (non_dir)
-		display_column(non_dir, option);
+	colunm_or_one_file(non_dir, option);
 	free_file(&non_dir);
 	return (nb_file);
+}
+
+void	colunm_or_one_file(t_file *non_dir, t_opt *option)
+{
+	if (non_dir && file_list_len(non_dir) > 1)
+		display_column(non_dir, option);
+	else if (non_dir && option->u_g)
+	{
+		join_color(non_dir, non_dir->path);
+		ft_putendl(non_dir->color_name);
+	}
+	else if (non_dir)
+		ft_putendl(non_dir->path);
 }
 
 t_file	*copy_file(char *path)

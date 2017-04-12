@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 10:49:12 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/11 15:42:26 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 19:33:12 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,8 @@ void	long_display_dir(int nb_file, int ac, t_file *files, t_opt *option)
 				display_file_error(temp);
 			else
 			{
-				if (!(file_list_len(temp->inside)))
-					break ;
-				display_totalblocks(temp);
+				if ((file_list_len(temp->inside)))
+					display_totalblocks(temp);
 				temp->inside = which_sort(temp->inside, option);
 				long_display_inside(temp->inside, option);
 				readndisplay_inside(temp->inside, option);

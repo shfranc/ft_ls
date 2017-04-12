@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 11:38:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/11 16:26:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 19:28:01 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,7 @@ int				display_column(t_file *files, t_opt *option);
 */
 int				display_non_dir_column(t_file *files, t_opt *option);
 t_file			*copy_file(char *path);
+void			colunm_or_one_file(t_file *non_dir, t_opt *option);
 
 /*
 ** free.c

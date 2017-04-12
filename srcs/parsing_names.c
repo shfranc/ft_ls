@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:24:18 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/11 15:42:56 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/11 19:33:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_file	*file_new(char *path, t_opt *option)
 	else
 		elem->name = temp + 1;
 	if (option->l
-		&& (elem->error == 0 || elem->error == 20 || elem->error == 2))
+		&& (elem->error == 0 || elem->error == 20))
 		get_len(elem);
 	return (elem);
 }
